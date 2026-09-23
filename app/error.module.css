@@ -1,0 +1,28 @@
+.wrap {
+  width: min(640px, calc(100% - 32px));
+  margin: 72px auto;
+  text-align: center;
+}
+
+.title {
+  margin: 0 0 12px;
+}
+
+.text {
+  margin: 0 0 24px;
+  color: #627d98;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+}

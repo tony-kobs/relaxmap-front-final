@@ -1,0 +1,20 @@
+.wrap {
+  width: min(640px, calc(100% - 32px));
+  margin: 48px auto;
+}
+
+.title {
+  margin: 0 0 16px;
+}
+
+@media (min-width: 768px) {
+  .wrap {
+    margin: 72px auto;
+  }
+}
+
+@media (min-width: 1440px) {
+  .wrap {
+    margin: 96px auto;
+  }
+}

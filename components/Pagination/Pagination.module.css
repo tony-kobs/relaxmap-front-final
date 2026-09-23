@@ -1,0 +1,18 @@
+.list {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.list a {
+  display: flex;
+  min-width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+  cursor: pointer;
+}
