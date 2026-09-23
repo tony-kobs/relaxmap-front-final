@@ -1,4 +1,4 @@
-// Власник: Форма локації
+// Власник: Створення локації
 import css from './LocationForm.module.css';
 
 export default function LocationForm() {

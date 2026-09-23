@@ -1,17 +1,11 @@
 'use client';
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { login } from '@/lib/api/clientApi';
 import { useAuthStore } from '@/lib/store/authStore';
 import css from './SignInForm.module.css';
-
-const schema = Yup.object({
-  email: Yup.string().email('Invalid email').required('Email is required'),
-  password: Yup.string().min(8, 'Мінімум 8 символів').max(128, 'Максимум 128 символів').required("Пароль обов'язковий"),
-});
 
 export default function SignInForm() {
   const router = useRouter();
@@ -20,7 +14,6 @@ export default function SignInForm() {
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
-      validationSchema={schema}
       onSubmit={async (values, helpers) => {
         try {
           const user = await login(values);

@@ -1,4 +1,4 @@
-// Власник: Вхід, після проміжного дедлайну
+// Власник: Сесія, після проміжного дедлайну
 import css from './AuthPromptModal.module.css';
 
 export default function AuthPromptModal() {

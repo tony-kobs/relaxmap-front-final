@@ -2,7 +2,7 @@
 
 Проєкт: **Природні Мандри**. Фронт `relaxmap-front-final`, бек `relaxmap-back-final`.
 
-Команда — 11 людей. Тімлід забирає Header і Footer. У кожного з десяти розробників дві секції і мінімум один ендпоінт. Імена вписуємо в таблицю на старті.
+Команда — 13 людей. Тімлід забирає Header і Footer. У кожного з дванадцяти розробників дві секції і мінімум один ендпоінт. Імена вписуємо в таблицю на старті.
 
 Браузер ніколи не кличе Render напряму. Запит іде в `app/api` на Next, звідти на бекенд. Маршрути бекенда без префікса `/api`: `/auth/register`, `/locations`, `/categories/regions`.
 
@@ -36,7 +36,7 @@
 ## Порядок до зустрічі
 
 1. Тімлід доводить каркас: фавікон, шрифт з макета, кольори в `styles/globals.css`, хедер, футер, вихід.
-2. Реєстрація і вхід закривають свої сторінки і живий логін.
+2. Реєстрація, вхід і сесія закривають свої сторінки, живий логін і сесію після перезавантаження.
 3. Усі власники ендпоінтів замінюють `501` до того, як сідати за пізні сторінки.
 4. Перший екран, популярні локації і відгуки на головній підключають дані і верстають три ширини.
 5. Сторінки каталогу, деталей, профілю, додавання і редагування локації, модалку відгуку не починаємо, поки не закритий свій ендпоінт і поки головна з авторизацією не тримають дедлайн.
@@ -45,27 +45,27 @@
 
 ## Хто що веде
 
-| Хто | Секції | Ендпоінт | До дедлайну |
+| Хто | 2 секції | Ендпоінт | До дедлайну |
 | --- | --- | --- | --- |
-| Тімлід | Header, Footer | `POST /auth/logout` вже є, підключити в хедері | фавікон, назва, шрифт, змінні, хедер, футер, вихід, три ширини |
-| Реєстрація | RegistrationForm, AuthNav | `POST /auth/register` | сторінка `/register`, валідація, тости, редірект |
-| Вхід | LoginPage, LoginForm | `POST /auth/login`, `POST /auth/refresh` | сторінка `/login`, валідація, тости, редірект, сесія після reload |
-| Перший екран | HeroBlock, AdvantagesBlock | `GET /categories/regions`, `GET /categories/types` | обидві секції на головній і обидва ендпоінти |
-| Популярні локації | PopularLocationsBlock, LocationCard | `GET /locations` | карусель на головній і повний список з фільтрами |
-| Каталог | FilterPanel, LocationsGrid | `GET /users/:userId/locations` | ендпоінт. Сторінка `/locations` після дедлайну |
-| Деталі локації | LocationInfoBlock, LocationGallery | `GET /locations/:locationId` | ендпоінт. Сторінка після дедлайну |
-| Профіль | ProfileInfo, ProfilePlaceholder | `GET /users/:userId` | ендпоінт. Сторінка після дедлайну |
-| Форма локації | LocationForm, EditLocationPage | `POST /locations`, `PATCH /locations/:locationId` | обидва ендпоінти. Сторінки після дедлайну |
-| Відгуки | ReviewsBlock, ReviewsSection | `GET /feedbacks` | слайдер на головній і ендпоінт. Блок на сторінці локації після |
-| Новий відгук | AddReviewModal, AddReviewForm | `POST /feedbacks` | ендпоінт. Модалка після дедлайну |
-
-`LocationDescription` робить людина деталей: це текст тієї самої сторінки, окремий файл `components/LocationDescription`. `AuthPromptModal` після дедлайну забирає людина входу.
+| Тімлід | Header, Footer | `POST /auth/logout` | хедер, футер, вихід, три ширини |
+| Реєстрація | форма реєстрації, AuthNav | `POST /auth/register` | сторінка `/register` |
+| Вхід | сторінка і форма входу | `POST /auth/login` | сторінка `/login` |
+| Сесія | модалка виходу, AuthPrompt | `POST /auth/refresh` | жива сесія після reload і модалка виходу |
+| Перший екран | Hero, переваги | регіони і типи | обидві секції на головній і обидва ендпоінти |
+| Популярні | карусель, картка | `GET /locations` | карусель і список з пошуком, регіоном, типом, пагінацією |
+| Каталог | фільтри, сітка | `GET /users/:userId/locations` | лише ендпоінт |
+| Деталі | інфо, галерея | `GET /locations/:id` | лише ендпоінт |
+| Профіль | інфо, порожній стан | `GET /users/:id` | лише ендпоінт |
+| Створення локації | форма, сторінка додавання | `POST /locations` | лише ендпоінт |
+| Редагування локації | сторінка редагування, опис | `PATCH /locations/:id` | лише ендпоінт |
+| Відгуки | слайдер на головній, секція на сторінці місця | `GET /feedbacks` | слайдер на головній і ендпоінт |
+| Новий відгук | модалка, форма відгуку | `POST /feedbacks` | лише ендпоінт |
 
 Каталог не пише другий `GET /locations`. Загальний список з пошуком, регіоном, типом і пагінацією робить розробник популярних локацій, бо ця вибірка потрібна головній ще до зустрічі. Каталог пізніше лише викликає його зі своїєї панелі. Свій ендпоінт каталогу — місця конкретного користувача, їх малює та сама `LocationsGrid` на профілі.
 
 ## Тімлід — Header і Footer
 
-Файли: `components/Header`, `components/Footer`, `components/ConfirmationModal`, `app/layout.tsx`, `app/favicon.ico`, `styles/globals.css`, `proxy.ts`.
+Файли: `components/Header`, `components/Footer`, `app/layout.tsx`, `styles/globals.css`, `proxy.ts`. Модалку виходу не пишеш: її робить людина сесії, ти лише відкриваєш її з хедера.
 
 До дедлайну:
 
@@ -81,7 +81,7 @@
 
 ## Реєстрація
 
-Файли: `components/SignUpForm`, `components/AuthNav`, `app/(auth)/register/page.tsx`. Бек: `src/controllers/authController.js` (`registerUser`), схема вже в `src/validations/authValidation.js`.
+Файли: `components/SignUpForm`, `components/AuthNav`, `app/(auth)/register/page.tsx`. Бек: порожній `registerUser` у `src/controllers/authController.js` і порожня схема в `src/validations/authValidation.js`. Правила Joi і логіку ендпоінта пишеш ти.
 
 Поля: `name` 2–32, `email` до 64 і унікальний, `password` 8–128. Помилки Yup біля полів за макетом. Зайнятий email і інші помилки запиту — тост, поля не чистимо. Успіх: користувач авторизований і потрапляє на `/profile`.
 
@@ -89,13 +89,17 @@
 
 ## Вхід
 
-Файли: `components/SignInForm`, `app/(auth)/login/page.tsx`. Бек: `loginUser` і `refreshUserSession` у `authController.js`.
+Файли: `components/SignInForm`, `app/(auth)/login/page.tsx`. Бек: `loginUser` у `authController.js`.
 
-Поля email і пароль, Yup, тост на помилку запиту, редірект на `/profile`.
+Поля email і пароль, Yup, тост на помилку запиту, редірект на `/profile`. Сторінка на трьох ширинах. Оновлення сесії після reload робить людина сесії.
 
-Сесія після reload уже зав'язана на `components/AuthProvider`: він кличе `GET /auth/session`, потім `GET /users/me`. Потрібно перевірити це в браузері: залогінився, оновив головну, хедер лишився авторизованим. Якщо access протух, `POST /auth/refresh` має видати нову сесію.
+## Сесія
 
-Після дедлайну: `components/AuthPromptModal` для дії гостя, якій потрібен акаунт. Закривається бекдропом, хрестиком і Escape. Кнопки ведуть на `/login` і `/register`.
+Файли: `components/ConfirmationModal`, `components/AuthPromptModal`. Бек: `refreshUserSession` у `authController.js`. Фронт уже кличе сесію з `components/AuthProvider`: `GET /auth/session`, потім `GET /users/me`.
+
+До дедлайну: якщо access протух, `POST /auth/refresh` видає нову сесію. Перевірка в браузері: залогінився, оновив головну, хедер лишився авторизованим. `ConfirmationModal` відкривається з хедера на виході. Текст на кшталт «Ви впевнені, що хочете вийти?». Закриття кнопкою скасування, бекдропом і Escape. Під час запиту лоадер. Успіх закриває модалку, помилка лишає її відкритою і показує тост.
+
+Після дедлайну: `AuthPromptModal` для дії гостя, якій потрібен акаунт. Закривається бекдропом, хрестиком і Escape. Кнопки ведуть на `/login` і `/register`.
 
 ## Перший екран
 
@@ -129,11 +133,11 @@ Query: `page`, `limit` (1–100), `region` (id), `type` (id), `search` по на
 
 ## Деталі локації
 
-Файли: `components/LocationInfoBlock`, `components/LocationGallery`, `components/LocationDescription`, `app/locations/[locationId]/page.tsx`. Бек: `getLocationById`.
+Файли: `components/LocationInfoBlock`, `components/LocationGallery`, `app/locations/[locationId]/page.tsx`. Бек: `getLocationById`. Текст опису — файл `components/LocationDescription`, його робить людина редагування.
 
 `GET /locations/:locationId` повертає одну локацію з автором, регіоном і типом. Немає id — 404.
 
-До дедлайну ендпоінт. Після — сторінка: рейтинг, назва, регіон, тип, автор-посилання на `/profile/[userId]`, велике фото, текст опису. `ReviewsSection` на цю сторінку ставить розробник відгуків.
+До дедлайну ендпоінт. Після — сторінка: рейтинг, назва, регіон, тип, автор-посилання на `/profile/[userId]`, велике фото. `ReviewsSection` на цю сторінку ставить розробник відгуків.
 
 ## Профіль
 
@@ -145,13 +149,21 @@ Query: `page`, `limit` (1–100), `region` (id), `type` (id), `search` по на
 
 `/profile` лишається приватною сторінкою поточного користувача, на неї веде логін. Коли публічний профіль готовий, «Мій профіль» у хедері можна перевести на `/profile/[свій id]`.
 
-## Форма локації
+## Створення локації
 
-Файли: `components/LocationForm`, `app/locations/add/page.tsx`, `app/locations/[locationId]/edit/page.tsx`. Бек: `createLocation`, `updateLocation`. Завантаження: `uploadLocationImages` у `src/middleware/multer.js`, далі `saveFileToCloudinary`.
+Файли: `components/LocationForm`, `app/locations/add/page.tsx`. Бек: `createLocation`. Завантаження: `uploadLocationImages` у `src/middleware/multer.js`, далі `saveFileToCloudinary`.
 
-`POST /locations` і `PATCH /locations/:locationId` приватні, тіло `multipart/form-data`: `name` 3–96, `type` і `region` як id категорії, `description` 20–6000, файл `images` jpg/png до 1 МБ. На створення фото обов'язкове. PATCH дозволений лише автору, інакше 403.
+`POST /locations` приватний, тіло `multipart/form-data`: `name` 3–96, `type` і `region` як id категорії, `description` 20–6000, файл `images` jpg/png до 1 МБ, хоча б одне фото.
 
-До дедлайну обидва ендпоінти. Після — сторінки «Додавання нового місця» і «Редагування місця». Дропдауни з категорій. Прев'ю фото замість плейсхолдера. Formik + Yup. Невалідне — текст біля поля. Запит — лоадер. Успіх створення веде на `/locations/[id]`. Помилка — тост, значення в полях лишаються. «Відмінити» повертає форму до стану на момент відкриття. Редагування спочатку вантажить `GET /locations/:id` і заповнює поля.
+До дедлайну ендпоінт. Після — сторінка «Додавання нового місця». Дропдауни з категорій. Прев'ю фото замість плейсхолдера. Formik + Yup. Невалідне — текст біля поля. Запит — лоадер. Успіх веде на `/locations/[id]`. Помилка — тост, значення в полях лишаються. «Відмінити» повертає форму до стану на момент відкриття. Цю саму форму підключає сторінка редагування, поля не дублюй у другому компоненті.
+
+## Редагування локації
+
+Файли: `app/locations/[locationId]/edit/page.tsx`, `components/LocationDescription`. Бек: `updateLocation`.
+
+`PATCH /locations/:locationId` приватний, тіло те саме, що в створення. Дозволений лише автору, інакше 403. Фото можна замінити.
+
+До дедлайну ендпоінт. Після — сторінка «Редагування місця»: спочатку `GET /locations/:id`, форма створення заповнена цими даними. Успіх лишає на сторінці цього місця. `LocationDescription` — текст опису на сторінці деталей, окремий файл, без логіки форми.
 
 ## Відгуки
 

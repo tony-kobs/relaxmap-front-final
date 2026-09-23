@@ -1,4 +1,4 @@
-// Власник: Деталі локації
+// Власник: Редагування локації
 import css from './LocationDescription.module.css';
 
 export default function LocationDescription() {

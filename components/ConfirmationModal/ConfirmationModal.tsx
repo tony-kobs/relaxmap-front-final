@@ -1,4 +1,4 @@
-// Власник: Тімлід. Діалог виходу відкривається з Header
+// Власник: Сесія. Діалог виходу відкривається з Header
 'use client';
 
 import css from './ConfirmationModal.module.css';
