@@ -1,25 +1,38 @@
-.box {
+.nav {
   display: flex;
   align-items: center;
   gap: 16px;
+  flex-wrap: wrap;
 }
 
 .link,
-.active,
-.button {
-  font: inherit;
+.active {
   color: inherit;
   text-decoration: none;
-  background: none;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
 }
 
 .active {
   font-weight: 700;
 }
 
-.button {
-  color: #2563eb;
+.profile {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.iconButton {
+  display: inline-flex;
+  color: inherit;
 }

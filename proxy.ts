@@ -9,7 +9,6 @@ export async function proxy(request: NextRequest) {
   const backendUrl = process.env.BACKEND_URL?.replace(/\/$/, '');
 
   const isPrivateRoute =
-    pathname === '/profile' ||
     pathname === '/locations/add' ||
     /^\/locations\/[^/]+\/edit$/.test(pathname);
   const isPublicRoute = publicRoutes.includes(pathname);
@@ -56,5 +55,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/profile', '/login', '/register', '/locations/add', '/locations/:locationId/edit'],
+  matcher: ['/login', '/register', '/locations/add', '/locations/:locationId/edit'],
 };

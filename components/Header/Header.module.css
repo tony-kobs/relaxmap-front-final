@@ -25,17 +25,6 @@
   height: 36px;
 }
 
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.nav a {
-  color: inherit;
-  text-decoration: none;
-}
-
 @media (min-width: 768px) {
   .inner {
     width: min(1120px, calc(100% - 48px));

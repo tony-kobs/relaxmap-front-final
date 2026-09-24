@@ -1,4 +1,11 @@
 // Власник: Форма локації
-export default function Page() {
-  return <h1>Додавання нового місця</h1>;
+import LocationForm from '@/components/LocationForm/LocationForm';
+
+export default function CreateLocationPage() {
+  return (
+    <>
+      <h1>Додавання нового місця</h1>
+      <LocationForm />
+    </>
+  );
 }

@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { register } from '@/lib/api/clientApi';
 import { useAuthStore } from '@/lib/store/authStore';
-import css from './SignUpForm.module.css';
+import css from './RegistrationForm.module.css';
 
-export default function SignUpForm() {
+export default function RegistrationForm() {
   const router = useRouter();
   const setUser = useAuthStore((state) => state.setUser);
 
@@ -19,7 +19,7 @@ export default function SignUpForm() {
           const user = await register(values);
           setUser(user);
           toast.success('Account created');
-          router.push('/profile');
+          router.push(`/profile/${user._id}`);
         } catch {
           toast.error('Could not create account');
         } finally {

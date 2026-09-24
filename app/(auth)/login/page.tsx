@@ -1,5 +1,5 @@
 import AuthNav from '@/components/AuthNav/AuthNav';
-import SignInForm from '@/components/SignInForm/SignInForm';
+import LoginForm from '@/components/LoginForm/LoginForm';
 import css from './page.module.css';
 
 export default function LoginPage() {
@@ -7,7 +7,7 @@ export default function LoginPage() {
     <section className={css.wrap}>
       <AuthNav />
       <h1 className={css.title}>Вхід</h1>
-      <SignInForm />
+      <LoginForm />
     </section>
   );
 }

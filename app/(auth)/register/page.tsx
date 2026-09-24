@@ -1,5 +1,5 @@
 import AuthNav from '@/components/AuthNav/AuthNav';
-import SignUpForm from '@/components/SignUpForm/SignUpForm';
+import RegistrationForm from '@/components/RegistrationForm/RegistrationForm';
 import css from './page.module.css';
 
 export default function RegisterPage() {
@@ -7,7 +7,7 @@ export default function RegisterPage() {
     <section className={css.wrap}>
       <AuthNav />
       <h1 className={css.title}>Реєстрація</h1>
-      <SignUpForm />
+      <RegistrationForm />
     </section>
   );
 }

@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { login } from '@/lib/api/clientApi';
 import { useAuthStore } from '@/lib/store/authStore';
-import css from './SignInForm.module.css';
+import css from './LoginForm.module.css';
 
-export default function SignInForm() {
+export default function LoginForm() {
   const router = useRouter();
   const setUser = useAuthStore((state) => state.setUser);
 
@@ -19,7 +19,7 @@ export default function SignInForm() {
           const user = await login(values);
           setUser(user);
           toast.success('Signed in');
-          router.push('/profile');
+          router.push(`/profile/${user._id}`);
         } catch {
           toast.error('Invalid email or password');
         } finally {

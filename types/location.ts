@@ -24,9 +24,9 @@ export type LocationQuery = {
   page?: number;
   limit?: number;
   region?: string;
-  type?: string;
+  type?: string | string[];
   search?: string;
-  sort?: 'rating' | 'new';
+  sort?: 'popular' | 'rating' | 'new';
 };
 
 export type Paginated<T> = {

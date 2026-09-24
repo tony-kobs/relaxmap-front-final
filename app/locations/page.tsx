@@ -1,4 +1,12 @@
 // Власник: Каталог
-export default function Page() {
-  return <h1>Місця відпочинку</h1>;
+import FilterPanel from '@/components/FilterPanel/FilterPanel';
+import LocationsGrid from '@/components/LocationsGrid/LocationsGrid';
+
+export default function LocationsPage() {
+  return (
+    <>
+      <FilterPanel />
+      <LocationsGrid />
+    </>
+  );
 }

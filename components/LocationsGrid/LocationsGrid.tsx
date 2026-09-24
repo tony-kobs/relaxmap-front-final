@@ -1,6 +1,10 @@
 // Власник: Каталог
 import css from './LocationsGrid.module.css';
 
-export default function LocationsGrid() {
-  return <section className={css.section} data-section="LocationsGrid" />;
+type LocationsGridProps = {
+  userId?: string;
+};
+
+export default function LocationsGrid({ userId }: LocationsGridProps) {
+  return <section className={css.section} data-section="LocationsGrid" data-user-id={userId} />;
 }

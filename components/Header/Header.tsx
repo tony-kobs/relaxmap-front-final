@@ -10,11 +10,7 @@ export default function Header() {
         <Link className={css.logo} href="/">
           <Image src="/company_logo.svg" width={129} height={36} alt="Relax Map" priority />
         </Link>
-        <nav className={css.nav}>
-          <Link href="/">Головна</Link>
-          <Link href="/locations">Місця відпочинку</Link>
-          <AuthNavigation />
-        </nav>
+        <AuthNavigation />
       </div>
     </header>
   );

@@ -1,47 +1,66 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { logout } from '@/lib/api/clientApi';
+import { usePathname } from 'next/navigation';
 import { useAuthStore } from '@/lib/store/authStore';
 import css from './AuthNavigation.module.css';
 
 export default function AuthNavigation() {
-  const router = useRouter();
   const pathname = usePathname();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const user = useAuthStore((state) => state.user);
-  const clearIsAuthenticated = useAuthStore(
-    (state) => state.clearIsAuthenticated,
-  );
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } finally {
-      clearIsAuthenticated();
-      router.push('/login');
-    }
-  };
+  const profileHref = user?._id ? `/profile/${user._id}` : '/profile';
+  const isLocationsCatalog =
+    pathname === '/locations' || /^\/locations\/[^/]+$/.test(pathname);
 
   if (isAuthenticated) {
     return (
-      <div className={css.box}>
+      <nav className={css.nav}>
         <Link
-          className={pathname === '/profile' ? css.active : css.link}
-          href="/profile"
+          className={isLocationsCatalog ? css.active : css.link}
+          href="/locations"
         >
-          {user?.name ?? 'Мій профіль'}
+          Місця відпочинку
         </Link>
-        <button className={css.button} type="button" onClick={handleLogout}>
-          Вийти
-        </button>
-      </div>
+        <Link
+          className={pathname.startsWith('/profile') ? css.active : css.link}
+          href={profileHref}
+        >
+          Мій Профіль
+        </Link>
+        <Link className={css.link} href="/locations/add">
+          Поділитись локацією
+        </Link>
+        <span className={css.profile}>
+          {user?.avatar ? (
+            <Image
+              src={user.avatar}
+              width={32}
+              height={32}
+              alt=""
+            />
+          ) : null}
+          <span className={css.name}>{user?.name}</span>
+        </span>
+        <Link className={css.iconButton} href="/logout" aria-label="Вийти">
+          <Image src="/logout.svg" width={24} height={24} alt="" />
+        </Link>
+      </nav>
     );
   }
 
   return (
-    <div className={css.box}>
+    <nav className={css.nav}>
+      <Link className={pathname === '/' ? css.active : css.link} href="/">
+        Головна
+      </Link>
+      <Link
+        className={isLocationsCatalog ? css.active : css.link}
+        href="/locations"
+      >
+        Місця відпочинку
+      </Link>
       <Link
         className={pathname === '/login' ? css.active : css.link}
         href="/login"
@@ -54,6 +73,6 @@ export default function AuthNavigation() {
       >
         Реєстрація
       </Link>
-    </div>
+    </nav>
   );
 }
