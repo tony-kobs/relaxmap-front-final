@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect } from 'react';
+import Image from 'next/image';
 import css from './error.module.css';
 
 type ErrorPageProps = {
@@ -7,14 +9,34 @@ type ErrorPageProps = {
   reset: () => void;
 };
 
-export default function ErrorPage({ reset }: ErrorPageProps) {
+export default function ErrorPage({ error, reset }: ErrorPageProps) {
+  useEffect(() => {
+    console.error(error);
+  }, [error]);
+
   return (
-    <div className={css.wrap}>
-      <h1 className={css.title}>Something went wrong</h1>
-      <p className={css.text}>Please try again.</p>
-      <button className={css.button} type="button" onClick={reset}>
-        Try again
-      </button>
-    </div>
+    <section className={css.stage}>
+      <div className={css.scene}>
+        <Image
+          className={`${css.photo} ${css.photoBridge}`}
+          src="/status/error.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+        />
+      </div>
+      <div className={css.scrim} />
+      <div className={`${css.card} ${css.cardEnd}`}>
+        <p className={css.kicker}>Стежка перервалась</p>
+        <h1 className={css.title}>Щось пішло не так</h1>
+        <p className={css.text}>
+          Не вдалося відкрити цю сторінку. Спробуйте ще раз — інколи дорога просто потребує другого кроку.
+        </p>
+        <button className={css.button} type="button" onClick={reset}>
+          Спробувати знову
+        </button>
+      </div>
+    </section>
   );
 }
