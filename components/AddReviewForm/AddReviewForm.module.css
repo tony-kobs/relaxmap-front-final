@@ -2,6 +2,12 @@
   padding: 24px 16px;
 }
 
+.rating {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 @media (min-width: 768px) {
   .section {
     padding: 32px 24px;

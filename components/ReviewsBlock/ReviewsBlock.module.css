@@ -2,6 +2,10 @@
   padding: 24px 16px;
 }
 
+.rating {
+  margin-top: 16px;
+}
+
 @media (min-width: 768px) {
   .section {
     padding: 32px 24px;

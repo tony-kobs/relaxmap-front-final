@@ -1,0 +1,29 @@
+.row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-neutral-darkest);
+}
+
+.md {
+  width: 132px;
+}
+
+.sm {
+  width: 88px;
+}
+
+.rating {
+  width: 100%;
+}
+
+.dot,
+.score {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+}
+
+.rating :global(.rr--box:focus-visible) :global(.rr--svg) {
+  outline-color: var(--color-neutral-darkest);
+}
