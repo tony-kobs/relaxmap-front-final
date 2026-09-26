@@ -1,0 +1,28 @@
+.logo {
+  width: 335px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin: 32px 20px;
+  color: #1b391b;
+}
+
+@media (min-width: 768px) {
+  .logo {
+    width: 704px;
+    font-weight: 700;
+    font-size: 48px;
+    margin: 32px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .section {
+    padding: 40px;
+  }
+
+  .logo {
+    width: 1312px;
+    font-size: 56px;
+    margin: 48px 64px;
+  }
+}
