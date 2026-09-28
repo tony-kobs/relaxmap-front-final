@@ -1,0 +1,98 @@
+/* components/ReviewsBlock/ReviewCard.module.css */
+/* --------------------------------------------- */
+
+/* --- КОНФІГУРАЦІЯ ТА ЗМІННІ  ----------------- */
+:local(.reviewCardCustom) {
+  --card-bg: #ffe5d9;
+  --card-radius: 16px;
+  --text-color-main: #4c2613;
+  --font-family-base: 'Montserrat', sans-serif;
+
+  --mob-height: 204px;
+  --desk-height: 228px;
+}
+
+/* 1. БАЗОВІ СТИЛІ (MOBILE-FIRST - ВІД 320px ДО 375px) */
+/* --------------------------------------------------- */
+.reviewCardCustom {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--card-bg);
+  border-radius: var(--card-radius);
+  padding: 16px;
+  box-sizing: border-box;
+  flex-shrink: 0; /* Забороняє стискання карти всередині флекс-ряду */
+  gap: 12px;
+  width: 100%; /* Ширина адаптується під розрахунок батьківського контейнера */
+  height: var(--mob-height);
+}
+
+.starsBlockWrapperFlex {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.cardRatingCustom {
+  display: flex;
+}
+
+.textBlockWrapperFlex {
+  display: flex;
+  width: 100%;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.cardContentText {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--text-color-main);
+  overflow: hidden;
+}
+
+.authorMetaGroupFlex {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 4px;
+}
+
+.authorNameText {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--text-color-main);
+}
+
+.locationBadgeCustom {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 150%;
+  color: var(--text-color-main);
+  align-self: flex-start;
+}
+
+/* 2. СТИЛІ ПЛАНШЕТ (ВІД 768px)                        */
+/* --------------------------------------------------- */
+@media (min-width: 768px) {
+  .reviewCardCustom {
+    height: var(--tab-height);
+  }
+}
+
+/* 3. СТИЛІ ДЕСKТОП (ВІД 1440px)                       */
+/* --------------------------------------------------- */
+@media (min-width: 1440px) {
+  .reviewCardCustom {
+    height: var(--desk-height);
+    gap: 16px;
+  }
+}
