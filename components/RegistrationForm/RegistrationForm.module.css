@@ -1,38 +1,137 @@
 .form {
-  display: grid;
-  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
 }
 
 .label {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
-  font-size: 0.95rem;
+  width: 100%;
+}
+
+.labelText {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.5;
+  color: var(--color-scheme-1-text);
 }
 
 .input {
+  box-sizing: border-box;
   width: 100%;
-  height: 44px;
-  padding: 0 12px;
-  border: 1px solid #d9e2ec;
-  border-radius: 8px;
-  font: inherit;
+  height: 40px;
+  padding: 8px;
+  border: 1px solid var(--opacity-neutral-darkest-15);
+  border-radius: 6px;
+  background-color: var(--color-scheme-2-foreground);
+  color: var(--color-neutral-darkest);
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.5;
+  transition:
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+.input::placeholder {
+  color: var(--opacity-neutral-darkest-60);
+  opacity: 1;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-coral);
+  box-shadow: 0 0 0 2px rgba(204, 101, 52, 0.2);
+}
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--color-scheme-2-foreground) inset !important;
+  -webkit-text-fill-color: var(--color-neutral-darkest) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.inputError {
+  border-color: var(--color-error) !important;
+}
+
+.inputError:focus {
+  box-shadow: 0 0 0 2px rgba(176, 1, 1, 0.2);
 }
 
 .error {
-  color: #c0392b;
-  font-size: 0.85rem;
+  color: var(--color-error);
+  font-size: var(--font-size-xs);
+  line-height: 1.5;
 }
 
 .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   height: 44px;
-  border: 0;
-  border-radius: 8px;
-  background: #2563eb;
-  color: #fff;
-  font: inherit;
+  padding: 6px 12px;
+  border: 1px solid var(--color-coral-dark);
+  border-radius: 6px;
+  background-color: var(--color-coral-dark);
+  color: var(--color-white);
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
   cursor: pointer;
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base),
+    border-color var(--transition-base),
+    opacity var(--transition-base),
+    transform var(--transition-base);
+}
+
+.button:hover:not(:disabled),
+.button:focus-visible:not(:disabled) {
+  background-color: var(--color-scheme-2-foreground);
+  color: #1b391b;
+  border-color: var(--color-coral-dark);
+  outline: none;
+}
+
+.button:active:not(:disabled) {
+  background-color: #a95325;
+  border-color: #a95325;
+  color: var(--color-white);
+  transform: scale(0.99);
 }
 
 .button:disabled {
-  opacity: 0.7;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.buttonContent {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+@media (min-width: 1440px) {
+  .labelText,
+  .input {
+    font-size: var(--font-size-md);
+  }
+
+  .input {
+    height: 43px;
+  }
+
+  .button {
+    font-size: 20px;
+  }
 }

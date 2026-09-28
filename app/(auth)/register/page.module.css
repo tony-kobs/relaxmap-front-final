@@ -1,20 +1,42 @@
 .wrap {
-  width: min(420px, calc(100% - 32px));
-  margin: 48px auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+  max-width: 684px;
+  margin: 0 auto;
+  padding: 64px 20px;
 }
 
 .title {
-  margin: 0 0 24px;
+  margin: 0;
+  font-size: 28px;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: var(--color-scheme-1-text);
 }
 
 @media (min-width: 768px) {
   .wrap {
-    margin: 72px auto;
+    max-width: 708px;
+    padding: 64px 32px;
+  }
+
+  .title {
+    font-size: 44px;
   }
 }
 
 @media (min-width: 1440px) {
   .wrap {
-    margin: 96px auto;
+    max-width: 772px;
+    padding: 64px;
+  }
+
+  .title {
+    font-size: 52px;
   }
 }
