@@ -1,4 +1,127 @@
+/* components/ReviewsBlock/ReviewsBlock.module.css
+/* Стилі, ГОЛОВНА СТОРІНКА, блок відгуків */
+
+/* 1. БАЗОВІ СТИЛІ (MOBILE-FIRST - ВІД 320px ДО 375px) */
+/* --------------------------------------------------- */
+
+/* БАЗОВІ КЛАСИ ПРОЕКТУ */
 .section {
+  padding: 24px 16px;
+}
+
+.rating {
+  margin-top: 16px;
+}
+
+/* ДОДАТКОВІ СТИЛІ СЛАЙДЕРА (DISPLAY: FLEX) */
+.reviewsBlockSection {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.titleText {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  color: #4c2613;
+}
+
+.spinnerContainerFlex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  width: 100%;
+}
+
+.sliderWrapperFlex {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 24px;
+}
+
+/* Вікно перегляду обмежує видиму область секції до 100% */
+.sliderViewportFlex {
+  overflow: hidden;
+  display: flex;
+  width: 100%;
+}
+
+/* Доріжка слайдера займає 100% батьківського вікна */
+.sliderTrackFlex {
+  display: flex;
+  width: 100%;
+  gap: 24px;
+  transition: transform 300ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Мобільний перелом: видимим є строго 1 відгук, який займає повну ширину */
+.sliderCardItemFlex {
+  width: 100%;
+}
+
+.sliderControlsFlex {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  width: 100%;
+}
+
+.sliderArrowBtn {
+  background: #ffffff;
+  border: 1px solid #4c2613;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: bold;
+  color: #4c2613;
+  transition: background-color 0.2s ease;
+}
+
+.sliderArrowBtn:hover {
+  background-color: #fff2ec;
+}
+
+/* 2. СТИЛІ ПЛАНШЕТ (ВІД 768px)                        */
+/* --------------------------------------------------- */
+@media (min-width: 768px) {
+  .titleText {
+    font-size: 24px;
+  }
+  .sliderCardItemFlex {
+    width: calc((100% - 24px) / 2);
+  }
+}
+
+/* 3. СТИЛІ ДЕСKТОП (ВІД 1440px)                       */
+/* --------------------------------------------------- */
+@media (min-width: 1440px) {
+  .titleText {
+    font-size: 28px;
+  }
+
+  .reviewsBlockSection {
+    max-width: 1312px;
+    margin: 0 auto;
+  }
+
+  .sliderCardItemFlex {
+    width: calc((100% - 48px) / 3);
+  }
+}
+
+/* ========================================= */
+/* .section {
   padding: 24px 16px;
 }
 
@@ -16,4 +139,4 @@
   .section {
     padding: 40px;
   }
-}
+} */

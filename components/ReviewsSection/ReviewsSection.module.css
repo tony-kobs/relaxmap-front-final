@@ -1,4 +1,146 @@
+/* ReviewsSection.module.css */
+/* СТИЛІ секції відгуків на сторінці з Локаціями та позиціонування кнопки залишити відгук */
+
+/* 1. БАЗОВІ СТИЛІ (MOBILE-FIRST - ВІД 320px ДО 375px) */
+/* --------------------------------------------------- */
+
 .section {
+  padding: 24px 16px;
+}
+
+/* --- ДОДАТКОВІ ЛОКАЛЬНІ КЛАСИ СЕКЦІЇ ЛОКАЦІЇ --- */
+.reviewsSectionCustom {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sectionHeaderTopFlex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.sectionHeadingText {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  color: #4c2613;
+}
+
+.actionBatonLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  background-color: #d97736;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.actionBatonLink:hover {
+  background-color: #bf5f25;
+}
+
+.spinnerContainerFlex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  width: 100%;
+}
+
+.listWrapperFlex {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.sliderViewportFlex {
+  overflow: hidden;
+  display: flex;
+  width: 100%;
+}
+
+.staticListFlex {
+  display: flex;
+  width: 100%;
+  gap: 24px;
+  transition: transform 300ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.listCardItemFlex {
+  width: 100%;
+}
+
+.bottomControlsFlex {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 24px;
+  width: 100%;
+}
+
+.sliderArrowBtn {
+  background: #ffffff;
+  border: 1px solid #4c2613;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: bold;
+  color: #4c2613;
+  transition: background-color 0.2s ease;
+}
+
+.sliderArrowBtn:hover {
+  background-color: #fff2ec;
+}
+
+/* 2. СТИЛІ ПЛАНШЕТ (ВІД 768px)                        */
+/* --------------------------------------------------- */
+@media (min-width: 768px) {
+  .section {
+    padding: 32px 24px;
+  }
+
+  .listCardItemFlex {
+    width: calc((100% - 24px) / 2);
+  }
+}
+
+/* 3. СТИЛІ ДЕСKТОП (ВІД 1440px)                       */
+/* --------------------------------------------------- */
+@media (min-width: 1440px) {
+  .section {
+    padding: 40px;
+  }
+
+  .reviewsSectionCustom {
+    max-width: 1312px;
+    margin: 0 auto;
+  }
+
+  .listCardItemFlex {
+    width: calc((100% - 48px) / 3);
+  }
+}
+
+/* ================================================= */
+/* .section {
   padding: 24px 16px;
 }
 
@@ -12,4 +154,4 @@
   .section {
     padding: 40px;
   }
-}
+} */
