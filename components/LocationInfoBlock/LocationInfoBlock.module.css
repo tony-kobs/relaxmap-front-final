@@ -1,15 +1,15 @@
 .section {
-  padding: 24px 16px;
+  padding: 32px 20px;
 }
 
 @media (min-width: 768px) {
   .section {
-    padding: 32px 24px;
+    padding: 32px;
   }
 }
 
 @media (min-width: 1440px) {
   .section {
-    padding: 40px;
+    padding: 48px 64px;
   }
 }
