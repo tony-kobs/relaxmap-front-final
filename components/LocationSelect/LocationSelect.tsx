@@ -41,6 +41,7 @@ export function LocationSelect({
 
   const handleSelect = (value: string) => {
     helpers.setValue(value);
+    helpers.setTouched(true, false);
     setIsOpen(false);
   };
 

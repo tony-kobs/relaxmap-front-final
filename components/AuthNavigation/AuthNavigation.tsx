@@ -65,12 +65,6 @@ export default function AuthNavigation() {
           {isAuthenticated ? (
             <>
               <Link
-                className={pathname === '/' ? css.active : css.link}
-                href="/"
-              >
-                Головна
-              </Link>
-              <Link
                 className={isLocationsCatalog ? css.active : css.link}
                 href="/locations"
               >

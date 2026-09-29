@@ -1,8 +1,16 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import AuthNavigation from '@/components/AuthNavigation/AuthNavigation';
 import css from './Header.module.css';
 
+const isAuthPage = (pathname: string) =>
+  pathname === '/login' || pathname === '/register';
+
 export default function Header() {
+  const pathname = usePathname();
+
   return (
     <header className={css.header}>
       <div className={css.inner}>
@@ -16,7 +24,7 @@ export default function Header() {
             <use href="/sprite.svg#company-logo" />
           </svg>
         </Link>
-        <AuthNavigation />
+        {isAuthPage(pathname) ? null : <AuthNavigation />}
       </div>
     </header>
   );
