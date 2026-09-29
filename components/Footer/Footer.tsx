@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import css from './Footer.module.css';
 
 const socials = [
@@ -8,8 +11,21 @@ const socials = [
   { id: 'youtube', label: 'YouTube', href: '#' },
 ];
 
+const isAuthPage = (pathname: string) =>
+  pathname === '/login' || pathname === '/register';
+
 export default function Footer() {
+  const pathname = usePathname();
   const year = new Date().getFullYear();
+
+  if (isAuthPage(pathname)) {
+    return (
+      <footer className={css.authFooter}>
+        <p>© 2025 Relax Map</p>
+      </footer>
+    );
+  }
+
   return (
     <footer className={css.footer}>
       <div className={css.inner}>

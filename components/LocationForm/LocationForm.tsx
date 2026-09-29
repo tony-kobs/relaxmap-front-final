@@ -139,6 +139,7 @@ export default function LocationForm({ locationId }: LocationFormProps) {
       >
         {({
           setFieldValue,
+          setFieldTouched,
           isSubmitting,
           resetForm,
           dirty,
@@ -188,6 +189,7 @@ export default function LocationForm({ locationId }: LocationFormProps) {
                       const file = event.currentTarget.files?.[0] ?? null;
 
                       setFieldValue('images', file);
+                      setFieldTouched('images', true, false);
 
                       if (file) {
                         setImagePreview(URL.createObjectURL(file));
