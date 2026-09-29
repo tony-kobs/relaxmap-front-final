@@ -9,7 +9,8 @@ type LocationInfoBlockProps = {
 
 async function getLocationDetails(id: string) {
   try {
-    const res = await fetch(`http://localhost:4000/locations/${id}`, {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+    const res = await fetch(`${baseUrl}/locations/${id}`, {
       cache: 'no-store',
     });
     if (!res.ok) return null;
