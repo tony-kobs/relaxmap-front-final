@@ -15,8 +15,8 @@
   max-width: 334px;
   margin: 0 auto;
   padding: 64px 20px;
-  border-radius: 16px;
-  background: #fffaf7;
+  border-radius: 24px;
+  background: var(--color-coral-lightest);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
   text-align: center;
 }
@@ -32,15 +32,17 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
   border-radius: 6px;
-  color: var(--color-neutral-darker);
 }
 
-.close svg {
-  width: 14px;
-  height: 14px;
+.closeIcon {
+  display: block;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
 }
 
 .close:hover:not(:disabled),
@@ -89,8 +91,8 @@
   gap: 8px;
   padding: 6px 12px;
   font-size: 16px;
-  font-weight: var(--font-weight-medium);
-  line-height: var(--line-height-normal);
+  font-weight: 500;
+  line-height: 1.5;
 }
 
 .cancel {
@@ -162,11 +164,6 @@
     padding: 64px 32px;
   }
 
-  .close {
-    width: 32px;
-    height: 32px;
-  }
-
   .title {
     font-size: 32px;
   }
@@ -176,6 +173,13 @@
     max-width: 430px;
     margin: 32px auto 0;
     flex-direction: row;
+  }
+
+  .cancel,
+  .confirm {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
   }
 }
 
@@ -196,5 +200,7 @@
   .cancel,
   .confirm {
     font-size: 20px;
+    font-weight: 500;
+    line-height: 1.5;
   }
 }
