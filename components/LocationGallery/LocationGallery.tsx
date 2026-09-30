@@ -14,7 +14,7 @@ async function getLocationImages(id: string) {
     });
     if (!res.ok) return null;
     const json = await res.json();
-    return json.data;
+    return json?.data ?? json;
   } catch (error) {
     console.error('Помилка завантаження фото в галереї:', error);
     return null;
