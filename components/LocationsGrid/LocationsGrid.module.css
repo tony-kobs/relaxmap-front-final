@@ -1,15 +1,124 @@
 .section {
-  padding: 24px 16px;
+  padding: 24px 0 40px;
+}
+
+.grid {
+  display: grid;
+  gap: 24px;
+  transition: opacity var(--transition-base);
+}
+
+.dimmed {
+  opacity: 0.5;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--color-scheme-2-border);
+  border-radius: 12px;
+  background-color: var(--color-coral-lightest);
+  scroll-margin-top: 100px;
+}
+
+.imageWrap {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background-color: var(--color-coral-lighter);
+}
+
+.image {
+  object-fit: cover;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 8px;
+  padding: 16px;
+}
+
+.type {
+  font-size: var(--font-size-sm);
+  color: var(--color-coral);
+}
+
+.name {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--line-height-tight);
+}
+
+.link {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  border: 1px solid var(--color-coral);
+  border-radius: 6px;
+  color: var(--color-coral);
+  font-weight: 500;
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base);
+}
+
+.link:hover,
+.link:focus-visible {
+  background-color: var(--color-coral);
+  color: var(--color-white);
+}
+
+.more {
+  display: block;
+  margin: 32px auto 0;
+  min-width: 200px;
+  height: 44px;
+  padding: 0 24px;
+  border: 1px solid var(--color-button-primary, #cc6534);
+  border-radius: 6px;
+  background-color: var(--color-button-primary, #cc6534);
+  color: var(--color-white);
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base);
+}
+
+.more:hover,
+.more:focus-visible {
+  background-color: var(--color-coral-lighter);
+  color: #1b391b;
+}
+
+.empty {
+  padding: 48px 16px;
+  text-align: center;
+}
+
+.emptyTitle {
+  margin-bottom: 8px;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+.message {
+  color: var(--color-coral-darker);
+  text-align: center;
 }
 
 @media (min-width: 768px) {
-  .section {
-    padding: 32px 24px;
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 1440px) {
-  .section {
-    padding: 40px;
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
