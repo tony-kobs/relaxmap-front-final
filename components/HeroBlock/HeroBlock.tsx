@@ -18,13 +18,24 @@ export default function HeroBlock() {
 
   return (
     <section className={css.section}>
-      <h1>Відкрий для себе Україну. Знайди ідеальне місце для відпочинку</h1>
-      <p>
-        Тисячі перевірених локацій з реальними фото та відгуками від мандрівників
-      </p>
-      <form onSubmit={onSubmit}>
-        <input name="search" placeholder="Введіть назву, тип або регіон..." />
-        <button type="submit">Знайти місце</button>
+      <div className={css.heroContent}>
+        <h1 className={css.heroTitle}>
+          Відкрий для себе Україну. Знайди ідеальне місце для відпочинку
+        </h1>
+        <p className={css.heroSubtitle}>
+          Тисячі перевірених локацій з реальними фото та відгуками від
+          мандрівників
+        </p>
+      </div>
+      <form className={css.searchForm} onSubmit={onSubmit}>
+        <input
+          name="search"
+          className={css.searchInput}
+          placeholder="Введіть назву, тип або регіон..."
+        />
+        <button className={css.searchButton} type="submit">
+          Знайти місце
+        </button>
       </form>
     </section>
   );

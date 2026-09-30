@@ -1,21 +1,45 @@
 // Власник: Перший екран
+import Image from 'next/image';
 import css from './AdvantagesBlock.module.css';
 
 const items = [
-  ['Реальні відгуки', 'Враження мандрівників, а не рекламні описи.'],
-  ['Зручні фільтри', 'Шукай за регіоном, типом локації і назвою.'],
-  ['Спільнота мандрівників', 'Ділись місцями, які варто побачити.'],
+  {
+    icon: '/iconsAdvantage/reviews.svg',
+    title: 'Реальні відгуки',
+    text: 'Користувачі діляться чесними враженнями, щоб ви робили правильний вибір.',
+  },
+  {
+    icon: '/iconsAdvantage/filters.svg',
+    title: 'Зручні фільтри',
+    text: 'Шукайте за типом локації, регіоном, наявністю зручностей та іншими критеріями.',
+  },
+  {
+    icon: '/iconsAdvantage/community.svg',
+    title: 'Спільнота мандрівників',
+    text: 'Додавайте власні улюблені місця та діліться своїми неймовірними знахідками.',
+  },
 ];
 
 export default function AdvantagesBlock() {
   return (
     <section className={css.section}>
-      {items.map(([title, text]) => (
-        <article key={title}>
-          <h2>{title}</h2>
-          <p>{text}</p>
-        </article>
-      ))}
+      <h2 className={css.heading}>Ключові переваги</h2>
+
+      <ul className={css.list}>
+        {items.map(({ icon, title, text }) => (
+          <li key={title} className={css.card}>
+            <Image
+              className={css.icon}
+              src={icon}
+              alt=""
+              width={64}
+              height={64}
+            />
+            <h3 className={css.cardTitle}>{title}</h3>
+            <p className={css.cardText}>{text}</p>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }
