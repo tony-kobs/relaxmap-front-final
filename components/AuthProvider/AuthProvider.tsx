@@ -13,25 +13,47 @@ export default function AuthProvider({ children }: Props) {
   const clearIsAuthenticated = useAuthStore(
     (state) => state.clearIsAuthenticated,
   );
+  const setAuthLoading = useAuthStore((state) => state.setAuthLoading);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const isAuthenticated = await checkSession();
+    let cancelled = false;
 
-        if (isAuthenticated) {
-          const user = await getMe();
-          if (user) setUser(user);
-        } else {
+    const fetchUser = async () => {
+      setAuthLoading(true);
+
+      try {
+        // 1) перевірка / оновлення сесії (бекенд сам рефрешить access за потреби)
+        const isAuthenticated = await checkSession();
+        if (cancelled) return;
+
+        if (!isAuthenticated) {
+          clearIsAuthenticated();
+          return;
+        }
+
+        // 2) поточний користувач для хедера і редіректу /profile
+        const user = await getMe();
+        if (cancelled) return;
+
+        if (user?._id) {
+          setUser(user);
+          return;
+        }
+
+        clearIsAuthenticated();
+      } catch {
+        if (!cancelled) {
           clearIsAuthenticated();
         }
-      } catch {
-        clearIsAuthenticated();
       }
     };
 
     fetchUser();
-  }, [setUser, clearIsAuthenticated]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [setUser, clearIsAuthenticated, setAuthLoading]);
 
   return children;
 }

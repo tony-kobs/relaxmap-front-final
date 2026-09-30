@@ -57,7 +57,7 @@ export default function RegistrationForm() {
           });
           setUser(user);
           toast.success(`Вітаємо, ${user.name || 'користувачу'}!`);
-          router.push('/profile');
+          router.push(user?._id ? `/profile/${user._id}` : '/profile');
         } catch (error: unknown) {
           toast.error(getErrorMessage(error));
         } finally {

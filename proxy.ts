@@ -2,6 +2,38 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const publicRoutes = ['/login', '/register'];
 
+function clearAuthCookies(response: NextResponse) {
+  const expired = { path: '/', maxAge: 0 };
+  response.cookies.set('accessToken', '', expired);
+  response.cookies.set('refreshToken', '', expired);
+  response.cookies.set('sessionId', '', expired);
+  return response;
+}
+
+function applySetCookies(response: NextResponse, setCookies: string[]) {
+  for (const cookie of setCookies) {
+    response.headers.append('Set-Cookie', cookie);
+  }
+  return response;
+}
+
+async function checkBackendSession(request: NextRequest, backendUrl: string) {
+  try {
+    const res = await fetch(`${backendUrl}/auth/session`, {
+      headers: {
+        Cookie: request.headers.get('cookie') ?? '',
+      },
+      cache: 'no-store',
+    });
+
+    const setCookies = res.headers.getSetCookie();
+    const data = (await res.json()) as { success?: boolean };
+    return { success: Boolean(data.success), setCookies };
+  } catch {
+    return { success: false, setCookies: [] as string[] };
+  }
+}
+
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const accessToken = request.cookies.get('accessToken')?.value;
@@ -13,42 +45,33 @@ export async function proxy(request: NextRequest) {
     /^\/locations\/[^/]+\/edit$/.test(pathname);
   const isPublicRoute = publicRoutes.includes(pathname);
 
+  // Do not trust a stale accessToken: validate/refresh before bouncing
+  // authenticated users away from login/register (avoids /profile spinner loop).
+  if (isPublicRoute && (accessToken || refreshToken) && backendUrl) {
+    const { success, setCookies } = await checkBackendSession(request, backendUrl);
+
+    if (success) {
+      return applySetCookies(
+        NextResponse.redirect(new URL('/profile', request.url)),
+        setCookies,
+      );
+    }
+
+    return clearAuthCookies(NextResponse.next());
+  }
+
   if (!accessToken) {
     if (refreshToken && backendUrl) {
-      try {
-        const res = await fetch(`${backendUrl}/auth/session`, {
-          headers: {
-            Cookie: request.headers.get('cookie') ?? '',
-          },
-          cache: 'no-store',
-        });
+      const { success, setCookies } = await checkBackendSession(request, backendUrl);
 
-        const setCookies = res.headers.getSetCookie();
-        const data = (await res.json()) as { success?: boolean };
-
-        if (data.success) {
-          const response = isPublicRoute
-            ? NextResponse.redirect(new URL('/profile', request.url))
-            : NextResponse.next();
-
-          for (const cookie of setCookies) {
-            response.headers.append('Set-Cookie', cookie);
-          }
-
-          return response;
-        }
-      } catch {
-        // session refresh failed
+      if (success) {
+        return applySetCookies(NextResponse.next(), setCookies);
       }
     }
 
     if (isPrivateRoute) {
       return NextResponse.redirect(new URL('/login', request.url));
     }
-  }
-
-  if (accessToken && isPublicRoute) {
-    return NextResponse.redirect(new URL('/profile', request.url));
   }
 
   return NextResponse.next();
