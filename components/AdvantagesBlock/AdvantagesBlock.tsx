@@ -23,23 +23,25 @@ const items = [
 export default function AdvantagesBlock() {
   return (
     <section className={css.section}>
-      <h2 className={css.heading}>Ключові переваги</h2>
+      <div className="container">
+        <h2 className={css.heading}>Ключові переваги</h2>
 
-      <ul className={css.list}>
-        {items.map(({ icon, title, text }) => (
-          <li key={title} className={css.card}>
-            <Image
-              className={css.icon}
-              src={icon}
-              alt=""
-              width={64}
-              height={64}
-            />
-            <h3 className={css.cardTitle}>{title}</h3>
-            <p className={css.cardText}>{text}</p>
-          </li>
-        ))}
-      </ul>
+        <ul className={css.list}>
+          {items.map(({ icon, title, text }) => (
+            <li key={title} className={css.card}>
+              <Image
+                className={css.icon}
+                src={icon}
+                alt=""
+                width={64}
+                height={64}
+              />
+              <h3 className={css.cardTitle}>{title}</h3>
+              <p className={css.cardText}>{text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 }

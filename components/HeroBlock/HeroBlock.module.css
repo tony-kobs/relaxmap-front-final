@@ -3,22 +3,34 @@
   --overlay-bottom: 0.55;
 
   position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-height: 100vh;
   min-height: 100svh;
-  padding: 64px 20px;
+  padding-block: 64px;
 
   font-family: var(--font-family);
   line-height: 1.5;
+}
 
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(30, 25, 15, var(--overlay-top)) 0%,
-      rgba(30, 25, 15, var(--overlay-bottom)) 100%
-    ),
-    url('/images/hero-bg.png') center top / cover no-repeat;
+.bg {
+  z-index: -2;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    to bottom,
+    rgba(30, 25, 15, var(--overlay-top)) 0%,
+    rgba(30, 25, 15, var(--overlay-bottom)) 100%
+  );
 }
 
 .heroContent {
@@ -47,6 +59,10 @@
   font-size: 16px;
   line-height: 1.5;
   border-radius: 6px;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s;
 }
 
 .searchInput {
@@ -63,6 +79,11 @@
   color: var(--opacity-neutral-darkest-60);
 }
 
+.searchInput:focus-visible {
+  outline: none;
+  border-color: var(--color-coral-dark);
+}
+
 .searchButton {
   width: 100%;
   padding: 6px 12px;
@@ -72,11 +93,40 @@
   cursor: pointer;
 }
 
+.searchButton:focus-visible {
+  outline: none;
+  background: var(--color-scheme-2-foreground);
+  color: var(--color-coral-dark);
+}
+
+@media (hover: hover) {
+  .searchInput:hover {
+    border-color: var(--color-coral-dark);
+  }
+
+  .searchButton:hover:not(:disabled) {
+    background: var(--color-scheme-2-foreground);
+    color: var(--color-coral-dark);
+  }
+}
+
+.searchButton:active:not(:disabled) {
+  background: var(--color-coral-dark);
+  color: var(--color-white);
+}
+
+.searchButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 @media (min-width: 768px) {
   .section {
-    min-height: 90vh;
-    padding: 48px 32px;
-    background-position: center;
+    padding-block: 48px;
+  }
+
+  .bg {
+    object-position: center;
   }
 
   .heroTitle {
@@ -104,8 +154,7 @@
     --overlay-top: 0.2;
     --overlay-bottom: 0.5;
 
-    min-height: 100vh;
-    padding: 64px 80px;
+    padding-block: 64px;
   }
 
   .heroTitle {
