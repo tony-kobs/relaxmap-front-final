@@ -8,13 +8,15 @@ type LocationDetailsPageProps = {
   params: Promise<{ locationId: string }>;
 };
 
-export default async function LocationDetailsPage({ params }: LocationDetailsPageProps) {
+export default async function LocationDetailsPage({
+  params,
+}: LocationDetailsPageProps) {
   const { locationId } = await params;
 
   return (
     <>
-      <LocationInfoBlock locationId={locationId} />
       <LocationGallery locationId={locationId} />
+      <LocationInfoBlock locationId={locationId} />
       <LocationDescription locationId={locationId} />
       <ReviewsSection locationId={locationId} />
     </>
