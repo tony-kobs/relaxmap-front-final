@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
@@ -23,6 +24,7 @@ const loginValidationSchema = Yup.object().shape({
 export default function LoginForm() {
   const router = useRouter();
   const setUser = useAuthStore((state) => state.setUser);
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <Formik
@@ -36,15 +38,8 @@ export default function LoginForm() {
           setUser(user);
           toast.success(`Вітаємо, ${user.name || 'користувачу'}!`);
           router.push(user?._id ? `/profile/${user._id}` : '/profile');
-        } catch (error: unknown) {
-          const apiError = error as {
-            response?: { data?: { message?: string; error?: string } };
-          };
-          const errorMessage =
-            apiError.response?.data?.message ||
-            apiError.response?.data?.error ||
-            'Невірний email або пароль. Спробуйте ще раз';
-          toast.error(errorMessage);
+        } catch {
+          toast.error('Невірний email або пароль');
         } finally {
           helpers.setSubmitting(false);
         }
@@ -69,16 +64,28 @@ export default function LoginForm() {
 
           <label className={css.label} htmlFor="password">
             <span className={css.labelText}>Пароль*</span>
-            <Field
-              id="password"
-              className={`${css.input} ${
-                touched.password && errors.password ? css.inputError : ''
-              }`}
-              type="password"
-              name="password"
-              placeholder="********"
-              autoComplete="current-password"
-            />
+            <div className={css.inputWrapper}>
+              <Field
+                id="password"
+                className={`${css.input} ${
+                  touched.password && errors.password ? css.inputError : ''
+                }`}
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                placeholder="********"
+                autoComplete="current-password"
+              />
+              <button
+                type="button"
+                className={css.eyeButton}
+                onClick={() => setShowPassword((prev) => !prev)}
+                aria-label={showPassword ? 'Приховати пароль' : 'Показати пароль'}
+              >
+                <svg className={css.eyeIcon} aria-hidden="true">
+                  <use href={`/sprite.svg#${showPassword ? 'eye-off' : 'eye'}`} />
+                </svg>
+              </button>
+            </div>
             <ErrorMessage
               className={css.error}
               name="password"
