@@ -105,3 +105,11 @@ export async function createLocation(formData: FormData) {
 
   return data;
 }
+
+export async function updateLocation(locationId: string, formData: FormData) {
+  const { data } = await nextServer.patch(`/locations/${locationId}`, formData);
+
+  return data;
+}
+
+

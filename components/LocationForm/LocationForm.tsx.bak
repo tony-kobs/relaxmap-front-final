@@ -1,13 +1,11 @@
 'use client';
 
-// Власник: Створення/Редагування локації
+// Власник: Створення локації
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import css from './LocationForm.module.css';
 import { useEffect, useId, useRef, useState } from 'react';
 import {
   createLocation,
-  updateLocation,
-  getLocation,
   getLocationTypes,
   getRegions,
 } from '@/lib/api/clientApi';
@@ -39,87 +37,65 @@ const initialValues: LocationFormValues = {
   description: '',
 };
 
-const getLocationFormSchema = (isEdit: boolean) =>
-  Yup.object().shape({
-    name: Yup.string()
-      .min(3, 'Назва занадто маленька')
-      .max(96, 'Назва занадто велика')
-      .required('Вкажіть назву локації'),
-    type: Yup.string().max(64).required('Вкажіть тип локації'),
-    region: Yup.string().max(64).required('Вкажіть регіон'),
-    description: Yup.string()
-      .min(20, 'Замалий опис')
-      .max(6000, 'Опис занадто великий')
-      .required('Опишіть локацію детальніше'),
-    images: Yup.mixed<File>()
-      .test(
-        'fileRequired',
-        'Додайте фото статті',
-        (file) => (isEdit ? true : !!file),
-      )
-      .test(
-        'fileType',
-        'Тільки формати JPG та PNG',
-        (file) => !file || ['image/jpeg', 'image/png'].includes(file.type),
-      )
-      .test(
-        'fileSize',
-        'Розмір фото має бути менше 1 МБ',
-        (file) => !file || file.size < 1024 * 1024,
-      ),
-  });
+const LocationFormSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(3, 'Назва занадто маленька')
+    .max(96, 'Назва занадто велика')
+    .required('Вкажіть назву локації'),
+  type: Yup.string().max(64).required('Вкажіть тип локації'),
+  region: Yup.string().max(64).required('Вкажіть регіон'),
+  description: Yup.string()
+    .min(20, 'Замалий опис')
+    .max(6000, 'Опис занадто великий')
+    .required('Опишіть локацію детальніше'),
+  images: Yup.mixed<File>()
+    .required('Додайте фото локації')
+    .test(
+      'fileType',
+      'Дозволені тільки JPG та PNG',
+      (file) => !file || ['image/jpeg', 'image/png'].includes(file.type),
+    )
+    .test(
+      'fileSize',
+      'Розмір фото має бути менше 1 МБ',
+      (file) => !file || file.size < 1024 * 1024,
+    ),
+});
 
 export default function LocationForm({ locationId }: LocationFormProps) {
   const fieldId = useId();
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const isEdit = !!locationId;
 
   const [regions, setRegions] = useState<Category[]>([]);
   const [locationTypes, setLocationTypes] = useState<Category[]>([]);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [initialFormValues, setInitialFormValues] = useState<LocationFormValues>(initialValues);
-  const [isLoading, setIsLoading] = useState(isEdit);
 
   useEffect(() => {
     return () => {
-      if (imagePreview && imagePreview.startsWith('blob:')) {
+      if (imagePreview) {
         URL.revokeObjectURL(imagePreview);
       }
     };
   }, [imagePreview]);
 
   useEffect(() => {
-    const loadData = async () => {
+    const loadCategories = async () => {
       try {
-        const [regionsData, locationTypesData] = await Promise.all([
+        const [regions, locationTypes] = await Promise.all([
           getRegions(),
           getLocationTypes(),
         ]);
 
-        setRegions(regionsData);
-        setLocationTypes(locationTypesData);
-
-        if (isEdit && locationId) {
-          const loc = await getLocation(locationId);
-          setInitialFormValues({
-            images: null,
-            name: loc.name,
-            type: loc.type._id,
-            region: loc.region._id,
-            description: loc.description,
-          });
-          if (loc.images?.[0]) setImagePreview(loc.images[0]);
-        }
+        setRegions(regions);
+        setLocationTypes(locationTypes);
       } catch {
         toast.error('Не вдалося завантажити дані для форми');
-      } finally {
-        setIsLoading(false);
       }
     };
 
-    loadData();
-  }, [isEdit, locationId]);
+    loadCategories();
+  }, []);
 
   const handleSubmit = async (values: LocationFormValues) => {
     try {
@@ -134,32 +110,21 @@ export default function LocationForm({ locationId }: LocationFormProps) {
         formData.append('images', values.images);
       }
 
-      let data;
-      if (isEdit && locationId) {
-        data = await updateLocation(locationId, formData);
-        toast.success('Локацію успішно оновлено!');
-      } else {
-        data = await createLocation(formData);
-        toast.success('Локацію успішно створено!');
-      }
+      const data = await createLocation(formData);
       router.push(`/locations/${data._id}`);
     } catch {
-      toast.error('Не вдалось зберегти локацію, спробуйте ще раз');
+      toast.error('Не вдалось створити локацію, спробуйте ще раз');
     }
   };
 
   const handleCancel = (resetForm: () => void) => {
     resetForm();
-    setImagePreview(initialFormValues.images ? URL.createObjectURL(initialFormValues.images) : null);
+    setImagePreview(null);
 
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
   };
-
-  if (isLoading) {
-    return <Loader size={80} />;
-  }
 
   return (
     <section
@@ -168,16 +133,15 @@ export default function LocationForm({ locationId }: LocationFormProps) {
       data-location-id={locationId}
     >
       <Formik
-        initialValues={initialFormValues}
-        enableReinitialize={true}
+        initialValues={initialValues}
         onSubmit={handleSubmit}
-        validationSchema={getLocationFormSchema(isEdit)}
+        validationSchema={LocationFormSchema}
       >
         {({
           setFieldValue,
-          setFieldTouched,
           isSubmitting,
           resetForm,
+          dirty,
           isValid,
           errors,
           touched,
@@ -224,7 +188,6 @@ export default function LocationForm({ locationId }: LocationFormProps) {
                       const file = event.currentTarget.files?.[0] ?? null;
 
                       setFieldValue('images', file);
-                      setFieldTouched('images', true, false);
 
                       if (file) {
                         setImagePreview(URL.createObjectURL(file));
@@ -328,7 +291,7 @@ export default function LocationForm({ locationId }: LocationFormProps) {
                 <button
                   className={css.submitButton}
                   type="submit"
-                  disabled={!isValid || isSubmitting}
+                  disabled={!dirty || !isValid || isSubmitting}
                 >
                   Опублікувати
                 </button>
@@ -340,3 +303,4 @@ export default function LocationForm({ locationId }: LocationFormProps) {
     </section>
   );
 }
+
