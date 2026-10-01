@@ -79,7 +79,7 @@ export default function LocationsGrid({ userId }: LocationsGridProps) {
       const firstNewCard = listRef.current?.children[index];
       firstNewCard?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       firstNewIndex.current = null;
-    }, [isFetchingNextPage]);
+    }, []);
 
   const handleLoadMore = () => {
     firstNewIndex.current = locations.length;
@@ -135,15 +135,13 @@ export default function LocationsGrid({ userId }: LocationsGridProps) {
         {locations.map((location) => (
           <li key={location._id} className={css.card}>
             <div className={css.imageWrap}>
-              {location.images[0] ? (
-                <Image
-                  src={location.images[0]}
-                  alt={location.name}
-                  fill
-                  sizes="(max-width: 767px) 100vw, (max-width: 1439px) 50vw, 33vw"
-                  className={css.image}
-                />
-              ) : null}
+              <Image
+                src={location.images[0] || '/images/location-form-placeholder-image.jpg'}
+                alt={location.name}
+                fill
+                sizes="(max-width: 767px) 100vw, (max-width: 1439px) 50vw, 33vw"
+                className={css.image}
+              />
             </div>
             <div className={css.body}>
               <p className={css.type}>{location.type?.name}</p>

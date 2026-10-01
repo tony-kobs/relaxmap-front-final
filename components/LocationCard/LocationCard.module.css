@@ -1,15 +1,70 @@
-.section {
-  padding: 24px 16px;
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  background: #fff;
+  height: 100%;
 }
 
-@media (min-width: 768px) {
-  .section {
-    padding: 32px 24px;
-  }
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
 }
 
-@media (min-width: 1440px) {
-  .section {
-    padding: 40px;
-  }
+.image {
+  object-fit: cover;
+}
+
+.editLink {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  transition: background 0.2s;
+}
+
+.editLink:hover {
+  background: #fff;
+}
+
+.content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.type {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: #111;
+  flex-grow: 1;
+}
+
+.viewLink {
+  display: inline-block;
+  text-decoration: none;
+  color: #0066cc;
+  font-weight: 500;
+  margin-top: auto;
+}
+
+.viewLink:hover {
+  text-decoration: underline;
 }
