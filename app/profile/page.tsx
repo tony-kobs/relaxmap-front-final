@@ -2,28 +2,24 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
 import Spinner from '@/components/Spinner/Spinner';
-import { meQueryOptions } from '@/queries/user';
+import { useAuthStore } from '@/lib/store/authStore';
 
 export default function ProfileRedirectPage() {
   const router = useRouter();
-  const { data, isLoading, isError } = useQuery(meQueryOptions);
+  const user = useAuthStore((state) => state.user);
+  const isAuthLoading = useAuthStore((state) => state.isAuthLoading);
 
   useEffect(() => {
-    if (data?._id) {
-      router.replace(`/profile/${data._id}`);
+    if (isAuthLoading) return;
+
+    if (user?._id) {
+      router.replace(`/profile/${user._id}`);
       return;
     }
 
-    if (isError) {
-      router.replace('/login');
-    }
-  }, [data, isError, router]);
-
-  if (isLoading || data || isError) {
-    return <Spinner />;
-  }
+    router.replace('/login');
+  }, [isAuthLoading, user, router]);
 
   return <Spinner />;
 }

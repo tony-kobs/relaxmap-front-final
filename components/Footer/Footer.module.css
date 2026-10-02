@@ -4,6 +4,20 @@
   color: var(--color-scheme-2-text);
 }
 
+.authFooter {
+  margin-top: auto;
+  padding: 24px 20px 32px;
+  background: transparent;
+  text-align: center;
+}
+
+.authFooter p {
+  margin: 0;
+  color: var(--color-neutral);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
 .inner {
   display: flex;
   flex-direction: column;

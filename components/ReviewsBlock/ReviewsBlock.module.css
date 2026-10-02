@@ -1,3 +1,10 @@
+:local(.reviewsBlockSection) {
+  --gap-size: 24px;
+  --mob-card-w: 336px;
+  --tab-card-w: 340px;
+  --desk-card-w: 422px;
+}
+
 /* 1. BASE STYLES (MOBILE-FIRST - from 320px / 375px)  */
 /* --------------------------------------------------- */
 
@@ -45,8 +52,10 @@
 
 .sliderTrackFlex {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
+  flex-wrap: nowrap;
   width: 100%;
+  /* width: max-content; */
   gap: 24px;
   transition: transform 300ms cubic-bezier(0.25, 1, 0.5, 1);
 }
