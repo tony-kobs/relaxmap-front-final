@@ -23,7 +23,7 @@ export default function HeroBlock() {
         src="/images/hero-bg.webp"
         alt=""
         fill
-        priority
+        preload
         sizes="100vw"
       />
 
