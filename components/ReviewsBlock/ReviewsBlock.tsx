@@ -1,6 +1,4 @@
-// Власник: Відгуки
-// ---------------------------------------------
-// ГОЛОВНА СТОРІНКА, блок відгуків
+// MAIN PAGE, Reviews Block
 
 'use client';
 
@@ -9,16 +7,23 @@ import Spinner from '@/components/Spinner/Spinner';
 import ReviewCard, { ReviewData } from './ReviewCard';
 import css from './ReviewsBlock.module.css';
 
-const DESK_BREAKPOINT = 1440;
 const TAB_BREAKPOINT = 768;
+const DESK_BREAKPOINT = 1440;
 
-export default function ReviewsBlock() {
+export default function ReviewsBlock({
+  locationId,
+  showTitle = true,
+}: {
+  locationId?: string;
+  showTitle?: boolean;
+}) {
   const [feedbacks, setFeedbacks] = useState<ReviewData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerPage, setCardsPerPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Визначення кількості відображуваних карток для точного розрахунку кроку зміщення треку
+  const isHomePage = !locationId;
+
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth >= DESK_BREAKPOINT) {
@@ -38,7 +43,8 @@ export default function ReviewsBlock() {
     async function fetchReviews() {
       setIsLoading(true);
       try {
-        const res = await fetch('/api/feedbacks');
+        const queryParams = isHomePage ? '' : `?locationId=${locationId}`;
+        const res = await fetch(`/api/feedbacks${queryParams}`);
         const resData = await res.json();
 
         if (resData && resData.data) {
@@ -47,13 +53,13 @@ export default function ReviewsBlock() {
           setFeedbacks(resData);
         }
       } catch (error) {
-        console.error('Помилка завантаження відгуків з MongoDB:', error);
+        console.error('Помилка MongoDB:', error);
       } finally {
         setIsLoading(false);
       }
     }
     fetchReviews();
-  }, []);
+  }, [locationId, isHomePage]);
 
   const handlePrevSlide = () => {
     setCurrentIndex((prev) =>
@@ -75,27 +81,31 @@ export default function ReviewsBlock() {
     );
   }
 
-  // Розрахунок точного відсотка зміщення флекс-треку з урахуванням відступів gap
-  const translationPercentage = currentIndex * (100 / cardsPerPage);
+  const rowOffset = currentIndex * (100 / cardsPerPage);
   const gapCompensation = currentIndex * (24 / cardsPerPage);
 
   return (
-    <section className={`${css.section} ${css.reviewsBlockSection}`}>
-      <h2 className={css.titleText}>Останні відгуки</h2>
-
+    <section className={`container ${css.reviewsBlockSection}`}>
       <div className={css.sliderWrapperFlex}>
+        <div className={css.titleWrapper}>
+          {showTitle && (
+            <h2 className={css.titleText}>
+              {isHomePage ? 'Останні відгуки' : 'Відгуки'}
+            </h2>
+          )}
+        </div>
         <div className={css.sliderViewportFlex}>
           <div
             className={css.sliderTrackFlex}
             style={{
-              transform: `translateX(calc(-${translationPercentage}% - ${gapCompensation}px))`,
+              transform: `translateY(calc(-${rowOffset}% - ${gapCompensation}px))`,
             }}
           >
             {feedbacks.map((item) => (
               <ReviewCard
                 key={item._id}
                 review={item}
-                showLocationType={true}
+                showLocationType={isHomePage}
                 customClassName={css.sliderCardItemFlex}
               />
             ))}
@@ -122,20 +132,3 @@ export default function ReviewsBlock() {
     </section>
   );
 }
-
-// ======================================
-// import StarRating from '@/components/StarRating/StarRating';
-// import css from './ReviewsBlock.module.css';
-
-// type ReviewsBlockProps = {
-//   locationId?: string;
-// };
-
-// export default function ReviewsBlock({ locationId }: ReviewsBlockProps) {
-//   return (
-//     <section className={css.section} data-location-id={locationId}>
-//       {locationId ? null : <h2>Відгуки</h2>}
-//       <StarRating className={css.rating} value={4.5} readOnly showValue />
-//     </section>
-//   );
-// }

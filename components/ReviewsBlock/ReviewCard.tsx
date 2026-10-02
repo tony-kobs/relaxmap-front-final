@@ -1,12 +1,7 @@
-// Власник: Відгуки
-// --------------------------------------
-// components/ReviewsBlock/ReviewCard.tsx
-// Карточка відгуку (загальний шаблон): Шрифти, відступи, отримання даних бекенд
-
 'use client';
 
 import StarRating from '@/components/StarRating/StarRating';
-import css from './ReviewCard.module.css';
+import cardCss from './ReviewCard.module.css';
 
 export type ReviewData = {
   _id: string;
@@ -44,26 +39,27 @@ export default function ReviewCard({
   const locationTypeName = locationId?.type?.name;
 
   return (
-    <div className={`${css.reviewCardCustom} ${customClassName}`}>
-      <div className={css.starsBlockWrapperFlex}>
+    <div className={`${cardCss.reviewCardCustom} ${customClassName}`}>
+      <div className={cardCss.starsBlockWrapperFlex}>
         <StarRating
           value={rate}
           readOnly
           showValue={false}
           size="sm"
-          className={css.cardRatingCustom}
+          className={cardCss.cardRatingCustom}
         />
       </div>
 
-      <div className={css.textBlockWrapperFlex}>
-        <p className={css.cardContentText}>{description}</p>
+      <div className={cardCss.textBlockWrapperFlex}>
+        <p className={cardCss.cardContentText}>{description}</p>
       </div>
 
-      <div className={css.authorMetaGroupFlex}>
-        <h4 className={css.authorNameText}>{userName}</h4>
-
+      <div className={cardCss.authorMetaGroupFlex}>
+        <h4 className={cardCss.authorNameText}>{userName}</h4>
         {showLocationType && locationTypeName && (
-          <span className={css.locationBadgeCustom}>{locationTypeName}</span>
+          <span className={cardCss.locationBadgeCustom}>
+            {locationTypeName}
+          </span>
         )}
       </div>
     </div>
