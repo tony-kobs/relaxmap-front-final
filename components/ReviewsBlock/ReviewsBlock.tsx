@@ -1,24 +1,31 @@
-// Власник: Відгуки
-// ---------------------------------------------
-// ГОЛОВНА СТОРІНКА, блок відгуків
+// MAIN PAGE, Reviews Block
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Spinner from '@/components/Spinner/Spinner';
 import ReviewCard, { ReviewData } from './ReviewCard';
+import ArrowNavigation from './ArrowNavigation';
 import css from './ReviewsBlock.module.css';
 
-const DESK_BREAKPOINT = 1440;
 const TAB_BREAKPOINT = 768;
+const DESK_BREAKPOINT = 1440;
 
-export default function ReviewsBlock() {
+export default function ReviewsBlock({
+  locationId,
+  showTitle = true,
+}: {
+  locationId?: string;
+  showTitle?: boolean;
+}) {
   const [feedbacks, setFeedbacks] = useState<ReviewData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerPage, setCardsPerPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Визначення кількості відображуваних карток для точного розрахунку кроку зміщення треку
+  const viewportRef = useRef<HTMLDivElement | null>(null);
+  const isHomePage = !locationId;
+
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth >= DESK_BREAKPOINT) {
@@ -38,7 +45,8 @@ export default function ReviewsBlock() {
     async function fetchReviews() {
       setIsLoading(true);
       try {
-        const res = await fetch('/api/feedbacks');
+        const queryParams = isHomePage ? '' : `?locationId=${locationId}`;
+        const res = await fetch(`/api/feedbacks${queryParams}`);
         const resData = await res.json();
 
         if (resData && resData.data) {
@@ -47,21 +55,23 @@ export default function ReviewsBlock() {
           setFeedbacks(resData);
         }
       } catch (error) {
-        console.error('Помилка завантаження відгуків з MongoDB:', error);
+        console.error('Помилка MongoDB:', error);
       } finally {
         setIsLoading(false);
       }
     }
     fetchReviews();
-  }, []);
+  }, [locationId, isHomePage]);
 
   const handlePrevSlide = () => {
+    if (feedbacks.length === 0) return;
     setCurrentIndex((prev) =>
       prev === 0 ? Math.max(0, feedbacks.length - cardsPerPage) : prev - 1,
     );
   };
 
   const handleNextSlide = () => {
+    if (feedbacks.length === 0) return;
     setCurrentIndex((prev) =>
       prev >= feedbacks.length - cardsPerPage ? 0 : prev + 1,
     );
@@ -75,16 +85,24 @@ export default function ReviewsBlock() {
     );
   }
 
-  // Розрахунок точного відсотка зміщення флекс-треку з урахуванням відступів gap
   const translationPercentage = currentIndex * (100 / cardsPerPage);
   const gapCompensation = currentIndex * (24 / cardsPerPage);
 
   return (
-    <section className={`${css.section} ${css.reviewsBlockSection}`}>
-      <h2 className={css.titleText}>Останні відгуки</h2>
+    <section className={`container ${css.reviewsBlockSection}`}>
+      <div
+        className={css.sliderWrapperFlex}
+        style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
+      >
+        <div className={css.titleWrapper}>
+          {showTitle && (
+            <h2 className={css.titleText}>
+              {isHomePage ? 'Останні відгуки' : 'Відгуки'}
+            </h2>
+          )}
+        </div>
 
-      <div className={css.sliderWrapperFlex}>
-        <div className={css.sliderViewportFlex}>
+        <div className={css.sliderViewportFlex} ref={viewportRef}>
           <div
             className={css.sliderTrackFlex}
             style={{
@@ -95,47 +113,154 @@ export default function ReviewsBlock() {
               <ReviewCard
                 key={item._id}
                 review={item}
-                showLocationType={true}
+                showLocationType={isHomePage}
                 customClassName={css.sliderCardItemFlex}
               />
             ))}
           </div>
         </div>
 
-        <div className={css.sliderControlsFlex}>
-          <button
-            type="button"
-            onClick={handlePrevSlide}
-            className={css.sliderArrowBtn}
-          >
-            &larr;
-          </button>
-          <button
-            type="button"
-            onClick={handleNextSlide}
-            className={css.sliderArrowBtn}
-          >
-            &rarr;
-          </button>
-        </div>
+        <ArrowNavigation
+          onPrev={handlePrevSlide}
+          onNext={handleNextSlide}
+          viewportRef={viewportRef}
+        />
       </div>
     </section>
   );
 }
 
-// ======================================
-// import StarRating from '@/components/StarRating/StarRating';
+// =================================
+// 'use client';
+
+// import { useState, useEffect, useRef } from 'react';
+// import Spinner from '@/components/Spinner/Spinner';
+// import ReviewCard, { ReviewData } from './ReviewCard';
+// import ArrowNavigation from './ArrowNavigation';
 // import css from './ReviewsBlock.module.css';
 
-// type ReviewsBlockProps = {
-//   locationId?: string;
-// };
+// const TAB_BREAKPOINT = 768;
+// const DESK_BREAKPOINT = 1440;
 
-// export default function ReviewsBlock({ locationId }: ReviewsBlockProps) {
+// export default function ReviewsBlock({
+//   locationId,
+//   showTitle = true,
+// }: {
+//   locationId?: string;
+//   showTitle?: boolean;
+// }) {
+//   const [feedbacks, setFeedbacks] = useState<ReviewData[]>([]);
+//   const [currentIndex, setCurrentIndex] = useState(0);
+//   const [cardsPerPage, setCardsPerPage] = useState(1);
+//   const [isLoading, setIsLoading] = useState(true);
+
+//   const viewportRef = useRef<HTMLDivElement | null>(null);
+//   const isHomePage = !locationId;
+
+//   useEffect(() => {
+//     function handleResize() {
+//       if (window.innerWidth >= DESK_BREAKPOINT) {
+//         setCardsPerPage(3);
+//       } else if (window.innerWidth >= TAB_BREAKPOINT) {
+//         setCardsPerPage(2);
+//       } else {
+//         setCardsPerPage(1);
+//       }
+//     }
+//     handleResize();
+//     window.addEventListener('resize', handleResize);
+//     return () => window.removeEventListener('resize', handleResize);
+//   }, []);
+
+//   useEffect(() => {
+//     async function fetchReviews() {
+//       setIsLoading(true);
+//       try {
+//         const queryParams = isHomePage ? '' : `?locationId=${locationId}`;
+//         const res = await fetch(`/api/feedbacks${queryParams}`);
+//         const resData = await res.json();
+
+//         if (resData && resData.data) {
+//           setFeedbacks(resData.data);
+//         } else if (Array.isArray(resData)) {
+//           setFeedbacks(resData);
+//         }
+//       } catch (error) {
+//         console.error('Помилка MongoDB:', error);
+//       } finally {
+//         setIsLoading(false);
+//       }
+//     }
+//     fetchReviews();
+//   }, [locationId, isHomePage]);
+
+//   const handlePrevSlide = () => {
+//     if (feedbacks.length === 0) return;
+//     setCurrentIndex((prev) =>
+//       prev === 0 ? Math.max(0, feedbacks.length - cardsPerPage) : prev - 1,
+//     );
+//   };
+
+//   const handleNextSlide = () => {
+//     if (feedbacks.length === 0) return;
+//     setCurrentIndex((prev) =>
+//       prev >= feedbacks.length - cardsPerPage ? 0 : prev + 1,
+//     );
+//   };
+
+//   if (isLoading) {
+//     return (
+//       <div className={css.spinnerContainerFlex}>
+//         <Spinner loading={isLoading} />
+//       </div>
+//     );
+//   }
+
+//   const translationPercentage = currentIndex * (100 / cardsPerPage);
+//   const gapCompensation = currentIndex * (24 / cardsPerPage);
+
 //   return (
-//     <section className={css.section} data-location-id={locationId}>
-//       {locationId ? null : <h2>Відгуки</h2>}
-//       <StarRating className={css.rating} value={4.5} readOnly showValue />
+//     <section className={`container ${css.reviewsBlockSection}`}>
+//       <div
+//         className={css.sliderWrapperFlex}
+//         style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
+//       >
+//         <div className={css.titleWrapper}>
+//           {showTitle && (
+//             <h2 className={css.titleText}>
+//               {isHomePage ? 'Останні відгуки' : 'Відгуки'}
+//             </h2>
+//           )}
+//         </div>
+
+//         <div
+//           className={css.sliderViewportFlex}
+//           ref={viewportRef}
+//           style={{ touchAction: 'pan-y' }}
+//         >
+//           <div
+//             className={css.sliderTrackFlex}
+//             style={{
+//               transform: `translateX(calc(-${translationPercentage}% - ${gapCompensation}px))`,
+//             }}
+//           >
+//             {feedbacks.map((item) => (
+//               <ReviewCard
+//                 key={item._id}
+//                 review={item}
+//                 showLocationType={isHomePage}
+//                 customClassName={css.sliderCardItemFlex}
+//               />
+//             ))}
+//           </div>
+//         </div>
+
+//         <ArrowNavigation
+//           onPrev={handlePrevSlide}
+//           onNext={handleNextSlide}
+//           viewportRef={viewportRef}
+//         />
+//       </div>
 //     </section>
 //   );
 // }
