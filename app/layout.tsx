@@ -7,6 +7,7 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 import AuthProvider from '@/components/AuthProvider/AuthProvider';
+import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 
 const montserrat = Montserrat({
   variable: '--font-montserrat',
@@ -15,7 +16,9 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000',
+  ),
   title: {
     default: 'Relax Map',
     template: '%s | Relax Map',
@@ -45,6 +48,7 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
             <main>{children}</main>
             {modal}
             <Footer />
+            <ScrollToTop />
             <Toaster position="top-right" />
           </AuthProvider>
         </TanStackProvider>
