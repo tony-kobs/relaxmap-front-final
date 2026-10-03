@@ -1,15 +1,89 @@
-.section {
-  padding: 24px 16px;
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--color-scheme-2-border);
+  border-radius: 12px;
+  background-color: var(--color-coral-lightest);
 }
 
-@media (min-width: 768px) {
-  .section {
-    padding: 32px 24px;
-  }
+.imageWrap {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background-color: var(--color-coral-lighter);
 }
 
-@media (min-width: 1440px) {
-  .section {
-    padding: 40px;
-  }
+.image {
+  object-fit: cover;
+}
+
+.edit {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--opacity-white-60);
+  color: var(--color-coral-darkest);
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base);
+}
+
+.editIcon {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.edit:hover,
+.edit:focus-visible {
+  background-color: var(--color-coral);
+  color: var(--color-white);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 8px;
+  padding: 16px;
+}
+
+.type {
+  font-size: var(--font-size-sm);
+  color: var(--color-coral);
+}
+
+.name {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--color-scheme-2-text);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  margin-top: auto;
+  border: 1px solid var(--color-coral);
+  border-radius: 6px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-coral);
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base);
+}
+
+.link:hover,
+.link:focus-visible {
+  background-color: var(--color-coral);
+  color: var(--color-white);
 }

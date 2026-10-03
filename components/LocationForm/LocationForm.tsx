@@ -1,11 +1,12 @@
 'use client';
 
-// Власник: Створення локації
+
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import css from './LocationForm.module.css';
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import {
   createLocation,
+  updateLocation,
   getLocationTypes,
   getRegions,
 } from '@/lib/api/clientApi';
@@ -19,6 +20,13 @@ import Image from 'next/image';
 
 type LocationFormProps = {
   locationId?: string;
+  initialLocation?: {
+    name: string;
+    type: string;
+    region: string;
+    description: string;
+    images: string[];
+  };
 };
 
 interface LocationFormValues {
@@ -29,47 +37,64 @@ interface LocationFormValues {
   description: string;
 }
 
-const initialValues: LocationFormValues = {
-  images: null,
-  name: '',
-  type: '',
-  region: '',
-  description: '',
-};
+const buildLocationFormSchema = (isEditing: boolean) =>
+  Yup.object().shape({
+    name: Yup.string()
+      .min(3, 'Назва занадто маленька')
+      .max(96, 'Назва занадто велика')
+      .required('Вкажіть назву локації'),
+    type: Yup.string().max(64).required('Вкажіть тип локації'),
+    region: Yup.string().max(64).required('Вкажіть регіон'),
+    description: Yup.string()
+      .min(20, 'Замалий опис')
+      .max(6000, 'Опис занадто великий')
+      .required('Опишіть локацію детальніше'),
+    images: Yup.mixed<File>()
+      // під час редагування фото можна лишити без змін
+      .test('required', 'Додайте фото локації', (file) =>
+        isEditing ? true : !!file,
+      )
+      .test(
+        'fileType',
+        'Дозволені тільки JPG та PNG',
+        (file) => !file || ['image/jpeg', 'image/png'].includes(file.type),
+      )
+      .test(
+        'fileSize',
+        'Розмір фото має бути менше 1 МБ',
+        (file) => !file || file.size < 1024 * 1024,
+      ),
+  });
 
-const LocationFormSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(3, 'Назва занадто маленька')
-    .max(96, 'Назва занадто велика')
-    .required('Вкажіть назву локації'),
-  type: Yup.string().max(64).required('Вкажіть тип локації'),
-  region: Yup.string().max(64).required('Вкажіть регіон'),
-  description: Yup.string()
-    .min(20, 'Замалий опис')
-    .max(6000, 'Опис занадто великий')
-    .required('Опишіть локацію детальніше'),
-  images: Yup.mixed<File>()
-    .required('Додайте фото локації')
-    .test(
-      'fileType',
-      'Дозволені тільки JPG та PNG',
-      (file) => !file || ['image/jpeg', 'image/png'].includes(file.type),
-    )
-    .test(
-      'fileSize',
-      'Розмір фото має бути менше 1 МБ',
-      (file) => !file || file.size < 1024 * 1024,
-    ),
-});
-
-export default function LocationForm({ locationId }: LocationFormProps) {
+export default function LocationForm({
+  locationId,
+  initialLocation,
+}: LocationFormProps) {
   const fieldId = useId();
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const isEditing = Boolean(initialLocation);
 
   const [regions, setRegions] = useState<Category[]>([]);
   const [locationTypes, setLocationTypes] = useState<Category[]>([]);
+  // нове фото, вибране користувачем (blob-прев'ю)
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  // фото, що вже збережене за локацією (під час редагування)
+  const existingImage = initialLocation?.images?.[0] ?? null;
+  const previewSrc = imagePreview ?? existingImage;
+
+  const initialValues: LocationFormValues = {
+    images: null,
+    name: initialLocation?.name ?? '',
+    type: initialLocation?.type ?? '',
+    region: initialLocation?.region ?? '',
+    description: initialLocation?.description ?? '',
+  };
+
+  const LocationFormSchema = useMemo(
+    () => buildLocationFormSchema(isEditing),
+    [isEditing],
+  );
 
   useEffect(() => {
     return () => {
@@ -110,10 +135,19 @@ export default function LocationForm({ locationId }: LocationFormProps) {
         formData.append('images', values.images);
       }
 
-      const data = await createLocation(formData);
-      router.push(`/locations/${data._id}`);
+      if (isEditing && locationId) {
+        await updateLocation(locationId, formData);
+        router.push(`/locations/${locationId}`);
+      } else {
+        const data = await createLocation(formData);
+        router.push(`/locations/${data._id}`);
+      }
     } catch {
-      toast.error('Не вдалось створити локацію, спробуйте ще раз');
+      toast.error(
+        isEditing
+          ? 'Не вдалось оновити локацію, спробуйте ще раз'
+          : 'Не вдалось створити локацію, спробуйте ще раз',
+      );
     }
   };
 
@@ -156,10 +190,10 @@ export default function LocationForm({ locationId }: LocationFormProps) {
 
                 <div className={css.imageUpload}>
                   <div className={css.imagePreview}>
-                    {imagePreview ? (
+                    {previewSrc ? (
                       <Image
                         className={css.previewImage}
-                        src={imagePreview}
+                        src={previewSrc}
                         alt="Попередній перегляд фото"
                         fill
                         sizes="100vw"
@@ -227,7 +261,7 @@ export default function LocationForm({ locationId }: LocationFormProps) {
 
               <div className={css.fieldGroup}>
                 <label className={css.label} htmlFor={`${fieldId}-type`}>
-                  Тип Місця
+                  Тип місця
                 </label>
 
                 <LocationSelect
@@ -287,7 +321,7 @@ export default function LocationForm({ locationId }: LocationFormProps) {
                   type="button"
                   onClick={() => handleCancel(resetForm)}
                 >
-                  Відмінити
+                  {isEditing ? 'Відмінити зміни' : 'Відмінити'}
                 </button>
 
                 <button
@@ -295,7 +329,7 @@ export default function LocationForm({ locationId }: LocationFormProps) {
                   type="submit"
                   disabled={!dirty || !isValid || isSubmitting}
                 >
-                  Опублікувати
+                  {isEditing ? 'Зберегти зміни' : 'Опублікувати'}
                 </button>
               </div>
             </Form>

@@ -78,9 +78,9 @@
   font-weight: 400;
   color: var(--opacity-neutral-darkest-60);
 }
-
 .searchInput:focus-visible {
-  outline: none;
+  outline: 2px solid var(--color-coral-dark);
+  outline-offset: 2px;
   border-color: var(--color-coral-dark);
 }
 

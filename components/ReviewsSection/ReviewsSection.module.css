@@ -1,19 +1,20 @@
-/* ReviewsSection.module.css */
-/* СТИЛІ секції відгуків на сторінці з Локаціями та позиціонування кнопки залишити відгук */
-
-/* 1. БАЗОВІ СТИЛІ (MOBILE-FIRST - ВІД 320px ДО 375px) */
+/* 1. BASE STYLES (MOBILE-FIRST - from 320px / 375px)  */
 /* --------------------------------------------------- */
-
-.section {
-  padding: 24px 16px;
-}
-
-/* --- ДОДАТКОВІ ЛОКАЛЬНІ КЛАСИ СЕКЦІЇ ЛОКАЦІЇ --- */
 .reviewsSectionCustom {
   display: flex;
   flex-direction: column;
   width: 100%;
   box-sizing: border-box;
+}
+
+.reviewsSectionWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 24px;
+  padding-top: 64px;
+  padding-bottom: 64px;
 }
 
 .sectionHeaderTopFlex {
@@ -25,10 +26,9 @@
 
 .sectionHeadingText {
   margin: 0;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  font-size: 32px;
-  color: #4c2613;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+  color: var(--color-scheme-2-text);
 }
 
 .actionBatonLink {
@@ -36,122 +36,40 @@
   align-items: center;
   justify-content: center;
   padding: 12px 24px;
-  background-color: #d97736;
-  color: #ffffff;
+  background-color: var(--color-coral);
+  color: var(--color-white);
   text-decoration: none;
   border-radius: 8px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-  font-size: 16px;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-base);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: var(--transition-base);
 }
 
 .actionBatonLink:hover {
-  background-color: #bf5f25;
+  opacity: 0.9;
 }
 
-.spinnerContainerFlex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px;
-  width: 100%;
+/* 
+  Використовуємо :global, щоб обійти ізоляцію вкладеного модуля ReviewsBlock.
+  Ми повністю анулюємо його внутрішній padding та max-width, передаючи контроль 
+  нашому зовнішньому wrapper, а від'ємний марджин прибирає зайве форматування від прихованого заголовка.
+*/
+.reviewsSectionWrapper > :global(section) {
+  margin-top: -24px !important;
+  padding: 0 !important;
+  max-width: none !important;
 }
 
-.listWrapperFlex {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-top: 24px;
-}
-
-.sliderViewportFlex {
-  overflow: hidden;
-  display: flex;
-  width: 100%;
-}
-
-.staticListFlex {
-  display: flex;
-  width: 100%;
-  gap: 24px;
-  transition: transform 300ms cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.listCardItemFlex {
-  width: 100%;
-}
-
-.bottomControlsFlex {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-top: 24px;
-  width: 100%;
-}
-
-.sliderArrowBtn {
-  background: #ffffff;
-  border: 1px solid #4c2613;
-  border-radius: 8px;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-weight: bold;
-  color: #4c2613;
-  transition: background-color 0.2s ease;
-}
-
-.sliderArrowBtn:hover {
-  background-color: #fff2ec;
-}
-
-/* 2. СТИЛІ ПЛАНШЕТ (ВІД 768px)                        */
+/* 2. TABLET STYLES (from 768px)                       */
 /* --------------------------------------------------- */
-@media (min-width: 768px) {
-  .section {
-    padding: 32px 24px;
-  }
-
-  .listCardItemFlex {
-    width: calc((100% - 24px) / 2);
-  }
-}
-
-/* 3. СТИЛІ ДЕСKТОП (ВІД 1440px)                       */
-/* --------------------------------------------------- */
-@media (min-width: 1440px) {
-  .section {
-    padding: 40px;
-  }
-
-  .reviewsSectionCustom {
-    max-width: 1312px;
-    margin: 0 auto;
-  }
-
-  .listCardItemFlex {
-    width: calc((100% - 48px) / 3);
-  }
-}
-
-/* ================================================= */
-/* .section {
-  padding: 24px 16px;
-}
-
-@media (min-width: 768px) {
-  .section {
-    padding: 32px 24px;
-  }
-}
-
-@media (min-width: 1440px) {
-  .section {
-    padding: 40px;
-  }
+/* @media (min-width: 768px) {
 } */
+
+/* 3. DESKTOP STYLES (from 1440px)                     */
+/* --------------------------------------------------- */
+@media (min-width: 1440px) {
+  .sectionHeadingText {
+    font-size: var(--font-size-xl);
+  }
+}

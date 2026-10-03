@@ -1,30 +1,18 @@
-/* components/ReviewsBlock/ReviewCard.module.css */
-/* --------------------------------------------- */
-
-/* --- КОНФІГУРАЦІЯ ТА ЗМІННІ  ----------------- */
-:local(.reviewCardCustom) {
-  --card-bg: #ffe5d9;
-  --card-radius: 16px;
-  --text-color-main: #4c2613;
-  --font-family-base: 'Montserrat', sans-serif;
-
-  --mob-height: 204px;
-  --desk-height: 228px;
-}
-
-/* 1. БАЗОВІ СТИЛІ (MOBILE-FIRST - ВІД 320px ДО 375px) */
+/* 1. BASE STYLES (MOBILE-FIRST - from 320px / 375px)  */
 /* --------------------------------------------------- */
+
 .reviewCardCustom {
   display: flex;
   flex-direction: column;
-  background-color: var(--card-bg);
-  border-radius: var(--card-radius);
+  background-color: var(--color-coral-lighter);
+  border-radius: 16px;
   padding: 16px;
   box-sizing: border-box;
-  flex-shrink: 0; /* Забороняє стискання карти всередині флекс-ряду */
-  gap: 12px;
-  width: 100%; /* Ширина адаптується під розрахунок батьківського контейнера */
-  height: var(--mob-height);
+  flex-shrink: 0;
+  gap: 16px;
+  width: 100%;
+  max-width: 336px;
+  height: 204px;
 }
 
 .starsBlockWrapperFlex {
@@ -46,11 +34,10 @@
 
 .cardContentText {
   margin: 0;
-  font-family: var(--font-family-base);
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 150%;
-  color: var(--text-color-main);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-scheme-2-text);
   overflow: hidden;
 }
 
@@ -63,36 +50,54 @@
 
 .authorNameText {
   margin: 0;
-  font-family: var(--font-family-base);
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 150%;
-  color: var(--text-color-main);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-scheme-2-text);
 }
 
 .locationBadgeCustom {
   margin: 0;
-  font-family: var(--font-family-base);
-  font-weight: 600;
-  font-size: 10px;
-  line-height: 150%;
-  color: var(--text-color-main);
+  font-weight: var(--font-weight-semibold);
+  font-size: 10 px;
+  line-height: var(--line-height-normal);
+  color: var(--color-scheme-2-text);
   align-self: flex-start;
 }
 
-/* 2. СТИЛІ ПЛАНШЕТ (ВІД 768px)                        */
-/* --------------------------------------------------- */
-@media (min-width: 768px) {
+@media screen and (min-width: 375px) {
   .reviewCardCustom {
-    height: var(--tab-height);
+    width: 336px;
+    max-width: none;
   }
 }
 
-/* 3. СТИЛІ ДЕСKТОП (ВІД 1440px)                       */
+/* 2. TABLET STYLES (from 768px)                       */
+/* --------------------------------------------------- */
+@media (min-width: 768px) {
+  .reviewCardCustom {
+    width: 340px;
+    max-width: none;
+  }
+}
+
+/* 3. DESKTOP STYLES (from 1440px)                     */
 /* --------------------------------------------------- */
 @media (min-width: 1440px) {
   .reviewCardCustom {
-    height: var(--desk-height);
-    gap: 16px;
+    width: 422px;
+    height: 228px;
+  }
+
+  .cardContentText {
+    font-size: 20px;
+  }
+
+  .authorNameText {
+    font-size: var(--font-size-md);
+  }
+
+  .locationBadgeCustom {
+    font-size: var(--font-size-xs);
   }
 }
