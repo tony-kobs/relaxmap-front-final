@@ -15,10 +15,14 @@ export default async function LocationDetailsPage({
 
   return (
     <>
-      <LocationGallery locationId={locationId} />
-      <LocationInfoBlock locationId={locationId} />
-      <LocationDescription locationId={locationId} />
-      <ReviewsSection locationId={locationId} />
+      <div className="container">
+        <div className="adaptive-top-container">
+          <LocationGallery locationId={locationId} />
+          <LocationInfoBlock locationId={locationId} />
+        </div>
+        <LocationDescription locationId={locationId} />
+        <ReviewsSection locationId={locationId} />
+      </div>
     </>
   );
 }

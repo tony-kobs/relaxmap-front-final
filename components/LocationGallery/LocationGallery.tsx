@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import styles from './LocationGallery.module.css';
+import css from './LocationGallery.module.css';
 
 interface LocationGalleryProps {
   locationId: string;
@@ -31,12 +31,10 @@ export default async function LocationGallery({
   }
 
   const mainImage =
-    location.image ||
-    (location.images && location.images[0]) ||
-    'https://goit.study';
+    location.image || (location.images && location.images[0]) || 'Image';
 
   return (
-    <div className={styles.galleryWrapper}>
+    <section className={css.galleryWrapper}>
       <Image
         src={mainImage}
         alt={location.name || 'Location Image'}
@@ -44,8 +42,8 @@ export default async function LocationGallery({
         sizes="(max-width: 768px) 100vw, (max-width: 1440px) 50vw, 33vw"
         priority
         unoptimized
-        className={styles.mainImage}
+        className={css.mainImage}
       />
-    </div>
+    </section>
   );
 }
