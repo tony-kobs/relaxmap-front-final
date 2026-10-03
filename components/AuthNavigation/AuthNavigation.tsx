@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuthStore } from '@/lib/store/authStore';
+import EditProfileModal from '@/components/EditProfileModal/EditProfileModal';
 import css from './AuthNavigation.module.css';
 
 import { useEffect, useState } from 'react';
@@ -25,6 +26,7 @@ export default function AuthNavigation() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [menuPath, setMenuPath] = useState(pathname);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   if (menuPath !== pathname) {
     setMenuPath(pathname);
@@ -122,28 +124,42 @@ export default function AuthNavigation() {
           )}
         </div>
         {isAuthenticated ? (
-          <span className={css.profile}>
-            {user?.avatar ? (
-              <Image
-                className={css.avatar}
-                src={user.avatar}
-                width={32}
-                height={32}
-                alt=""
-              />
-            ) : (
-              <span className={css.avatarFallback}>
-                {user?.name?.charAt(0)}
-              </span>
-            )}
-            <span className={css.name}>{user?.name}</span>
-            <span className={css.divider} aria-hidden="true" />
-            <Link className={css.iconButton} href="/logout" aria-label="Вийти">
-              <svg width="24" height="24" aria-hidden="true">
-                <use href="/sprite.svg#logout" />
-              </svg>
-            </Link>
-          </span>
+          <>
+            <span className={css.profile}>
+              <button
+                type="button"
+                className={css.profileButton}
+                onClick={() => setIsProfileModalOpen(true)}
+                aria-haspopup="dialog"
+                aria-label="Редагувати профіль"
+              >
+                {user?.avatar ? (
+                  <Image
+                    className={css.avatar}
+                    src={user.avatar}
+                    width={32}
+                    height={32}
+                    alt=""
+                  />
+                ) : (
+                  <span className={css.avatarFallback}>
+                    {user?.name?.charAt(0) || 'U'}
+                  </span>
+                )}
+                <span className={css.name}>{user?.name}</span>
+              </button>
+              <span className={css.divider} aria-hidden="true" />
+              <Link className={css.iconButton} href="/logout" aria-label="Вийти">
+                <svg width="24" height="24" aria-hidden="true">
+                  <use href="/sprite.svg#logout" />
+                </svg>
+              </Link>
+            </span>
+            <EditProfileModal
+              isOpen={isProfileModalOpen}
+              onClose={() => setIsProfileModalOpen(false)}
+            />
+          </>
         ) : null}
       </nav>
     </div>
