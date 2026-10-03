@@ -38,7 +38,9 @@ export async function getMe(): Promise<User> {
   return data;
 }
 
-export async function updateMe(payload: { name?: string }): Promise<User> {
+export async function updateMe(
+  payload: { name?: string; avatar?: string } | FormData,
+): Promise<User> {
   const { data } = await nextServer.patch<User>('/users/me', payload);
   return data;
 }
