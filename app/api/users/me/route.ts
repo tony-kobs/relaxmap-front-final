@@ -8,7 +8,10 @@ export async function GET(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
-  const body = await request.text();
+  const contentType = request.headers.get('content-type') || '';
+  const body = contentType.includes('multipart/form-data')
+    ? await request.formData()
+    : await request.text();
   return proxyToBackend(request, '/users/me', {
     method: 'PATCH',
     body,

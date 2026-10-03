@@ -1,38 +1,43 @@
-import { notFound } from 'next/navigation';
+// Власник: Форма локації
+import { notFound, redirect } from 'next/navigation';
+import { getMe } from '@/lib/api/serverApi';
+import { getLocationById } from '@/lib/api/locations';
 import LocationForm from '@/components/LocationForm/LocationForm';
-import type { Location } from '@/types/location';
+import css from './page.module.css';
 
 type EditLocationPageProps = {
   params: Promise<{ locationId: string }>;
 };
 
-async function getLocation(id: string): Promise<Location | null> {
-  try {
-    const baseUrl = process.env.BACKEND_URL;
-    const res = await fetch(`${baseUrl}/locations/${id}`, {
-      cache: 'no-store',
-    });
-    if (!res.ok) return null;
-    const json = await res.json();
-    return json?.data ?? json;
-  } catch {
-    return null;
-  }
-}
-
 export default async function EditLocationPage({
   params,
 }: EditLocationPageProps) {
   const { locationId } = await params;
-  const location = await getLocation(locationId);
+  const location = await getLocationById(locationId);
 
   if (!location) {
     notFound();
   }
 
+  let currentUserId: string | null = null;
+  try {
+    const me = await getMe();
+    currentUserId = me._id;
+  } catch {
+    currentUserId = null;
+  }
+
+  if (!currentUserId) {
+    redirect('/login');
+  }
+
+  if (currentUserId !== location.owner._id) {
+    redirect(`/locations/${locationId}`);
+  }
+
   return (
     <>
-      <h1>Редагування місця</h1>
+      <h1 className={css.title}>Редагування місця</h1>
       <LocationForm
         locationId={locationId}
         initialLocation={{

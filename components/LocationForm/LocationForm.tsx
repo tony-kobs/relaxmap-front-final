@@ -1,9 +1,10 @@
 'use client';
-
-
+// Власник: Створення локації
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import css from './LocationForm.module.css';
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
+import { isAxiosError } from 'axios';
+import { useQueryClient } from '@tanstack/react-query';
 import {
   createLocation,
   updateLocation,
@@ -72,6 +73,7 @@ export default function LocationForm({
 }: LocationFormProps) {
   const fieldId = useId();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const isEditing = Boolean(initialLocation);
 
@@ -137,12 +139,29 @@ export default function LocationForm({
 
       if (isEditing && locationId) {
         await updateLocation(locationId, formData);
+        toast.success('Зміни збережено');
+        queryClient.invalidateQueries({ queryKey: ['locations'] });
         router.push(`/locations/${locationId}`);
       } else {
         const data = await createLocation(formData);
         router.push(`/locations/${data._id}`);
       }
-    } catch {
+    } catch (error) {
+      if (isAxiosError(error)) {
+        const status = error.response?.status;
+        const message = error.response?.data?.message;
+
+        if (status === 403) {
+          toast.error('Редагувати може лише автор');
+          return;
+        }
+
+        if (typeof message === 'string' && message) {
+          toast.error(message);
+          return;
+        }
+      }
+
       toast.error(
         isEditing
           ? 'Не вдалось оновити локацію, спробуйте ще раз'
