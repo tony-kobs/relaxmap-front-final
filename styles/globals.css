@@ -197,7 +197,7 @@ svg {
 .container {
   width: 100%;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 32px 20px;
 }
 
 @media screen and (min-width: 375px) {
@@ -233,5 +233,12 @@ svg {
 @media screen and (min-width: 1440px) {
   .section {
     padding: 80px 64px;
+  }
+
+  .adaptive-top-container {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    max-width: 1440px;
   }
 }
