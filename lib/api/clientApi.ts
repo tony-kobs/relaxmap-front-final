@@ -116,3 +116,8 @@ export async function updateLocation(locationId: string, formData: FormData) {
 
   return data;
 }
+export async function updateUserAvatar(formData: FormData): Promise<{ url: string }> {
+  // НЕ передаємо headers взагалі! Axios сам правильно додасть multipart/формат і boundary
+  const { data } = await nextServer.patch('/users/me/avatar', formData);
+  return data;
+}
