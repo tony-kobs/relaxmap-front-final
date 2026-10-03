@@ -84,6 +84,16 @@ export async function getFeedbacks(
   return data;
 }
 
+export async function createFeedback(body: {
+  locationId: string;
+  userName: string;
+  rate: number;
+  description: string;
+}) {
+  const { data } = await nextServer.post<Feedback>('/feedbacks', body);
+  return data;
+}
+
 export async function getUserById(userId: string) {
   const { data } = await nextServer.get<User>(`/users/${userId}`);
   return data;

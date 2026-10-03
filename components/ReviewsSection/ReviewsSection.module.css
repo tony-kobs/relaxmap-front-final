@@ -39,15 +39,23 @@
   background-color: var(--color-coral);
   color: var(--color-white);
   text-decoration: none;
+  white-space: nowrap;
   border-radius: 8px;
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-base);
   cursor: pointer;
-  transition: var(--transition-base);
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base);
 }
 
 .actionBatonLink:hover {
-  opacity: 0.9;
+  background-color: var(--color-coral-dark);
+}
+
+.actionBatonLink:focus-visible {
+  outline: 2px solid var(--color-coral-dark);
+  outline-offset: 2px;
 }
 
 /* 
@@ -63,13 +71,26 @@
 
 /* 2. TABLET STYLES (from 768px)                       */
 /* --------------------------------------------------- */
-/* @media (min-width: 768px) {
-} */
+@media (min-width: 768px) {
+  .sectionHeadingText {
+    font-size: var(--font-size-xl);
+  }
+
+  .actionBatonLink {
+    padding: 14px 28px;
+    font-size: var(--font-size-md);
+  }
+}
 
 /* 3. DESKTOP STYLES (from 1440px)                     */
 /* --------------------------------------------------- */
 @media (min-width: 1440px) {
   .sectionHeadingText {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-2xl);
+  }
+
+  .actionBatonLink {
+    padding: 16px 32px;
+    font-size: var(--font-size-md);
   }
 }
