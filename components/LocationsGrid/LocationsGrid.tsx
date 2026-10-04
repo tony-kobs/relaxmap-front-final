@@ -1,8 +1,8 @@
 'use client';
 // Власник: Каталог
 import { useEffect, useRef } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import LocationCard from '@/components/LocationCard/LocationCard';
+import { useAuthStore } from '@/lib/store/authStore';
 import { useSearchParams } from 'next/navigation';
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 import { nextServer } from '@/lib/api/api';
@@ -36,6 +36,8 @@ async function fetchPage(
 
 export default function LocationsGrid({ userId }: LocationsGridProps) {
   const searchParams = useSearchParams();
+  const currentUserId = useAuthStore((state) => state.user?._id);
+  const isOwnProfile = Boolean(userId) && userId === currentUserId;
 
   const filters: LocationQuery = {};
   if (!userId) {
@@ -134,24 +136,7 @@ export default function LocationsGrid({ userId }: LocationsGridProps) {
       >
         {locations.map((location) => (
           <li key={location._id} className={css.card}>
-            <div className={css.imageWrap}>
-              {location.images[0] ? (
-                <Image
-                  src={location.images[0]}
-                  alt={location.name}
-                  fill
-                  sizes="(max-width: 767px) 100vw, (max-width: 1439px) 50vw, 33vw"
-                  className={css.image}
-                />
-              ) : null}
-            </div>
-            <div className={css.body}>
-              <p className={css.type}>{location.type?.name}</p>
-              <h3 className={css.name}>{location.name}</h3>
-              <Link href={`/locations/${location._id}`} className={css.link}>
-                Переглянути локацію
-              </Link>
-            </div>
+            <LocationCard location={location} showEdit={isOwnProfile} />
           </li>
         ))}
       </ul>
