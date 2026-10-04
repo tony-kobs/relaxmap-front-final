@@ -1,5 +1,6 @@
 // Власник: Деталі локації
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import LocationDescription from '@/components/LocationDescription/LocationDescription';
 import LocationGallery from '@/components/LocationGallery/LocationGallery';
 import LocationInfoBlock from '@/components/LocationInfoBlock/LocationInfoBlock';
@@ -67,6 +68,11 @@ export default async function LocationDetailsPage({
   params,
 }: LocationDetailsPageProps) {
   const { locationId } = await params;
+  const location = await getLocationById(locationId);
+
+  if (!location) {
+    notFound();
+  }
 
   return (
     <>
