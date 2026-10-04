@@ -112,6 +112,15 @@
   background-color: var(--color-coral-lightest);
 }
 
+/* Крапки пагінації зліва, стрілки справа */
+.controlsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+}
+
 /* 2. TABLET STYLES (from 768px)                       */
 /* --------------------------------------------------- */
 @media (min-width: 768px) {
