@@ -36,16 +36,22 @@ export default function Footer() {
     <footer className={css.footer}>
       <div className={css.inner}>
         <div className={css.top}>
-          <Link className={css.logo} href="/" aria-label="Relax Map">
-            <svg
-              className={css.logoMark}
-              width="129"
-              height="36"
-              aria-hidden="true"
-            >
-              <use href="/sprite.svg#company-logo" />
-            </svg>
-          </Link>
+          <div className={css.brand}>
+            <Link className={css.logo} href="/" aria-label="Relax Map">
+              <svg
+                className={css.logoMark}
+                width="129"
+                height="36"
+                aria-hidden="true"
+              >
+                <use href="/sprite.svg#company-logo" />
+              </svg>
+            </Link>
+            <p className={css.description}>
+              Знаходьте та діліться найкращими місцями для відпочинку на природі
+              в Україні — з фото, описами та відгуками мандрівників.
+            </p>
+          </div>
 
           <ul className={css.socials}>
             {socials.map((item) => (
