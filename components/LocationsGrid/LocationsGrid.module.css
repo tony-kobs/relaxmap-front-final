@@ -15,10 +15,6 @@
 .card {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  border: 1px solid var(--color-scheme-2-border);
-  border-radius: 12px;
-  background-color: var(--color-coral-lightest);
   scroll-margin-top: 100px;
 }
 
@@ -26,50 +22,6 @@
   position: relative;
   aspect-ratio: 4 / 3;
   background-color: var(--color-coral-lighter);
-}
-
-.image {
-  object-fit: cover;
-}
-
-.body {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  gap: 8px;
-  padding: 16px;
-}
-
-.type {
-  font-size: var(--font-size-sm);
-  color: var(--color-coral);
-}
-
-.name {
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-semibold, 600);
-  line-height: var(--line-height-tight);
-}
-
-.link {
-  margin-top: auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 44px;
-  border: 1px solid var(--color-coral);
-  border-radius: 6px;
-  color: var(--color-coral);
-  font-weight: 500;
-  transition:
-    background-color var(--transition-base),
-    color var(--transition-base);
-}
-
-.link:hover,
-.link:focus-visible {
-  background-color: var(--color-coral);
-  color: var(--color-white);
 }
 
 .more {
