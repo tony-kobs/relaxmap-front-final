@@ -88,7 +88,7 @@ export default function AddReviewForm({ locationId }: AddReviewFormProps) {
           }
         }}
       >
-        {({ isSubmitting, errors, touched, resetForm }) => (
+        {({ isSubmitting, errors, touched }) => (
           <Form className={css.form} noValidate>
             <label className={css.label} htmlFor="review-description">
               <span className={css.labelText}>Ваш відгук</span>
@@ -118,7 +118,7 @@ export default function AddReviewForm({ locationId }: AddReviewFormProps) {
               <button
                 className={css.buttonGhost}
                 type="button"
-                onClick={() => resetForm()}
+                onClick={() => router.back()}
               >
                 Відмінити
               </button>
