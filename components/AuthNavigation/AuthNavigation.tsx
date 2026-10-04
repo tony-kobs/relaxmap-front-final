@@ -155,10 +155,11 @@ export default function AuthNavigation() {
                 </svg>
               </Link>
             </span>
-            <EditProfileModal
-              isOpen={isProfileModalOpen}
-              onClose={() => setIsProfileModalOpen(false)}
-            />
+            {isProfileModalOpen && (
+              <EditProfileModal
+                onClose={() => setIsProfileModalOpen(false)}
+              />
+            )}
           </>
         ) : null}
       </nav>

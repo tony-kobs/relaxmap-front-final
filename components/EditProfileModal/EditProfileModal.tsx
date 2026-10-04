@@ -9,17 +9,14 @@ import { useAuthStore } from '@/lib/store/authStore';
 import css from './EditProfileModal.module.css';
 
 type EditProfileModalProps = {
-  isOpen: boolean;
   onClose: () => void;
 };
 
-export default function EditProfileModal({
-  isOpen,
-  onClose,
-}: EditProfileModalProps) {
+export default function EditProfileModal({ onClose }: EditProfileModalProps) {
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
 
+  // State initializes fresh every time the component mounts (parent renders it only when open)
   const [name, setName] = useState(user?.name || '');
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>(user?.avatar || '');
@@ -29,20 +26,8 @@ export default function EditProfileModal({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
 
-  // Synchronize state with current user when modal opens
-  useEffect(() => {
-    if (isOpen) {
-      setName(user?.name || '');
-      setPreviewUrl(user?.avatar || '');
-      setAvatarFile(null);
-      setNameError('');
-    }
-  }, [isOpen, user]);
-
   // Handle ESC and scroll locking
   useEffect(() => {
-    if (!isOpen) return;
-
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && !isLoading) {
         onClose();
@@ -58,9 +43,7 @@ export default function EditProfileModal({
       root.style.overflow = prevOverflow;
       document.removeEventListener('keydown', onKeyDown);
     };
-  }, [isOpen, isLoading, onClose]);
-
-  if (!isOpen) return null;
+  }, [isLoading, onClose]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
