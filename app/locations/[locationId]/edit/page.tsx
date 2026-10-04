@@ -1,9 +1,15 @@
 // Власник: Форма локації
+import type { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 import { getMe } from '@/lib/api/serverApi';
 import { getLocationById } from '@/lib/api/locations';
 import LocationForm from '@/components/LocationForm/LocationForm';
 import css from './page.module.css';
+
+export const metadata: Metadata = {
+  title: 'Редагування місця',
+  robots: { index: false, follow: false },
+};
 
 type EditLocationPageProps = {
   params: Promise<{ locationId: string }>;
