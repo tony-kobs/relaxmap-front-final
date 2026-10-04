@@ -1,0 +1,59 @@
+.viewport {
+  flex-shrink: 0;
+  overflow: hidden;
+  padding: 4px 0;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transition: transform 300ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.track li {
+  display: flex;
+}
+
+.dot {
+  display: block;
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--color-coral-light);
+  opacity: 0.5;
+  cursor: pointer;
+  transition:
+    transform var(--transition-base),
+    opacity var(--transition-base),
+    background-color var(--transition-base);
+}
+
+.dot:hover,
+.dot:focus-visible {
+  opacity: 1;
+  outline: none;
+}
+
+.dot:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-coral-lighter);
+}
+
+.active {
+  background-color: var(--color-coral);
+  opacity: 1;
+}
+
+.small {
+  transform: scale(0.66);
+}
+
+.tiny {
+  transform: scale(0.33);
+}
