@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
@@ -92,6 +93,10 @@ export default function LoginForm() {
               component="span"
             />
           </label>
+
+          <Link href="/forgot-password" className={css.forgotLink}>
+            Забули пароль?
+          </Link>
 
           <button
             className={css.button}

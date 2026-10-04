@@ -11,8 +11,14 @@ const socials = [
   { id: 'youtube', label: 'YouTube', href: '#' },
 ];
 
-const isAuthPage = (pathname: string) =>
-  pathname === '/login' || pathname === '/register';
+const AUTH_PAGES = [
+  '/login',
+  '/register',
+  '/forgot-password',
+  '/reset-password',
+];
+
+const isAuthPage = (pathname: string) => AUTH_PAGES.includes(pathname);
 
 export default function Footer() {
   const pathname = usePathname();

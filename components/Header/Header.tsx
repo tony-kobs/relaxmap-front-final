@@ -5,8 +5,14 @@ import { usePathname } from 'next/navigation';
 import AuthNavigation from '@/components/AuthNavigation/AuthNavigation';
 import css from './Header.module.css';
 
-const isAuthPage = (pathname: string) =>
-  pathname === '/login' || pathname === '/register';
+const AUTH_PAGES = [
+  '/login',
+  '/register',
+  '/forgot-password',
+  '/reset-password',
+];
+
+const isAuthPage = (pathname: string) => AUTH_PAGES.includes(pathname);
 
 export default function Header() {
   const pathname = usePathname();
