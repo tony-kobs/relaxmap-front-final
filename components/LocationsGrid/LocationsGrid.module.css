@@ -12,6 +12,26 @@
   opacity: 0.5;
 }
 
+/* Лоадер поверх списку під час завантаження нових даних за фільтрами */
+.gridWrap {
+  position: relative;
+}
+
+.fetchLoader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 48px;
+  pointer-events: none;
+}
+
+.fetchLoaderInner {
+  position: sticky;
+  top: 120px;
+}
+
 .card {
   display: flex;
   flex-direction: column;
