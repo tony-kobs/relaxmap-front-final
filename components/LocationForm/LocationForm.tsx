@@ -51,6 +51,9 @@ const buildLocationFormSchema = (isEditing: boolean) =>
       .max(6000, 'Опис занадто великий')
       .required('Опишіть локацію детальніше'),
     images: Yup.mixed<File>()
+      // початкове значення — null (файл не вибрано); без nullable() Yup
+      // вважає форму невалідною і кнопка збереження лишається неактивною
+      .nullable()
       // під час редагування фото можна лишити без змін
       .test('required', 'Додайте фото локації', (file) =>
         isEditing ? true : !!file,
