@@ -58,9 +58,13 @@ export default function ReviewsBlock({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useEffect(() => {
+  // Скидаємо слайдер на початок, коли змінилась локація або кількість відгуків
+  const sliderResetKey = `${locationId ?? 'latest'}:${feedbacks.length}`;
+  const [prevSliderResetKey, setPrevSliderResetKey] = useState(sliderResetKey);
+  if (prevSliderResetKey !== sliderResetKey) {
+    setPrevSliderResetKey(sliderResetKey);
     setCurrentIndex(0);
-  }, [locationId, feedbacks.length]);
+  }
 
   const handlePrevSlide = () => {
     if (feedbacks.length === 0) return;
@@ -106,7 +110,11 @@ export default function ReviewsBlock({
             {isHomePage ? 'Останні відгуки' : 'Відгуки'}
           </h2>
         )}
-        <p className={css.message}>Поки що немає відгуків для цієї локації.</p>
+        <p className={css.message}>
+          {isHomePage
+            ? 'Поки що немає відгуків.'
+            : 'Поки що немає відгуків для цієї локації.'}
+        </p>
       </section>
     );
   }

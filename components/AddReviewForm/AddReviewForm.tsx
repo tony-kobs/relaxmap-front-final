@@ -76,7 +76,11 @@ export default function AddReviewForm({ locationId }: AddReviewFormProps) {
               rate: values.rate,
               description: values.description.trim(),
             });
-            await queryClient.invalidateQueries({ queryKey: ['feedbacks'] });
+            // Бекенд одразу перераховує рейтинг локації, тож оновлюємо і картки локацій
+            await Promise.all([
+              queryClient.invalidateQueries({ queryKey: ['feedbacks'] }),
+              queryClient.invalidateQueries({ queryKey: ['locations'] }),
+            ]);
             toast.success('Відгук опубліковано');
             router.back();
           } catch (error: unknown) {
