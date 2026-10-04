@@ -1,6 +1,7 @@
 // Власник: Популярні локації
 import Link from 'next/link';
 import Image from 'next/image';
+import StarRating from '@/components/StarRating/StarRating';
 import type { Location } from '@/types/location';
 import css from './LocationCard.module.css';
 
@@ -43,6 +44,12 @@ export default function LocationCard({
 
       <div className={css.body}>
         <p className={css.type}>{location.type?.name}</p>
+        <StarRating
+          value={location.rating ?? 0}
+          readOnly
+          size="sm"
+          className={css.rating}
+        />
         <h3 className={css.name}>{location.name}</h3>
         <Link href={`/locations/${location._id}`} className={css.link}>
           Переглянути локацію

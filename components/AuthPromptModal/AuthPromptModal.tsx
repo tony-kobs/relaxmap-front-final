@@ -18,7 +18,7 @@ export default function AuthPromptModal() {
 
   return (
     <ConfirmationModal
-      title="Помилка під час додавання відгуку"
+      title="Потрібна авторизація"
       description="Щоб залишити відгук вам треба увійти, якщо ще немає облікового запису зареєструйтесь"
       cancelButtonText="Увійти"
       confirmButtonText="Зареєструватись"

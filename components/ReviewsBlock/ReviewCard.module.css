@@ -18,11 +18,47 @@
 .starsBlockWrapperFlex {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   width: 100%;
 }
 
 .cardRatingCustom {
   display: flex;
+  min-width: 0;
+}
+
+.deleteButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--color-scheme-2-border);
+  border-radius: 8px;
+  background: var(--color-coral-lightest);
+  color: var(--color-scheme-2-text);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base);
+}
+
+.deleteButton:hover,
+.deleteButton:focus-visible {
+  border-color: var(--color-error);
+  background: var(--color-white);
+  color: var(--color-error);
+  outline: none;
+}
+
+.deleteIcon {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
 }
 
 .textBlockWrapperFlex {
@@ -59,7 +95,7 @@
 .locationBadgeCustom {
   margin: 0;
   font-weight: var(--font-weight-semibold);
-  font-size: 10 px;
+  font-size: 10px;
   line-height: var(--line-height-normal);
   color: var(--color-scheme-2-text);
   align-self: flex-start;

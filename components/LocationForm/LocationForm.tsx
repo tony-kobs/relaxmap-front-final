@@ -140,10 +140,12 @@ export default function LocationForm({
       if (isEditing && locationId) {
         await updateLocation(locationId, formData);
         toast.success('Зміни збережено');
-        queryClient.invalidateQueries({ queryKey: ['locations'] });
+        await queryClient.invalidateQueries({ queryKey: ['locations'] });
         router.push(`/locations/${locationId}`);
       } else {
         const data = await createLocation(formData);
+        toast.success('Локацію додано');
+        await queryClient.invalidateQueries({ queryKey: ['locations'] });
         router.push(`/locations/${data._id}`);
       }
     } catch (error) {

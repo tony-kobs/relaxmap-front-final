@@ -8,6 +8,7 @@ import { ClipLoader } from 'react-spinners';
 import toast from 'react-hot-toast';
 import { register } from '@/lib/api/clientApi';
 import { useAuthStore } from '@/lib/store/authStore';
+import { getErrorMessage } from '@/lib/utils/getErrorMessage';
 import css from './RegistrationForm.module.css';
 
 const registrationValidationSchema = Yup.object().shape({
@@ -27,15 +28,11 @@ const registrationValidationSchema = Yup.object().shape({
     .required('Пароль обовʼязковий'),
 });
 
-const getErrorMessage = (error: unknown): string => {
-  if (isAxiosError(error)) {
-    if (error.response?.status === 409) {
-      return 'Користувач з такою поштою вже існує';
-    }
-    const message = error.response?.data?.message ?? error.response?.data?.error;
-    if (typeof message === 'string' && message) return message;
+const getRegisterErrorMessage = (error: unknown): string => {
+  if (isAxiosError(error) && error.response?.status === 409) {
+    return 'Користувач з такою поштою вже існує';
   }
-  return 'Не вдалося зареєструватись. Спробуйте ще раз';
+  return getErrorMessage(error, 'Не вдалося зареєструватись. Спробуйте ще раз');
 };
 
 export default function RegistrationForm() {
@@ -59,7 +56,7 @@ export default function RegistrationForm() {
           toast.success(`Вітаємо, ${user.name || 'користувачу'}!`);
           router.push(user?._id ? `/profile/${user._id}` : '/profile');
         } catch (error: unknown) {
-          toast.error(getErrorMessage(error));
+          toast.error(getRegisterErrorMessage(error));
         } finally {
           helpers.setSubmitting(false);
         }
