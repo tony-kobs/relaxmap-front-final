@@ -1,0 +1,12 @@
+.title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin: 32px 0 24px;
+  color: var(--color-scheme-1-text);
+}
+
+.error {
+  color: var(--color-error);
+  font-size: var(--font-size-sm);
+  padding: 16px 0;
+}

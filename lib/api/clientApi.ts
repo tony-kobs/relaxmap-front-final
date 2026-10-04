@@ -94,6 +94,10 @@ export async function createFeedback(body: {
   return data;
 }
 
+export async function deleteFeedback(feedbackId: string): Promise<void> {
+  await nextServer.delete(`/feedbacks/${feedbackId}`);
+}
+
 export async function getUserById(userId: string) {
   const { data } = await nextServer.get<User>(`/users/${userId}`);
   return data;
@@ -124,10 +128,5 @@ export async function updateLocation(locationId: string, formData: FormData) {
     formData,
   );
 
-  return data;
-}
-export async function updateUserAvatar(formData: FormData): Promise<{ url: string }> {
-  // НЕ передаємо headers взагалі! Axios сам правильно додасть multipart/формат і boundary
-  const { data } = await nextServer.patch('/users/me/avatar', formData);
   return data;
 }

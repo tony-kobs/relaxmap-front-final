@@ -3,17 +3,19 @@
 
 import { ErrorMessage, Field, Form, Formik, useField } from 'formik';
 import * as Yup from 'yup';
-import { isAxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { ClipLoader } from 'react-spinners';
 import StarRating from '@/components/StarRating/StarRating';
 import { createFeedback } from '@/lib/api/clientApi';
 import { useAuthStore } from '@/lib/store/authStore';
+import { getErrorMessage } from '@/lib/utils/getErrorMessage';
 import css from './AddReviewForm.module.css';
 
 const reviewValidationSchema = Yup.object().shape({
   rate: Yup.number()
+    .integer('Оцінка повинна бути цілим числом')
     .required('Оберіть оцінку')
     .min(1, 'Оберіть оцінку від 1 до 5 зірок')
     .max(5, 'Оцінка не повинна перевищувати 5 зірок'),
@@ -23,14 +25,6 @@ const reviewValidationSchema = Yup.object().shape({
     .max(200, 'Відгук не повинен перевищувати 200 символів')
     .required('Відгук обовʼязковий'),
 });
-
-const getErrorMessage = (error: unknown): string => {
-  if (isAxiosError(error)) {
-    const message = error.response?.data?.message ?? error.response?.data?.error;
-    if (typeof message === 'string' && message) return message;
-  }
-  return 'Не вдалося надіслати відгук. Спробуйте ще раз';
-};
 
 function ReviewRating() {
   const [field, , { setValue }] = useField<number>('rate');
@@ -52,6 +46,7 @@ type AddReviewFormProps = {
 
 export default function AddReviewForm({ locationId }: AddReviewFormProps) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const userName = useAuthStore((state) => state.user?.name ?? '');
 
   return (
@@ -81,11 +76,13 @@ export default function AddReviewForm({ locationId }: AddReviewFormProps) {
               rate: values.rate,
               description: values.description.trim(),
             });
-            // Список не оновлюємо: відгук іде зі статусом pending і публічно не показується
-            toast.success('Відгук відправлено на модерацію');
+            await queryClient.invalidateQueries({ queryKey: ['feedbacks'] });
+            toast.success('Відгук опубліковано');
             router.back();
           } catch (error: unknown) {
-            toast.error(getErrorMessage(error));
+            toast.error(
+              getErrorMessage(error, 'Не вдалося надіслати відгук. Спробуйте ще раз'),
+            );
           } finally {
             helpers.setSubmitting(false);
           }
@@ -96,6 +93,7 @@ export default function AddReviewForm({ locationId }: AddReviewFormProps) {
             <label className={css.label} htmlFor="review-description">
               <span className={css.labelText}>Ваш відгук</span>
               <Field
+                as="textarea"
                 id="review-description"
                 className={`${css.textarea} ${
                   touched.description && errors.description ? css.inputError : ''

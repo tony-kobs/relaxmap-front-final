@@ -58,17 +58,6 @@
   outline-offset: 2px;
 }
 
-/* 
-  Використовуємо :global, щоб обійти ізоляцію вкладеного модуля ReviewsBlock.
-  Ми повністю анулюємо його внутрішній padding та max-width, передаючи контроль 
-  нашому зовнішньому wrapper, а від'ємний марджин прибирає зайве форматування від прихованого заголовка.
-*/
-.reviewsSectionWrapper > :global(section) {
-  margin-top: -24px !important;
-  padding: 0 !important;
-  max-width: none !important;
-}
-
 /* 2. TABLET STYLES (from 768px)                       */
 /* --------------------------------------------------- */
 @media (min-width: 768px) {

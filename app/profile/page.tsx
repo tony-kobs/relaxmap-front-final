@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Spinner from '@/components/Spinner/Spinner';
+import Loader from '@/components/Loader/Loader';
 import { useAuthStore } from '@/lib/store/authStore';
 
 export default function ProfileRedirectPage() {
@@ -21,5 +21,5 @@ export default function ProfileRedirectPage() {
     router.replace('/login');
   }, [isAuthLoading, user, router]);
 
-  return <Spinner />;
+  return <Loader fullPage size={64} />;
 }
