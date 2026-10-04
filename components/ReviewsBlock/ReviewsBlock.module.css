@@ -16,6 +16,24 @@
   padding: 64px 20px;
 }
 
+.reviewsBlockEmbedded {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  max-width: none;
+}
+
+.message {
+  margin: 0;
+  color: var(--color-scheme-2-text);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  text-align: center;
+  padding: 24px 0;
+}
+
 .reviewsBlockRating {
   display: flex;
   align-self: flex-start;
@@ -24,7 +42,7 @@
 .titleText {
   margin: 0;
   font-weight: var(--font-weight-bold);
-  font-size: 28 px;
+  font-size: 28px;
   color: var(--color-scheme-2-text);
 }
 

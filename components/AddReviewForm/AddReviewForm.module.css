@@ -119,7 +119,7 @@
 
 .buttonPrimary:hover:not(:disabled),
 .buttonPrimary:focus-visible:not(:disabled) {
-  border-color: #e5b299;
+  border-color: var(--color-coral-lighter);
   background: var(--color-coral-lighter);
   color: var(--color-scheme-2-text);
   outline: none;

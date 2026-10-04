@@ -1,12 +1,20 @@
 import css from './Loader.module.css';
 
 type LoaderProps = {
+  /** Діаметр компаса в px */
   size?: number;
+  /** На всю висоту екрана (route loading / page pending) */
+  fullPage?: boolean;
 };
 
-export default function Loader({ size = 80 }: LoaderProps) {
+export default function Loader({ size = 56, fullPage = false }: LoaderProps) {
   return (
-    <div className={css.wrap} role="status" aria-live="polite" aria-label="Завантаження">
+    <div
+      className={`${css.wrap} ${fullPage ? css.fullPage : css.inline}`}
+      role="status"
+      aria-live="polite"
+      aria-label="Завантаження"
+    >
       <div className={css.compass} style={{ width: size, height: size }}>
         <span className={css.ripple} />
         <span className={css.ripple} />

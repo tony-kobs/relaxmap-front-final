@@ -3,15 +3,21 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+}
+
+.fullPage {
   min-height: calc(100svh - 8.5rem);
+}
+
+.inline {
+  min-height: 0;
+  padding: 24px 0;
 }
 
 .compass {
   position: relative;
   display: inline-block;
   flex: none;
-  width: 80px;
-  height: 80px;
 }
 
 .ripple,

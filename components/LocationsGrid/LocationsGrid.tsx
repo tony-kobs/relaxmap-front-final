@@ -6,11 +6,14 @@ import { useAuthStore } from '@/lib/store/authStore';
 import { useSearchParams } from 'next/navigation';
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 import { nextServer } from '@/lib/api/api';
-import Spinner from '@/components/Spinner/Spinner';
+import Loader from '@/components/Loader/Loader';
+import {
+  LOCATIONS_PAGE_SIZE,
+  locationsQueryKey,
+} from '@/lib/constants/locations';
 import type { Location, LocationQuery, Paginated } from '@/types/location';
 import css from './LocationsGrid.module.css';
 
-const LIMIT = 9;
 const DEFAULT_SORT = 'popular';
 
 type LocationsGridProps = {
@@ -24,8 +27,8 @@ async function fetchPage(
 ) {
   const url = userId ? `/users/${userId}/locations` : '/locations';
   const params = userId
-    ? { page, limit: LIMIT }
-    : { ...filters, page, limit: LIMIT };
+    ? { page, limit: LOCATIONS_PAGE_SIZE }
+    : { ...filters, page, limit: LOCATIONS_PAGE_SIZE };
 
   const { data } = await nextServer.get<Paginated<Location>>(url, {
     params,
@@ -61,7 +64,7 @@ export default function LocationsGrid({ userId }: LocationsGridProps) {
     hasNextPage,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: ['locations', userId ?? 'all', filters],
+    queryKey: locationsQueryKey(userId, filters),
     queryFn: ({ pageParam }) => fetchPage(pageParam, filters, userId),
     initialPageParam: 1,
     getNextPageParam: (lastPage) =>
@@ -91,7 +94,7 @@ export default function LocationsGrid({ userId }: LocationsGridProps) {
   if (isPending) {
     return (
       <section className={css.section} data-section="LocationsGrid">
-        <Spinner />
+        <Loader size={56} />
       </section>
     );
   }
@@ -141,7 +144,7 @@ export default function LocationsGrid({ userId }: LocationsGridProps) {
         ))}
       </ul>
 
-      {isFetchingNextPage && <Spinner />}
+      {isFetchingNextPage && <Loader size={40} />}
 
       {hasNextPage && !isFetchingNextPage && (
         <button type="button" className={css.more} onClick={handleLoadMore}>

@@ -20,8 +20,9 @@ export default function ReviewsSection({ locationId }: ReviewsSectionProps) {
 
   return (
     <section
-      className={`container ${css.reviewsSectionCustom}`}
+      className={css.reviewsSectionCustom}
       data-location-id={locationId}
+      data-section="ReviewsSection"
     >
       <div className={css.reviewsSectionWrapper}>
         <div className={css.sectionHeaderTopFlex}>
@@ -31,7 +32,7 @@ export default function ReviewsSection({ locationId }: ReviewsSectionProps) {
           </Link>
         </div>
 
-        <ReviewsBlock locationId={locationId} showTitle={false} />
+        <ReviewsBlock locationId={locationId} showTitle={false} embedded />
       </div>
     </section>
   );

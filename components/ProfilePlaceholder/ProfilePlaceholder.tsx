@@ -3,16 +3,20 @@ import Link from 'next/link';
 import css from './ProfilePlaceholder.module.css';
 
 type ProfilePlaceholderProps = {
-  isAuthenticated: boolean;
+  isMyProfile: boolean;
 };
 
-export default function ProfilePlaceholder({ isAuthenticated }: ProfilePlaceholderProps) {
+export default function ProfilePlaceholder({ isMyProfile }: ProfilePlaceholderProps) {
   return (
     <section className={css.section} data-section="ProfilePlaceholder">
-      {isAuthenticated ? (
-        <Link href="/locations/add">Поділитись локацією</Link>
+      {isMyProfile ? (
+        <Link className={css.link} href="/locations/add">
+          Поділитись локацією
+        </Link>
       ) : (
-        <Link href="/">Назад до локацій</Link>
+        <Link className={css.link} href="/">
+          Назад до локацій
+        </Link>
       )}
     </section>
   );

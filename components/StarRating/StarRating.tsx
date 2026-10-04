@@ -49,10 +49,15 @@ export default function StarRating({
           className={css.rating}
           value={value}
           readOnly={isReadOnly}
-          onChange={isReadOnly ? undefined : onChange}
+          onChange={
+            isReadOnly || !onChange
+              ? undefined
+              : (nextValue: number) => onChange(Math.round(nextValue))
+          }
           items={STAR_COUNT}
           itemStyles={starStyles}
-          halfFillMode="svg"
+          // halfFillMode лише для read-only середнього рейтингу; у формі — цілі зірки
+          {...(isReadOnly ? { halfFillMode: 'svg' as const } : {})}
           spaceInside="none"
           spaceBetween="small"
           transition="colors"
