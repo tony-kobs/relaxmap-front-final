@@ -21,7 +21,7 @@ export default function Footer() {
   if (isAuthPage(pathname)) {
     return (
       <footer className={css.authFooter}>
-        <p>© 2025 Relax Map</p>
+        <p>© {year} Relax Map</p>{' '}
       </footer>
     );
   }
