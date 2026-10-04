@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import LocationDescription from '@/components/LocationDescription/LocationDescription';
 import LocationGallery from '@/components/LocationGallery/LocationGallery';
 import LocationInfoBlock from '@/components/LocationInfoBlock/LocationInfoBlock';
+import LocationMap from '@/components/LocationMap/LocationMap';
 import ReviewsSection from '@/components/ReviewsSection/ReviewsSection';
 import { getLocationById } from '@/lib/api/locations';
 import {
@@ -75,6 +76,7 @@ export default async function LocationDetailsPage({
           <LocationInfoBlock locationId={locationId} />
         </div>
         <LocationDescription locationId={locationId} />
+        <LocationMap locationId={locationId} />
         <ReviewsSection locationId={locationId} />
       </div>
     </>
