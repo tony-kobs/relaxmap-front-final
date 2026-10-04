@@ -76,7 +76,11 @@ export default function AddReviewForm({ locationId }: AddReviewFormProps) {
               rate: values.rate,
               description: values.description.trim(),
             });
-            await queryClient.invalidateQueries({ queryKey: ['feedbacks'] });
+            // Бекенд одразу перераховує рейтинг локації, тож оновлюємо і картки локацій
+            await Promise.all([
+              queryClient.invalidateQueries({ queryKey: ['feedbacks'] }),
+              queryClient.invalidateQueries({ queryKey: ['locations'] }),
+            ]);
             toast.success('Відгук опубліковано');
             router.back();
           } catch (error: unknown) {
@@ -88,7 +92,7 @@ export default function AddReviewForm({ locationId }: AddReviewFormProps) {
           }
         }}
       >
-        {({ isSubmitting, errors, touched, resetForm }) => (
+        {({ isSubmitting, errors, touched }) => (
           <Form className={css.form} noValidate>
             <label className={css.label} htmlFor="review-description">
               <span className={css.labelText}>Ваш відгук</span>
@@ -118,7 +122,7 @@ export default function AddReviewForm({ locationId }: AddReviewFormProps) {
               <button
                 className={css.buttonGhost}
                 type="button"
-                onClick={() => resetForm()}
+                onClick={() => router.back()}
               >
                 Відмінити
               </button>

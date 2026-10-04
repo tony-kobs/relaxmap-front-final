@@ -8,6 +8,13 @@ import Footer from '@/components/Footer/Footer';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 import AuthProvider from '@/components/AuthProvider/AuthProvider';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
+import {
+  DEFAULT_OG_IMAGE,
+  SITE_DESCRIPTION,
+  SITE_LOCALE,
+  SITE_NAME,
+  SITE_URL,
+} from '@/lib/constants/seo';
 
 const montserrat = Montserrat({
   variable: '--font-montserrat',
@@ -16,20 +23,25 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000',
-  ),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Relax Map',
-    template: '%s | Relax Map',
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
   },
-  description: 'Знаходьте та діліться місцями для відпочинку в Україні',
+  description: SITE_DESCRIPTION,
   openGraph: {
     type: 'website',
-    siteName: 'Relax Map',
-    title: 'Relax Map',
-    description: 'Знаходьте та діліться місцями для відпочинку в Україні',
-    locale: 'uk_UA',
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    locale: SITE_LOCALE,
+    images: [DEFAULT_OG_IMAGE],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: [DEFAULT_OG_IMAGE.url],
   },
 };
 

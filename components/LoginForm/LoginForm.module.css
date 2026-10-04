@@ -158,6 +158,47 @@
   gap: 10px;
 }
 
+/* Посилання й тексти для форм входу та відновлення пароля */
+.forgotLink {
+  align-self: flex-end;
+  margin-top: -12px;
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  color: var(--color-coral-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--transition-base);
+}
+
+.text {
+  margin: 0;
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  text-align: center;
+  color: var(--color-scheme-1-text);
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+}
+
+.link {
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  color: var(--color-coral-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--transition-base);
+}
+
+.forgotLink:hover,
+.forgotLink:focus-visible,
+.link:hover,
+.link:focus-visible {
+  color: var(--color-coral-darker);
+}
+
 @media (min-width: 1440px) {
   .labelText,
   .input {

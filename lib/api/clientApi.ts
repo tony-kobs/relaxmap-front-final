@@ -24,6 +24,17 @@ export async function login(credentials: AuthCredentials): Promise<User> {
   return data;
 }
 
+export async function requestResetEmail(email: string): Promise<void> {
+  await nextServer.post('/auth/request-reset-email', { email });
+}
+
+export async function resetPassword(payload: {
+  token: string;
+  password: string;
+}): Promise<void> {
+  await nextServer.post('/auth/reset-password', payload);
+}
+
 export async function logout(): Promise<void> {
   await nextServer.post('/auth/logout');
 }

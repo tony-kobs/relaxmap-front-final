@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import Loader from '@/components/Loader/Loader';
 import ReviewCard, { ReviewData } from './ReviewCard';
 import ArrowNavigation from './ArrowNavigation';
+import SliderDots from './SliderDots';
 import { getFeedbacks } from '@/lib/api/clientApi';
 import { feedbacksQueryKey } from '@/lib/constants/feedbacks';
 import css from './ReviewsBlock.module.css';
@@ -58,22 +59,27 @@ export default function ReviewsBlock({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useEffect(() => {
+  // Скидаємо слайдер на початок, коли змінилась локація або кількість відгуків
+  const sliderResetKey = `${locationId ?? 'latest'}:${feedbacks.length}`;
+  const [prevSliderResetKey, setPrevSliderResetKey] = useState(sliderResetKey);
+  if (prevSliderResetKey !== sliderResetKey) {
+    setPrevSliderResetKey(sliderResetKey);
     setCurrentIndex(0);
-  }, [locationId, feedbacks.length]);
+  }
+
+  // Кількість позицій слайдера з урахуванням карток на екрані; індекс
+  // обмежуємо, щоб після зміни ширини екрана не вийти за останню позицію
+  const maxIndex = Math.max(0, feedbacks.length - cardsPerPage);
+  const activeIndex = Math.min(currentIndex, maxIndex);
 
   const handlePrevSlide = () => {
     if (feedbacks.length === 0) return;
-    setCurrentIndex((prev) =>
-      prev === 0 ? Math.max(0, feedbacks.length - cardsPerPage) : prev - 1,
-    );
+    setCurrentIndex(activeIndex === 0 ? maxIndex : activeIndex - 1);
   };
 
   const handleNextSlide = () => {
     if (feedbacks.length === 0) return;
-    setCurrentIndex((prev) =>
-      prev >= feedbacks.length - cardsPerPage ? 0 : prev + 1,
-    );
+    setCurrentIndex(activeIndex >= maxIndex ? 0 : activeIndex + 1);
   };
 
   const sectionClassName = embedded
@@ -106,13 +112,17 @@ export default function ReviewsBlock({
             {isHomePage ? 'Останні відгуки' : 'Відгуки'}
           </h2>
         )}
-        <p className={css.message}>Поки що немає відгуків для цієї локації.</p>
+        <p className={css.message}>
+          {isHomePage
+            ? 'Поки що немає відгуків.'
+            : 'Поки що немає відгуків для цієї локації.'}
+        </p>
       </section>
     );
   }
 
-  const translationPercentage = currentIndex * (100 / cardsPerPage);
-  const gapCompensation = currentIndex * (24 / cardsPerPage);
+  const translationPercentage = activeIndex * (100 / cardsPerPage);
+  const gapCompensation = activeIndex * (24 / cardsPerPage);
 
   return (
     <section className={sectionClassName} data-section="ReviewsBlock">
@@ -143,11 +153,18 @@ export default function ReviewsBlock({
           </div>
         </div>
 
-        <ArrowNavigation
-          onPrev={handlePrevSlide}
-          onNext={handleNextSlide}
-          viewportRef={viewportRef}
-        />
+        <div className={css.controlsRow}>
+          <SliderDots
+            count={maxIndex + 1}
+            activeIndex={activeIndex}
+            onSelect={setCurrentIndex}
+          />
+          <ArrowNavigation
+            onPrev={handlePrevSlide}
+            onNext={handleNextSlide}
+            viewportRef={viewportRef}
+          />
+        </div>
       </div>
     </section>
   );

@@ -5,6 +5,9 @@ import LocationsGrid from '@/components/LocationsGrid/LocationsGrid';
 
 export const metadata: Metadata = {
   title: 'Локації',
+  description:
+    'Каталог місць для відпочинку в Україні: пошук за назвою, регіоном і типом локації.',
+  alternates: { canonical: '/locations' },
 };
 
 export default function LocationsPage() {
