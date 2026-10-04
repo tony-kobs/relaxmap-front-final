@@ -32,7 +32,7 @@ export default function LocationCard({
           <Link
             href={`/locations/${location._id}/edit`}
             className={css.edit}
-            aria-label={`Редагувати локацію ${location.name}`}
+            aria-label="Редагувати місце"
           >
             <svg className={css.editIcon} aria-hidden="true">
               <use href="/sprite.svg#edit" />

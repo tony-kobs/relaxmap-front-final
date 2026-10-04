@@ -9,17 +9,14 @@ import { useAuthStore } from '@/lib/store/authStore';
 import css from './EditProfileModal.module.css';
 
 type EditProfileModalProps = {
-  isOpen: boolean;
   onClose: () => void;
 };
 
-export default function EditProfileModal({
-  isOpen,
-  onClose,
-}: EditProfileModalProps) {
+export default function EditProfileModal({ onClose }: EditProfileModalProps) {
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
 
+  // State initializes fresh every time the component mounts (parent renders it only when open)
   const [name, setName] = useState(user?.name || '');
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>(user?.avatar || '');
@@ -29,20 +26,8 @@ export default function EditProfileModal({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
 
-  // Synchronize state with current user when modal opens
-  useEffect(() => {
-    if (isOpen) {
-      setName(user?.name || '');
-      setPreviewUrl(user?.avatar || '');
-      setAvatarFile(null);
-      setNameError('');
-    }
-  }, [isOpen, user]);
-
   // Handle ESC and scroll locking
   useEffect(() => {
-    if (!isOpen) return;
-
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && !isLoading) {
         onClose();
@@ -58,21 +43,19 @@ export default function EditProfileModal({
       root.style.overflow = prevOverflow;
       document.removeEventListener('keydown', onKeyDown);
     };
-  }, [isOpen, isLoading, onClose]);
-
-  if (!isOpen) return null;
+  }, [isLoading, onClose]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (!file.type.startsWith('image/')) {
-      toast.error('Будь ласка, оберіть файл зображення');
+    if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+      toast.error('Дозволені лише файли JPG та PNG');
       return;
     }
 
-    if (file.size > 2 * 1024 * 1024) {
-      toast.error('Розмір фото не повинен перевищувати 2 МБ');
+    if (file.size > 1 * 1024 * 1024) {
+      toast.error('Розмір фото не повинен перевищувати 1 МБ');
       return;
     }
 
@@ -120,8 +103,11 @@ export default function EditProfileModal({
       setUser(updatedUser);
       toast.success('Профіль успішно оновлено!');
       onClose();
-    } catch {
-      toast.error('Не вдалося оновити профіль. Спробуйте ще раз');
+    } catch (err) {
+      const message =
+        (err as { response?: { data?: { message?: string } } })?.response?.data
+          ?.message ?? 'Не вдалося оновити профіль. Спробуйте ще раз';
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }
@@ -183,7 +169,7 @@ export default function EditProfileModal({
               <input
                 ref={fileInputRef}
                 type="file"
-                accept="image/png, image/jpeg, image/webp"
+                accept="image/jpeg,image/png"
                 className={css.hiddenFileInput}
                 onChange={handleFileChange}
               />
