@@ -49,13 +49,13 @@ export default function EditProfileModal({ onClose }: EditProfileModalProps) {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (!file.type.startsWith('image/')) {
-      toast.error('Будь ласка, оберіть файл зображення');
+    if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+      toast.error('Дозволені лише файли JPG та PNG');
       return;
     }
 
-    if (file.size > 2 * 1024 * 1024) {
-      toast.error('Розмір фото не повинен перевищувати 2 МБ');
+    if (file.size > 1 * 1024 * 1024) {
+      toast.error('Розмір фото не повинен перевищувати 1 МБ');
       return;
     }
 
@@ -103,8 +103,11 @@ export default function EditProfileModal({ onClose }: EditProfileModalProps) {
       setUser(updatedUser);
       toast.success('Профіль успішно оновлено!');
       onClose();
-    } catch {
-      toast.error('Не вдалося оновити профіль. Спробуйте ще раз');
+    } catch (err) {
+      const message =
+        (err as { response?: { data?: { message?: string } } })?.response?.data
+          ?.message ?? 'Не вдалося оновити профіль. Спробуйте ще раз';
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }
@@ -166,7 +169,7 @@ export default function EditProfileModal({ onClose }: EditProfileModalProps) {
               <input
                 ref={fileInputRef}
                 type="file"
-                accept="image/png, image/jpeg, image/webp"
+                accept="image/jpeg,image/png"
                 className={css.hiddenFileInput}
                 onChange={handleFileChange}
               />
