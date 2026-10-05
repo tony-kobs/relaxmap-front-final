@@ -44,6 +44,8 @@ export default function FilterPanel() {
 
   const updateParams = (changes: ParamChanges) => {
     const params = new URLSearchParams(searchParams.toString());
+    // будь-яка зміна фільтрів повертає на першу сторінку каталогу
+    params.delete('page');
 
     for (const [key, value] of Object.entries(changes)) {
       params.delete(key);

@@ -51,6 +51,9 @@ const buildLocationFormSchema = (isEditing: boolean) =>
       .max(6000, 'Опис занадто великий')
       .required('Опишіть локацію детальніше'),
     images: Yup.mixed<File>()
+      // початкове значення — null (файл не вибрано); без nullable() Yup
+      // вважає форму невалідною і кнопка збереження лишається неактивною
+      .nullable()
       // під час редагування фото можна лишити без змін
       .test('required', 'Додайте фото локації', (file) =>
         isEditing ? true : !!file,
@@ -85,13 +88,16 @@ export default function LocationForm({
   const existingImage = initialLocation?.images?.[0] ?? null;
   const previewSrc = imagePreview ?? existingImage;
 
-  const initialValues: LocationFormValues = {
-    images: null,
-    name: initialLocation?.name ?? '',
-    type: initialLocation?.type ?? '',
-    region: initialLocation?.region ?? '',
-    description: initialLocation?.description ?? '',
-  };
+  const initialValues = useMemo<LocationFormValues>(
+    () => ({
+      images: null,
+      name: initialLocation?.name ?? '',
+      type: initialLocation?.type ?? '',
+      region: initialLocation?.region ?? '',
+      description: initialLocation?.description ?? '',
+    }),
+    [initialLocation],
+  );
 
   const LocationFormSchema = useMemo(
     () => buildLocationFormSchema(isEditing),
@@ -191,6 +197,7 @@ export default function LocationForm({
         initialValues={initialValues}
         onSubmit={handleSubmit}
         validationSchema={LocationFormSchema}
+        validateOnMount={isEditing}
       >
         {({
           setFieldValue,

@@ -73,6 +73,8 @@ export default function LocationsGrid({ userId }: LocationsGridProps) {
   });
 
   const locations = data?.pages.flatMap((page) => page.data) ?? [];
+  // нові дані за зміненими фільтрами (не догрузка «Показати ще»)
+  const isRefetching = isFetching && !isFetchingNextPage;
 
   const listRef = useRef<HTMLUListElement>(null);
   const firstNewIndex = useRef<number | null>(null);
@@ -133,16 +135,26 @@ export default function LocationsGrid({ userId }: LocationsGridProps) {
       data-user-id={userId}
       aria-busy={isFetching}
     >
-      <ul
-        ref={listRef}
-        className={`${css.grid} ${isFetching && !isFetchingNextPage ? css.dimmed : ''}`}
-      >
-        {locations.map((location) => (
-          <li key={location._id} className={css.card}>
-            <LocationCard location={location} showEdit={isOwnProfile} />
-          </li>
-        ))}
-      </ul>
+      <div className={css.gridWrap}>
+        <ul
+          ref={listRef}
+          className={`${css.grid} ${isRefetching ? css.dimmed : ''}`}
+        >
+          {locations.map((location) => (
+            <li key={location._id} className={css.card}>
+              <LocationCard location={location} showEdit={isOwnProfile} />
+            </li>
+          ))}
+        </ul>
+
+        {isRefetching && (
+          <div className={css.fetchLoader}>
+            <div className={css.fetchLoaderInner}>
+              <Loader size={48} />
+            </div>
+          </div>
+        )}
+      </div>
 
       {isFetchingNextPage && <Loader size={40} />}
 
