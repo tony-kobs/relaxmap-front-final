@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import StarRating from '@/components/StarRating/StarRating';
+import LocationRating from '@/components/LocationInfoBlock/LocationRating';
 import css from './LocationInfoBlock.module.css';
 
 type LocationInfoBlockProps = {
@@ -36,11 +36,9 @@ export default async function LocationInfoBlock({
       data-section="LocationInfoBlock"
       data-location-id={locationId}
     >
-      <StarRating
-        value={location.rating || 0}
-        readOnly
-        showValue
-        className={css.ratingCustom}
+      <LocationRating
+        locationId={locationId}
+        initialRating={location.rating || 0}
       />
 
       <h1 className={css.title}>{location.name}</h1>

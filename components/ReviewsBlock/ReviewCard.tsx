@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import StarRating from '@/components/StarRating/StarRating';
 import ConfirmationModal from '@/components/ConfirmationModal/ConfirmationModal';
 import { deleteFeedback } from '@/lib/api/clientApi';
+import { locationDetailsQueryKey } from '@/lib/constants/locations';
 import { useAuthStore } from '@/lib/store/authStore';
 import { getErrorMessage } from '@/lib/utils/getErrorMessage';
 import cardCss from './ReviewCard.module.css';
@@ -56,7 +57,18 @@ export default function ReviewCard({
     setIsDeleting(true);
     try {
       await deleteFeedback(review._id);
-      await queryClient.invalidateQueries({ queryKey: ['feedbacks'] });
+      const reviewedLocationId = locationId?._id;
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['feedbacks'] }),
+        queryClient.invalidateQueries({ queryKey: ['locations'] }),
+        ...(reviewedLocationId
+          ? [
+              queryClient.invalidateQueries({
+                queryKey: locationDetailsQueryKey(reviewedLocationId),
+              }),
+            ]
+          : []),
+      ]);
       toast.success('Відгук видалено');
       setIsConfirmOpen(false);
     } catch (error) {

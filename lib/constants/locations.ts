@@ -19,3 +19,8 @@ export function locationsQueryKey(
 ) {
   return ['locations', userId ?? 'all', filters] as const;
 }
+
+/** Рейтинг на сторінці локації. Окремий ключ: списки живуть під `locations`. */
+export function locationDetailsQueryKey(locationId: string) {
+  return ['location', locationId] as const;
+}
