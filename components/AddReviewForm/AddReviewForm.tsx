@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 import { ClipLoader } from 'react-spinners';
 import StarRating from '@/components/StarRating/StarRating';
 import { createFeedback } from '@/lib/api/clientApi';
+import { locationDetailsQueryKey } from '@/lib/constants/locations';
 import { useAuthStore } from '@/lib/store/authStore';
 import { getErrorMessage } from '@/lib/utils/getErrorMessage';
 import css from './AddReviewForm.module.css';
@@ -76,10 +77,15 @@ export default function AddReviewForm({ locationId }: AddReviewFormProps) {
               rate: values.rate,
               description: values.description.trim(),
             });
-            // Бекенд одразу перераховує рейтинг локації, тож оновлюємо і картки локацій
+            // Бекенд одразу перераховує рейтинг. Списки карток — ключ locations,
+            // зірки в описі місця — окремий ключ location (серверний блок лишається
+            // змонтованим під модалкою і не оновлюється через router.back).
             await Promise.all([
               queryClient.invalidateQueries({ queryKey: ['feedbacks'] }),
               queryClient.invalidateQueries({ queryKey: ['locations'] }),
+              queryClient.invalidateQueries({
+                queryKey: locationDetailsQueryKey(locationId),
+              }),
             ]);
             toast.success('Відгук опубліковано');
             router.back();
