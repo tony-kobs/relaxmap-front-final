@@ -18,14 +18,16 @@ export default function HeroBlock() {
 
   return (
     <section className={css.section}>
-      <Image
-        className={css.bg}
-        src="/images/hero-bg.webp"
-        alt=""
-        fill
-        preload
-        sizes="100vw"
-      />
+      <div className={css.bgWrap} aria-hidden="true">
+        <Image
+          className={css.bg}
+          src="/images/hero-bg.webp"
+          alt=""
+          fill
+          preload
+          sizes="(max-width: 1440px) 100vw, 1440px"
+        />
+      </div>
 
       <div className="container">
         <div className={css.heroContent}>

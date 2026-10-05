@@ -4,6 +4,7 @@ import { notFound, redirect } from 'next/navigation';
 import { getMe } from '@/lib/api/serverApi';
 import { getLocationById } from '@/lib/api/locations';
 import LocationForm from '@/components/LocationForm/LocationForm';
+import { getCategoryId } from '@/lib/utils/getCategoryId';
 import css from './page.module.css';
 
 export const metadata: Metadata = {
@@ -48,8 +49,8 @@ export default async function EditLocationPage({
         locationId={locationId}
         initialLocation={{
           name: location.name,
-          type: location.type?._id ?? '',
-          region: location.region?._id ?? '',
+          type: getCategoryId(location.type),
+          region: getCategoryId(location.region),
           description: location.description,
           images: location.images,
         }}
