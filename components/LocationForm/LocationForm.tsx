@@ -88,13 +88,16 @@ export default function LocationForm({
   const existingImage = initialLocation?.images?.[0] ?? null;
   const previewSrc = imagePreview ?? existingImage;
 
-  const initialValues: LocationFormValues = {
-    images: null,
-    name: initialLocation?.name ?? '',
-    type: initialLocation?.type ?? '',
-    region: initialLocation?.region ?? '',
-    description: initialLocation?.description ?? '',
-  };
+  const initialValues = useMemo<LocationFormValues>(
+    () => ({
+      images: null,
+      name: initialLocation?.name ?? '',
+      type: initialLocation?.type ?? '',
+      region: initialLocation?.region ?? '',
+      description: initialLocation?.description ?? '',
+    }),
+    [initialLocation],
+  );
 
   const LocationFormSchema = useMemo(
     () => buildLocationFormSchema(isEditing),
@@ -194,6 +197,7 @@ export default function LocationForm({
         initialValues={initialValues}
         onSubmit={handleSubmit}
         validationSchema={LocationFormSchema}
+        validateOnMount={isEditing}
       >
         {({
           setFieldValue,
