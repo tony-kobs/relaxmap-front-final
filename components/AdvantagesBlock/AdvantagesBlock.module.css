@@ -1,14 +1,8 @@
-.section {
-  padding-block: 64px;
-  font-family: var(--font-family);
-  line-height: 1.5;
-}
-
 .heading,
 .cardTitle,
 .cardText {
   font-family: var(--font-family);
-  color: var(--color-scheme-2-text);
+  color: var(--color-scheme-2-text-green);
 }
 
 .heading,
@@ -18,7 +12,6 @@
 }
 
 .heading {
-  margin-top: 40px;
   margin-bottom: 32px;
   font-size: 28px;
   line-height: 1.2; /* 34px */
@@ -27,7 +20,7 @@
 .list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
   padding-block: 8px;
   list-style: none;
 }
@@ -35,10 +28,14 @@
 .card {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 16px;
   padding: 16px;
   border-radius: 16px;
   background: var(--color-scheme-2-foreground);
+}
+
+.card:nth-child(-n + 2) .icon {
+  padding: 10px;
 }
 
 .icon {

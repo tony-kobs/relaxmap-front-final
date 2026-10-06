@@ -22,7 +22,7 @@ const items = [
 
 export default function AdvantagesBlock() {
   return (
-    <section className={css.section}>
+    <section className="section">
       <div className="container">
         <h2 className={css.heading}>Ключові переваги</h2>
 
