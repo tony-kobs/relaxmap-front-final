@@ -43,9 +43,10 @@
   }
 }
 
+/* Десктоп за макетом: 16:9 (865×486 у колонці 865px) */
 @media (min-width: 1440px) {
   .frameWrap {
     height: auto;
-    aspect-ratio: 21 / 9;
+    aspect-ratio: 16 / 9;
   }
 }
