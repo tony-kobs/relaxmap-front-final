@@ -22,7 +22,6 @@ export default async function LocationDescription({
       data-section="LocationDescription"
       data-location-id={locationId}
     >
-      <h2 className={css.title}>Опис</h2>
       <p className={css.text}>{location.description}</p>
     </section>
   );
