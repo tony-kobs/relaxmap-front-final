@@ -3,14 +3,14 @@
   flex-direction: column;
   height: 100%;
   overflow: hidden;
-  border: 1px solid var(--color-scheme-2-border);
+  border: 0px solid var(--color-scheme-2-border);
   border-radius: 12px;
-  background-color: var(--color-coral-lightest);
+  background: var(--color-scheme-2-foreground);
 }
 
 .imageWrap {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 4;
   background-color: var(--color-coral-lighter);
 }
 
@@ -51,15 +51,15 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  gap: 8px;
+  gap: 12px;
   padding: 16px;
 }
 
 .type {
-  margin: 0;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-scheme-2-text);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--color-coral-darkest);
 }
 
 .rating {
@@ -67,24 +67,29 @@
 }
 
 .name {
-  margin: 0;
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-tight);
-  color: var(--color-scheme-2-text);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.5;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  color: var(--color-coral-darkest);
 }
 
 .link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 44px;
-  margin-top: auto;
   border: 1px solid var(--color-scheme-2-border);
   border-radius: 6px;
-  background-color: var(--color-coral-lighter);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-scheme-2-text);
+  padding: 12px 0;
+  background: var(--opacity-neutral-darkest-5);
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-coral-darkest);
   transition:
     background-color var(--transition-base),
     border-color var(--transition-base),
@@ -93,8 +98,16 @@
 
 .link:hover,
 .link:focus-visible {
-  border-color: var(--color-coral);
-  background-color: var(--color-coral);
+  border-color: var(--opacity-transparent);
+  background-color: var(--color-coral-dark);
+  color: var(--color-white);
+  opacity: 1;
+  outline: none;
+}
+
+.link:active {
+  border-color: var(--opacity-transparent);
+  background-color: var(--color-scheme-2-text);
   color: var(--color-white);
   opacity: 1;
   outline: none;

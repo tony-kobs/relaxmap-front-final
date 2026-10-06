@@ -13,6 +13,7 @@ import {
   SITE_NAME,
   toMetaDescription,
 } from '@/lib/constants/seo';
+import css from './page.module.css';
 
 type LocationDetailsPageProps = {
   params: Promise<{ locationId: string }>;
@@ -76,7 +77,7 @@ export default async function LocationDetailsPage({
 
   return (
     <>
-      <div className="container">
+      <div className={`container ${css.locationDetailsPage}`}>
         <div className="adaptive-top-container">
           <LocationGallery locationId={locationId} />
           <LocationInfoBlock locationId={locationId} />

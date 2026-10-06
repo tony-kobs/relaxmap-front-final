@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 
 export default function CreateLocationPage() {
   return (
-    <>
-      <h1 className={css.logo}>Додавання нового місця</h1>
+    <div className={`container ${css.addLocationPage}`}>
+      <h1 className={css.title}>Додавання нового місця</h1>
       <LocationForm />
-    </>
+    </div>
   );
 }

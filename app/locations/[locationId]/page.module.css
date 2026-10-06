@@ -1,0 +1,11 @@
+.locationDetailsPage {
+  padding-top: 32px;
+  padding-bottom: 64px;
+}
+
+@media (min-width: 1440px) {
+  .locationDetailsPage {
+    padding-top: 48px;
+    padding-bottom: 72px;
+  }
+}

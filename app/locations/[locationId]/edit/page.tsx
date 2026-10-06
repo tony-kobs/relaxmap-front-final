@@ -44,17 +44,19 @@ export default async function EditLocationPage({
 
   return (
     <>
-      <h1 className={css.title}>Редагування місця</h1>
-      <LocationForm
-        locationId={locationId}
-        initialLocation={{
-          name: location.name,
-          type: getCategoryId(location.type),
-          region: getCategoryId(location.region),
-          description: location.description,
-          images: location.images,
-        }}
-      />
+      <div className={css.editLocationPage}>
+        <h1 className={css.title}>Редагування місця</h1>
+        <LocationForm
+          locationId={locationId}
+          initialLocation={{
+            name: location.name,
+            type: getCategoryId(location.type),
+            region: getCategoryId(location.region),
+            description: location.description,
+            images: location.images,
+          }}
+        />
+      </div>
     </>
   );
 }
