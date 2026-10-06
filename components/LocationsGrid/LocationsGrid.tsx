@@ -46,12 +46,12 @@ export default function LocationsGrid({ userId }: LocationsGridProps) {
   if (!userId) {
     const search = searchParams.get('search')?.trim();
     const region = searchParams.get('region');
-    const types = searchParams.getAll('type');
+    const type = searchParams.get('type');
     const sort = searchParams.get('sort') ?? DEFAULT_SORT;
 
     if (search) filters.search = search;
     if (region) filters.region = region;
-    if (types.length) filters.type = types;
+    if (type) filters.type = type;
     filters.sort = sort as LocationQuery['sort'];
   }
 

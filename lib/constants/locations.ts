@@ -1,16 +1,7 @@
 import type { LocationQuery } from '@/types/location';
 
-/**
- * Десктопний каталог (3×3) і порція «Показати ще» на профілі.
- * Поріг десктопу — `LOCATIONS_DESKTOP_MEDIA`, той самий, що в сітці.
- */
+/** Порція «Показати ще» в каталозі та на профілі. */
 export const LOCATIONS_PAGE_SIZE = 9;
-
-/** Каталог на планшеті (2×4) і мобільному (1×8): 8 карток на сторінку. */
-export const LOCATIONS_PAGE_SIZE_COMPACT = 8;
-
-/** Збігається з `@media (min-width: 1440px)` у LocationsGrid.module.css. */
-export const LOCATIONS_DESKTOP_MEDIA = '(min-width: 1440px)';
 
 /** Спільний queryKey для LocationsGrid і сторінки профілю (один кеш React Query). */
 export function locationsQueryKey(
