@@ -1,6 +1,7 @@
 .card {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   height: 100%;
   overflow: hidden;
   border: 0px solid var(--color-scheme-2-border);
@@ -81,6 +82,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  /* Кнопка завжди внизу картки, хоч би скільки рядків мала назва */
+  margin-top: auto;
   border: 1px solid var(--color-scheme-2-border);
   border-radius: 6px;
   padding: 12px 0;
