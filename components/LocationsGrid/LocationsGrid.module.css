@@ -49,9 +49,8 @@
   display: block;
   width: 100%;
   margin: 32px auto 0;
-  min-width: 200px;
-  height: 44px;
-  padding: 0 24px;
+  height: 48px;
+  padding: 0 12px;
   border: 1px solid var(--color-button-primary, #cc6534);
   border-radius: 6px;
   background-color: var(--color-button-primary, #cc6534);
@@ -90,14 +89,21 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* на мобільному кнопка на всю ширину контенту, від планшета — за вмістом */
+  /* на мобільному кнопка на всю ширину контенту, від планшета — за вмістом (макет ~133×48) */
   .more {
     width: auto;
+    margin-top: 40px;
   }
 }
 
 @media (min-width: 1440px) {
   .grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* десктоп за макетом: ~162×48 */
+  .more {
+    padding: 0 20px;
+    font-size: var(--font-size-md);
   }
 }
