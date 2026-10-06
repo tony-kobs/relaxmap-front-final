@@ -36,7 +36,8 @@
   --color-coral-dark: #cc6534;
   --color-coral-darker: #66321a;
   --color-coral-darkest: #4c2613;
-  --color-scheme-2-text: var(--color-coral-darkest);
+  --color-scheme-2-text-green: rgba(27, 57, 27, 1);
+  --color-scheme-2-text: var(--color-coral-darker);
   --color-scheme-2-background: var(--color-coral-lightest);
   --color-scheme-2-border: var(--opacity-neutral-darkest-15);
   --color-scheme-2-accent: var(--color-coral);
@@ -51,8 +52,6 @@
   --color-error: #b00101;
 
   /* ── Misc / Aliases ── */
-  --color-scheme-2-text: #4c2613;
-  --color-coral-primary: #cc6534;
   --radius-full: 9999px;
   --font-family: var(--font-montserrat);
 
@@ -197,7 +196,7 @@ svg {
 .container {
   width: 100%;
   margin: 0 auto;
-  padding: 32px 20px;
+  padding: 0px 20px;
 }
 
 @media screen and (min-width: 375px) {
@@ -221,18 +220,18 @@ svg {
 }
 
 .section {
-  padding: 40px 20px;
+  padding: 64px 0px;
 }
 
 @media screen and (min-width: 768px) {
   .section {
-    padding: 60px 32px;
+    padding: 64px 0px;
   }
 }
 
 @media screen and (min-width: 1440px) {
   .section {
-    padding: 80px 64px;
+    padding: 72px 0px;
   }
 
   .adaptive-top-container {

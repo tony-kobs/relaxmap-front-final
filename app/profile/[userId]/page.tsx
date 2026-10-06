@@ -39,7 +39,7 @@ export default function ProfilePage({ params }: PageProps) {
   const locationsCount = data?.pages[0]?.total ?? 0;
 
   return (
-    <main className="container">
+    <div className={`container ${css.profilePage}`}>
       <ProfileInfo userId={userId} locationsCount={locationsCount} />
 
       <h2 className={css.title}>Локації</h2>
@@ -55,6 +55,6 @@ export default function ProfilePage({ params }: PageProps) {
       ) : (
         <ProfilePlaceholder isMyProfile={isMyProfile} />
       )}
-    </main>
+    </div>
   );
 }

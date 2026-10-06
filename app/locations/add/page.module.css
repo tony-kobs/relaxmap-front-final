@@ -1,28 +1,35 @@
-.logo {
-  width: 335px;
+.addLocationPage {
+  padding: 32px 20px 64px;
+}
+
+.title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 32px;
   line-height: 1.1;
   letter-spacing: -0.01em;
-  margin: 32px 20px;
-  color: #1b391b;
+  color: var(--color-scheme-2-text-green);
+  margin-bottom: 32px;
 }
 
 @media (min-width: 768px) {
-  .logo {
-    width: 704px;
-    font-weight: 700;
+  .addLocationPage {
+    padding: 32px 32px 64px;
+  }
+
+  .title {
     font-size: 48px;
-    margin: 32px;
   }
 }
 
 @media (min-width: 1440px) {
-  .section {
-    padding: 40px;
+  .addLocationPage {
+    padding: 48px 285px 72px 64px;
   }
 
-  .logo {
-    width: 1312px;
+  .title {
+    width: 1440px;
+    margin-bottom: 48px;
     font-size: 56px;
-    margin: 48px 64px;
   }
 }

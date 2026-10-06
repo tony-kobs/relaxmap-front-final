@@ -47,10 +47,6 @@ export default function Footer() {
                 <use href="/sprite.svg#company-logo" />
               </svg>
             </Link>
-            <p className={css.description}>
-              Знаходьте та діліться найкращими місцями для відпочинку на природі
-              в Україні — з фото, описами та відгуками мандрівників.
-            </p>
           </div>
 
           <ul className={css.socials}>

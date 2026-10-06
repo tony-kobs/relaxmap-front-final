@@ -2,7 +2,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   width: 100%;
   position: relative;
   z-index: 10;
@@ -16,6 +16,7 @@
   height: 48px;
   padding: 12px;
   box-sizing: border-box;
+  opacity: 1;
   background-color: var(--color-coral-lighter);
   border: 1px solid var(--color-scheme-1-border);
   border-radius: 8px;
@@ -26,15 +27,21 @@
 
 .sliderArrowBtn:hover,
 .sliderArrowBtn:focus-visible {
-  background-color: var(--color-coral-light);
-  border-color: var(--color-coral);
+  background-color: var(--color-neutral-lightest);
+  border-color: var(--color-coral-light);
   outline: none;
 }
 
 .sliderArrowBtn:active,
 .sliderArrowBtnActiveVisual {
   background-color: var(--color-coral-light);
-  border-color: var(--color-coral);
+  border-color: var(--color-coral-light);
+}
+
+.sliderArrowBtn:disabled {
+  background-color: var(--color-scheme-1-foreground);
+  border-color: var(--color-scheme-1-foreground);
+  opacity: 0.4;
 }
 
 .sliderArrowBtn svg {
