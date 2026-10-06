@@ -63,6 +63,8 @@
 }
 
 .slide {
+  display: flex;
+  flex-direction: column;
   flex: 0 0 100%;
   scroll-snap-align: start;
 }
