@@ -33,6 +33,8 @@ function ReviewRating() {
   return (
     <StarRating
       className={css.rating}
+      size="lg"
+      strokeWidth={2}
       value={field.value}
       // field.onChange(number) не працює: Formik сприймає не-string як event і
       // падає на event.target.type, тому ставимо значення через setValue.
