@@ -82,8 +82,10 @@ export default async function LocationDetailsPage({
           <LocationGallery locationId={locationId} />
           <LocationInfoBlock locationId={locationId} />
         </div>
-        <LocationDescription locationId={locationId} />
-        <LocationMap locationId={locationId} />
+        <div className={css.detailColumn}>
+          <LocationDescription locationId={locationId} />
+          <LocationMap locationId={locationId} />
+        </div>
         <ReviewsSection locationId={locationId} />
       </div>
     </>

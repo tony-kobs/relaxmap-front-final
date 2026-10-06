@@ -3,9 +3,32 @@
   padding-bottom: 64px;
 }
 
+.detailColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  padding-top: 24px;
+}
+
+@media (min-width: 768px) {
+  .detailColumn {
+    gap: 32px;
+    padding-top: 32px;
+  }
+}
+
 @media (min-width: 1440px) {
   .locationDetailsPage {
     padding-top: 48px;
     padding-bottom: 72px;
+  }
+
+  /* Центрована колонка 865px лише на десктопі; на планшеті й мобільному — вся ширина контенту */
+  .detailColumn {
+    max-width: 865px;
+    margin-inline: auto;
+    gap: 40px;
+    padding-top: 40px;
   }
 }

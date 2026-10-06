@@ -4,9 +4,9 @@
 
 .title {
   font-size: 32px;
-  font-weight: 700px;
+  font-weight: 700;
   margin: 12px 0 12px 0;
-  color: #1b391b;
+  color: var(--color-coral-darkest);
   line-height: 1.1;
   max-width: 533px;
 }
@@ -16,12 +16,12 @@
   flex-direction: column;
   gap: 8px;
   font-size: 16px;
-  color: #1b391b;
+  color: var(--color-coral-darkest);
 }
 
 .label {
   font-weight: bold;
-  color: #1b391b;
+  color: var(--color-coral-darkest);
   font-size: 16px;
 
   /* line-height: 24px; */
@@ -36,11 +36,11 @@
   line-height: 1.5;
   text-decoration: underline;
   text-decoration-skip-ink: none;
-  color: #1b391b;
+  color: var(--color-coral-darkest);
 }
 
 .authorLink:hover {
-  color: #1b3b2b;
+  color: var(--color-coral);
 }
 
 @media (min-width: 768px) {

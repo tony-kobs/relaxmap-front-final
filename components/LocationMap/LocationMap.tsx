@@ -27,7 +27,6 @@ export default async function LocationMap({ locationId }: LocationMapProps) {
       data-section="LocationMap"
       data-location-id={locationId}
     >
-      <h2 className={css.title}>Розташування</h2>
       <div className={css.frameWrap}>
         <iframe
           className={css.frame}
