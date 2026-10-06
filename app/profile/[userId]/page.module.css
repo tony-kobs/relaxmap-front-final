@@ -8,10 +8,27 @@
   padding-top: 0;
 }
 
+/* «Локації» на публічному профілі; відступи за макетом */
+.title {
+  margin: 0 0 24px;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-scheme-1-text);
+}
+
 .error {
   color: var(--color-error);
   font-size: var(--font-size-sm);
   padding: 16px 0;
+}
+
+@media (min-width: 768px) {
+  .title {
+    margin-bottom: 40px;
+    font-size: 40px;
+  }
 }
 
 @media (min-width: 1440px) {

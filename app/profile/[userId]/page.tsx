@@ -1,16 +1,14 @@
 'use client';
 
 import { use } from 'react';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 import ProfileInfo from '@/components/ProfileInfo/ProfileInfo';
 import LocationsGrid from '@/components/LocationsGrid/LocationsGrid';
 import ProfilePlaceholder from '@/components/ProfilePlaceholder/ProfilePlaceholder';
 import Loader from '@/components/Loader/Loader';
 import { getUserLocations } from '@/lib/api/clientApi';
-import {
-  LOCATIONS_PROFILE_PAGE_SIZE,
-  locationsQueryKey,
-} from '@/lib/constants/locations';
+import { locationsQueryKey } from '@/lib/constants/locations';
+import { useProfilePageSize } from '@/lib/hooks/useProfilePageSize';
 import { useAuthStore } from '@/lib/store/authStore';
 import css from './page.module.css';
 
@@ -23,14 +21,20 @@ export default function ProfilePage({ params }: PageProps) {
   const currentUserId = useAuthStore((state) => state.user?._id);
   const isAuthLoading = useAuthStore((state) => state.isAuthLoading);
   const isMyProfile = Boolean(currentUserId) && currentUserId === userId;
+  // заголовок «Локації» — лише на чужому (публічному) профілі
+  const isPublicProfile = !isAuthLoading && !isMyProfile;
+  const pageSize = useProfilePageSize();
 
   const { data, isPending, isError } = useInfiniteQuery({
-    queryKey: locationsQueryKey(userId),
+    queryKey: locationsQueryKey(userId, { limit: pageSize ?? undefined }),
     queryFn: ({ pageParam }) =>
       getUserLocations(userId, {
         page: pageParam,
-        limit: LOCATIONS_PROFILE_PAGE_SIZE,
+        limit: pageSize ?? undefined,
       }),
+    enabled: pageSize !== null,
+    // при зміні брейкпоінта (інша порція) не ховаємо сторінку за лоадером
+    placeholderData: keepPreviousData,
     initialPageParam: 1,
     getNextPageParam: (lastPage) =>
       lastPage.page < lastPage.totalPages ? lastPage.page + 1 : undefined,
@@ -45,12 +49,14 @@ export default function ProfilePage({ params }: PageProps) {
     <div className={`container ${css.profilePage}`}>
       <ProfileInfo userId={userId} locationsCount={locationsCount} />
 
+      {isPublicProfile && <h2 className={css.title}>Локації</h2>}
+
       {isError ? (
         <p className={css.error}>
           Не вдалося завантажити локації профілю. Спробуйте пізніше.
         </p>
       ) : locationsCount > 0 ? (
-        <LocationsGrid userId={userId} />
+        <LocationsGrid userId={userId} pageSize={pageSize ?? undefined} />
       ) : isAuthLoading ? (
         <Loader size={40} />
       ) : (

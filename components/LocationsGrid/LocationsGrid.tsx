@@ -19,6 +19,8 @@ const DEFAULT_SORT = 'popular';
 
 type LocationsGridProps = {
   userId?: string;
+  /** Порція карток профілю (залежить від брейкпоінта) */
+  pageSize?: number;
 };
 
 async function fetchPage(
@@ -28,7 +30,7 @@ async function fetchPage(
 ) {
   const url = userId ? `/users/${userId}/locations` : '/locations';
   const params = userId
-    ? { page, limit: LOCATIONS_PROFILE_PAGE_SIZE }
+    ? { page, limit: filters.limit ?? LOCATIONS_PROFILE_PAGE_SIZE }
     : { ...filters, page, limit: LOCATIONS_PAGE_SIZE };
 
   const { data } = await nextServer.get<Paginated<Location>>(url, {
@@ -38,12 +40,16 @@ async function fetchPage(
   return data;
 }
 
-export default function LocationsGrid({ userId }: LocationsGridProps) {
+export default function LocationsGrid({
+  userId,
+  pageSize,
+}: LocationsGridProps) {
   const searchParams = useSearchParams();
   const currentUserId = useAuthStore((state) => state.user?._id);
   const isOwnProfile = Boolean(userId) && userId === currentUserId;
 
-  const filters: LocationQuery = {};
+  // профіль: limit у ключі запиту, той самий ключ, що й на сторінці профілю
+  const filters: LocationQuery = userId && pageSize ? { limit: pageSize } : {};
   if (!userId) {
     const search = searchParams.get('search')?.trim();
     const region = searchParams.get('region');
