@@ -1,14 +1,13 @@
 import type { LocationQuery } from '@/types/location';
 
-/** Порція «Показати ще» в каталозі (мобільний і десктоп 3×3). */
+/** Порція «Показати ще» в каталозі на десктопі (3×3). */
 export const LOCATIONS_PAGE_SIZE = 9;
 
-/** Каталог на планшеті (2 колонки): 6 карток, далі по 6. */
-export const LOCATIONS_PAGE_SIZE_TABLET = 6;
+/** Каталог на планшеті (2 колонки) і мобільному: 6 карток, далі по 6. */
+export const LOCATIONS_PAGE_SIZE_COMPACT = 6;
 
-/** Планшет — між брейкпоінтами 768 і 1440 у LocationsGrid.module.css. */
-export const LOCATIONS_TABLET_MEDIA =
-  '(min-width: 768px) and (max-width: 1439.98px)';
+/** Десктоп — брейкпоінт 1440 у LocationsGrid.module.css. */
+export const LOCATIONS_DESKTOP_MEDIA = '(min-width: 1440px)';
 
 /** Спільний queryKey для LocationsGrid і сторінки профілю (один кеш React Query). */
 export function locationsQueryKey(

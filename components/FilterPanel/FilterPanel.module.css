@@ -8,9 +8,28 @@
   gap: 16px;
 }
 
+/* Мобільний за макетом: пошук на всю ширину; тип і регіон по 50%; сортування на всю ширину */
 .row {
   display: grid;
-  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.search {
+  grid-column: 1 / -1;
+}
+
+.type {
+  order: 1;
+}
+
+.region {
+  order: 2;
+}
+
+.sort {
+  order: 3;
+  grid-column: 1 / -1;
 }
 
 .field {
@@ -47,23 +66,9 @@ select.field {
 @media (min-width: 768px) {
   .row {
     grid-template-columns: 208px 208px minmax(0, 1fr) 160px;
-    column-gap: 16px;
-  }
-
-  .search {
-    grid-column: 1 / -1;
-  }
-
-  .type {
-    order: 1;
-  }
-
-  .region {
-    order: 2;
   }
 
   .sort {
-    order: 3;
     grid-column: 4;
   }
 }

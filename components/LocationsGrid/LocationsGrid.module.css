@@ -47,6 +47,7 @@
 
 .more {
   display: block;
+  width: 100%;
   margin: 32px auto 0;
   min-width: 200px;
   height: 44px;
@@ -87,6 +88,11 @@
 @media (min-width: 768px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* на мобільному кнопка на всю ширину контенту, від планшета — за вмістом */
+  .more {
+    width: auto;
   }
 }
 

@@ -33,7 +33,7 @@ async function fetchPage(
     : { ...filters, page, limit: LOCATIONS_PAGE_SIZE };
 
   const { data } = await nextServer.get<Paginated<Location>>(url, {
-    // каталог передає порцію за брейкпоінтом (6 на планшеті, 9 інакше)
+    // каталог передає порцію за брейкпоінтом (9 на десктопі, 6 інакше)
     params: limit ? { ...params, limit } : params,
     paramsSerializer: { indexes: null },
   });
