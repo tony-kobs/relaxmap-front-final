@@ -84,27 +84,6 @@
   text-align: center;
 }
 
-/* Посторінковий режим каталогу */
-.paged {
-  scroll-margin-top: 24px;
-}
-
-.pagedBody {
-  position: relative;
-}
-
-.overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  padding-top: 80px;
-  pointer-events: none;
-}
-
-/* Колонки не ріжуть список: скільки карток на сторінці — вирішує limit запиту.
-   До 1440px каталог просить 8, від 1440px — 9 (3×3). */
 @media (min-width: 768px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);

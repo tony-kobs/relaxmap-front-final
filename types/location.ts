@@ -24,7 +24,7 @@ export type LocationQuery = {
   page?: number;
   limit?: number;
   region?: string;
-  type?: string | string[];
+  type?: string;
   search?: string;
   sort?: 'popular' | 'rating' | 'new';
 };
