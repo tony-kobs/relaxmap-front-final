@@ -1,7 +1,8 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import FilterPanel from '@/components/FilterPanel/FilterPanel';
-import PaginatedLocationsGrid from '@/components/LocationsGrid/PaginatedLocationsGrid';
+import LocationsGrid from '@/components/LocationsGrid/LocationsGrid';
+import css from './page.module.css';
 
 export const metadata: Metadata = {
   title: 'Локації',
@@ -13,9 +14,10 @@ export const metadata: Metadata = {
 export default function LocationsPage() {
   return (
     <div className="container">
+      <h1 className={css.title}>Усі місця відпочинку</h1>
       <Suspense fallback={null}>
         <FilterPanel />
-        <PaginatedLocationsGrid />
+        <LocationsGrid />
       </Suspense>
     </div>
   );
