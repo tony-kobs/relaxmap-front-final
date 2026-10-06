@@ -51,8 +51,8 @@
 }
 
 .textarea {
-  min-height: 120px;
-  resize: vertical;
+  height: 180px;
+  resize: none;
 }
 
 .input::placeholder,
@@ -102,6 +102,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  min-height: 48px;
   border-radius: 6px;
   gap: 8px;
   padding: 6px 12px;
@@ -167,6 +168,14 @@
 @media (min-width: 768px) {
   .actions {
     flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .buttonPrimary,
+  .buttonGhost {
+    width: 203px;
+    height: 48px;
   }
 }
 
