@@ -21,3 +21,12 @@ export function locationsQueryKey(
 export function locationDetailsQueryKey(locationId: string) {
   return ['location', locationId] as const;
 }
+
+/** Профіль на десктопі: 6 карток (3×2), далі «Показати ще» по 6. */
+export const LOCATIONS_PROFILE_PAGE_SIZE = 6;
+
+/** Профіль на планшеті (2×2) і мобільному: 4 картки, далі по 4. */
+export const LOCATIONS_PROFILE_PAGE_SIZE_COMPACT = 4;
+
+/** Десктоп профілю — брейкпоінт 1440 у LocationsGrid.module.css. */
+export const LOCATIONS_PROFILE_DESKTOP_MEDIA = '(min-width: 1440px)';

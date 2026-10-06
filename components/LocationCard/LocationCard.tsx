@@ -28,18 +28,6 @@ export default function LocationCard({
             className={css.image}
           />
         )}
-
-        {showEdit && (
-          <Link
-            href={`/locations/${location._id}/edit`}
-            className={css.edit}
-            aria-label="Редагувати місце"
-          >
-            <svg className={css.editIcon} aria-hidden="true">
-              <use href="/sprite.svg#edit" />
-            </svg>
-          </Link>
-        )}
       </div>
 
       <div className={css.body}>
@@ -51,9 +39,23 @@ export default function LocationCard({
           className={css.rating}
         />
         <h3 className={css.name}>{location.name}</h3>
-        <Link href={`/locations/${location._id}`} className={css.link}>
-          Переглянути локацію
-        </Link>
+        <div className={css.actions}>
+          <Link href={`/locations/${location._id}`} className={css.link}>
+            Переглянути локацію
+          </Link>
+
+          {showEdit && (
+            <Link
+              href={`/locations/${location._id}/edit`}
+              className={css.edit}
+              aria-label="Редагувати місце"
+            >
+              <svg className={css.editIcon} aria-hidden="true">
+                <use href="/sprite.svg#edit" />
+              </svg>
+            </Link>
+          )}
+        </div>
       </div>
     </article>
   );
