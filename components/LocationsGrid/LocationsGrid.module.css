@@ -65,7 +65,7 @@
 .more:hover,
 .more:focus-visible {
   background-color: var(--color-coral-lighter);
-  color: #1b391b;
+  color: var(--color-scheme-2-text);
 }
 
 .empty {

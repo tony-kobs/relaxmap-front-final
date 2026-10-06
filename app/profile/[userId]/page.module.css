@@ -2,6 +2,12 @@
   padding-bottom: 24px;
 }
 
+/* Відступ від блоку профілю до карток задає ProfileInfo (32px, від 1440px — 40px),
+   тому верхній padding сітки тут прибираємо; у каталозі сітка без змін */
+.profilePage > [data-section='LocationsGrid'] {
+  padding-top: 0;
+}
+
 .error {
   color: var(--color-error);
   font-size: var(--font-size-sm);
