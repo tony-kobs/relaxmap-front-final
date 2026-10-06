@@ -8,7 +8,7 @@ import ProfilePlaceholder from '@/components/ProfilePlaceholder/ProfilePlacehold
 import Loader from '@/components/Loader/Loader';
 import { getUserLocations } from '@/lib/api/clientApi';
 import {
-  LOCATIONS_PAGE_SIZE,
+  LOCATIONS_PROFILE_PAGE_SIZE,
   locationsQueryKey,
 } from '@/lib/constants/locations';
 import { useAuthStore } from '@/lib/store/authStore';
@@ -27,7 +27,10 @@ export default function ProfilePage({ params }: PageProps) {
   const { data, isPending, isError } = useInfiniteQuery({
     queryKey: locationsQueryKey(userId),
     queryFn: ({ pageParam }) =>
-      getUserLocations(userId, { page: pageParam, limit: LOCATIONS_PAGE_SIZE }),
+      getUserLocations(userId, {
+        page: pageParam,
+        limit: LOCATIONS_PROFILE_PAGE_SIZE,
+      }),
     initialPageParam: 1,
     getNextPageParam: (lastPage) =>
       lastPage.page < lastPage.totalPages ? lastPage.page + 1 : undefined,
@@ -41,8 +44,6 @@ export default function ProfilePage({ params }: PageProps) {
   return (
     <div className={`container ${css.profilePage}`}>
       <ProfileInfo userId={userId} locationsCount={locationsCount} />
-
-      <h2 className={css.title}>Локації</h2>
 
       {isError ? (
         <p className={css.error}>

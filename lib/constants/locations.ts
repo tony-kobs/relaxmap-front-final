@@ -24,3 +24,6 @@ export function locationsQueryKey(
 export function locationDetailsQueryKey(locationId: string) {
   return ['location', locationId] as const;
 }
+
+/** Профіль: 6 карток (3×2 на десктопі), далі «Показати ще» по 6. */
+export const LOCATIONS_PROFILE_PAGE_SIZE = 6;

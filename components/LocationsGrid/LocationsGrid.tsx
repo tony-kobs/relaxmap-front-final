@@ -9,6 +9,7 @@ import { nextServer } from '@/lib/api/api';
 import Loader from '@/components/Loader/Loader';
 import {
   LOCATIONS_PAGE_SIZE,
+  LOCATIONS_PROFILE_PAGE_SIZE,
   locationsQueryKey,
 } from '@/lib/constants/locations';
 import type { Location, LocationQuery, Paginated } from '@/types/location';
@@ -27,7 +28,7 @@ async function fetchPage(
 ) {
   const url = userId ? `/users/${userId}/locations` : '/locations';
   const params = userId
-    ? { page, limit: LOCATIONS_PAGE_SIZE }
+    ? { page, limit: LOCATIONS_PROFILE_PAGE_SIZE }
     : { ...filters, page, limit: LOCATIONS_PAGE_SIZE };
 
   const { data } = await nextServer.get<Paginated<Location>>(url, {

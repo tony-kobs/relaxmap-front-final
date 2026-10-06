@@ -2,16 +2,6 @@
   padding-bottom: 24px;
 }
 
-.title {
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 28px;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  color: var(--color-scheme-1-text);
-  margin-bottom: 16px;
-}
-
 .error {
   color: var(--color-error);
   font-size: var(--font-size-sm);
