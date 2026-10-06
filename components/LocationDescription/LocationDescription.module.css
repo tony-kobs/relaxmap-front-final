@@ -6,6 +6,6 @@
   margin: 0;
   font-size: var(--font-size-base);
   line-height: 1.6;
-  color: var(--color-scheme-2-text);
+  color: var(--color-coral-darkest);
   white-space: pre-line;
 }
