@@ -13,12 +13,6 @@ export default function AuthNavigation() {
   const pathname = usePathname();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const user = useAuthStore((state) => state.user);
-  /* const isAuthenticated = true;
-  const user = {
-    _id: '1',
-    name: 'Олена Коваленко',
-    avatar: '/images/location-form-placeholder-image.jpg',
-  }; */
 
   const profileHref = user?._id ? `/profile/${user._id}` : '/profile';
   const isLocationsCatalog =
@@ -67,6 +61,12 @@ export default function AuthNavigation() {
           {isAuthenticated ? (
             <>
               <Link
+                className={pathname === '/' ? css.active : css.link}
+                href="/"
+              >
+                Головна
+              </Link>
+              <Link
                 className={isLocationsCatalog ? css.active : css.link}
                 href="/locations"
               >
@@ -103,6 +103,7 @@ export default function AuthNavigation() {
             <Link
               className={`${css.button} ${css.buttonSecondary}`}
               href="/locations/add"
+              onClick={() => setIsOpen(false)}
             >
               Поділитись локацією
             </Link>
@@ -149,16 +150,18 @@ export default function AuthNavigation() {
                 <span className={css.name}>{user?.name}</span>
               </button>
               <span className={css.divider} aria-hidden="true" />
-              <Link className={css.iconButton} href="/logout" aria-label="Вийти">
+              <Link
+                className={css.iconButton}
+                href="/logout"
+                aria-label="Вийти"
+              >
                 <svg width="24" height="24" aria-hidden="true">
                   <use href="/sprite.svg#logout" />
                 </svg>
               </Link>
             </span>
             {isProfileModalOpen && (
-              <EditProfileModal
-                onClose={() => setIsProfileModalOpen(false)}
-              />
+              <EditProfileModal onClose={() => setIsProfileModalOpen(false)} />
             )}
           </>
         ) : null}
