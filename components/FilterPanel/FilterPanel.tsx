@@ -106,7 +106,7 @@ export default function FilterPanel() {
           />
 
           <select
-            className={css.field}
+            className={`${css.field} ${css.region}`}
             value={region}
             onChange={(event) =>
               updateParams({ region: event.target.value || null })
@@ -122,7 +122,7 @@ export default function FilterPanel() {
           </select>
 
           <select
-            className={css.field}
+            className={`${css.field} ${css.type}`}
             value={locationType}
             onChange={(event) =>
               updateParams({ type: event.target.value || null })
