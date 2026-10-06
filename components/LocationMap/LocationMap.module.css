@@ -35,14 +35,17 @@
   color: var(--color-coral-darker);
 }
 
+/* Планшет за макетом: на всю ширину контенту, висота 280px */
 @media (min-width: 768px) {
   .frameWrap {
-    aspect-ratio: 16 / 9;
+    aspect-ratio: auto;
+    height: 280px;
   }
 }
 
 @media (min-width: 1440px) {
   .frameWrap {
+    height: auto;
     aspect-ratio: 21 / 9;
   }
 }

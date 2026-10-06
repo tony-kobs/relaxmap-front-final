@@ -8,8 +8,6 @@
   flex-direction: column;
   gap: 24px;
   width: 100%;
-  max-width: 865px;
-  margin-inline: auto;
   padding-top: 24px;
 }
 
@@ -26,7 +24,10 @@
     padding-bottom: 72px;
   }
 
+  /* Центрована колонка 865px лише на десктопі; на планшеті й мобільному — вся ширина контенту */
   .detailColumn {
+    max-width: 865px;
+    margin-inline: auto;
     gap: 40px;
     padding-top: 40px;
   }
