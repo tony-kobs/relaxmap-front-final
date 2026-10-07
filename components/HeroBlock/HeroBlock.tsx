@@ -25,6 +25,8 @@ export default function HeroBlock() {
           alt=""
           fill
           preload
+          fetchPriority="high"
+          quality={70}
           sizes="(max-width: 1440px) 100vw, 1440px"
         />
       </div>
