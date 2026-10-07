@@ -58,9 +58,20 @@ export default function FilterSelect({
 
   useEffect(() => {
     if (!isOpen || activeIndex < 0) return;
-    const item = listRef.current?.children[activeIndex] as
-      HTMLElement | undefined;
-    item?.scrollIntoView({ block: 'nearest' });
+    const list = listRef.current;
+    const item = list?.children[activeIndex] as HTMLElement | undefined;
+    if (!list || !item) return;
+
+    // Гортаємо лише список, щоб сторінка не стрибала
+    const top = item.offsetTop;
+    const bottom = top + item.offsetHeight;
+    if (activeIndex === 0) {
+      list.scrollTop = 0;
+    } else if (top < list.scrollTop) {
+      list.scrollTop = top;
+    } else if (bottom > list.scrollTop + list.clientHeight) {
+      list.scrollTop = bottom - list.clientHeight;
+    }
   }, [isOpen, activeIndex]);
 
   const open = () => {
