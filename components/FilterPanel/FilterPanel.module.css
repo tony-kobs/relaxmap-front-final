@@ -44,11 +44,6 @@
   transition: border-color var(--transition-base);
 }
 
-select.field {
-  padding-right: 32px;
-  cursor: pointer;
-}
-
 .field:focus {
   outline: none;
   border-color: var(--color-coral);
