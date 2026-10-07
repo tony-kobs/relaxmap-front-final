@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 import { getLocationTypes, getRegions } from '@/lib/api/clientApi';
+import FilterSelect from '@/components/FilterSelect/FilterSelect';
 import css from './FilterPanel.module.css';
 
 export const DEFAULT_SORT = 'popular';
@@ -105,50 +106,41 @@ export default function FilterPanel() {
             maxLength={96}
           />
 
-          <select
-            className={`${css.field} ${css.region}`}
+          <FilterSelect
+            className={css.region}
             value={region}
-            onChange={(event) =>
-              updateParams({ region: event.target.value || null })
-            }
-            aria-label="Регіон"
-          >
-            <option value="">Регіон</option>
-            {regions.map(({ _id, name }) => (
-              <option key={_id} value={_id}>
-                {name}
-              </option>
-            ))}
-          </select>
+            onChange={(value) => updateParams({ region: value || null })}
+            ariaLabel="Регіон"
+            options={[
+              { value: '', label: 'Регіон' },
+              ...regions.map(({ _id, name }) => ({ value: _id, label: name })),
+            ]}
+          />
 
-          <select
-            className={`${css.field} ${css.type}`}
+          <FilterSelect
+            className={css.type}
             value={locationType}
-            onChange={(event) =>
-              updateParams({ type: event.target.value || null })
-            }
-            aria-label="Тип локації"
-          >
-            <option value="">Тип локації</option>
-            {locationTypes.map(({ _id, name }) => (
-              <option key={_id} value={_id}>
-                {name}
-              </option>
-            ))}
-          </select>
+            onChange={(value) => updateParams({ type: value || null })}
+            ariaLabel="Тип локації"
+            options={[
+              { value: '', label: 'Тип локації' },
+              ...locationTypes.map(({ _id, name }) => ({
+                value: _id,
+                label: name,
+              })),
+            ]}
+          />
 
-          <select
-            className={`${css.field} ${css.sort}`}
+          <FilterSelect
+            className={css.sort}
             value={sort}
-            onChange={(event) => updateParams({ sort: event.target.value })}
-            aria-label="Сортування"
-          >
-            {SORT_OPTIONS.map(({ value, label }) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ))}
-          </select>
+            onChange={(value) => updateParams({ sort: value })}
+            ariaLabel="Сортування"
+            options={SORT_OPTIONS.map(({ value, label }) => ({
+              value,
+              label,
+            }))}
+          />
         </div>
 
         {hasFilters && (
