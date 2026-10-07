@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { isAxiosError } from 'axios';
@@ -38,6 +39,7 @@ const getRegisterErrorMessage = (error: unknown): string => {
 export default function RegistrationForm() {
   const router = useRouter();
   const setUser = useAuthStore((state) => state.setUser);
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <Formik
@@ -96,16 +98,28 @@ export default function RegistrationForm() {
 
           <label className={css.label} htmlFor="password">
             <span className={css.labelText}>Пароль*</span>
-            <Field
-              id="password"
-              className={`${css.input} ${
-                touched.password && errors.password ? css.inputError : ''
-              }`}
-              type="password"
-              name="password"
-              placeholder="********"
-              autoComplete="new-password"
-            />
+            <div className={css.inputWrapper}>
+              <Field
+                id="password"
+                className={`${css.input} ${
+                  touched.password && errors.password ? css.inputError : ''
+                }`}
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                placeholder="********"
+                autoComplete="new-password"
+              />
+              <button
+                type="button"
+                className={css.eyeButton}
+                onClick={() => setShowPassword((prev) => !prev)}
+                aria-label={showPassword ? 'Приховати пароль' : 'Показати пароль'}
+              >
+                <svg className={css.eyeIcon} aria-hidden="true">
+                  <use href={`/sprite.svg#${showPassword ? 'eye-off' : 'eye'}`} />
+                </svg>
+              </button>
+            </div>
             <ErrorMessage
               className={css.error}
               name="password"

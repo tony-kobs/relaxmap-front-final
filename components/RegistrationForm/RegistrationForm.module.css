@@ -64,6 +64,43 @@
   box-shadow: 0 0 0 2px rgba(176, 1, 1, 0.2);
 }
 
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.inputWrapper .input {
+  padding-right: 44px;
+}
+
+.eyeButton {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--opacity-neutral-darkest-40);
+  transition: color var(--transition-base);
+}
+
+.eyeButton:hover {
+  color: var(--color-coral);
+}
+
+.eyeIcon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
 .error {
   color: var(--color-error);
   font-size: var(--font-size-xs);
