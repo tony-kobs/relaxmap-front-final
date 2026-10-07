@@ -11,12 +11,44 @@
 
 ## Зміст
 
-1. [Що на екрані](#що-на-екрані)
-2. [Стек](#стек)
-3. [Сторінки](#сторінки)
-4. [Як зібраний застосунок](#як-зібраний-застосунок)
-5. [Проксі](#проксі)
-6. [Запуск](#запуск)
+1. [Посилання](#посилання)
+2. [Команда](#команда)
+3. [Що на екрані](#що-на-екрані)
+4. [Стек](#стек)
+5. [Сторінки](#сторінки)
+6. [Як зібраний застосунок](#як-зібраний-застосунок)
+7. [Проксі](#проксі)
+8. [Запуск](#запуск)
+
+## Посилання
+
+| Що | Де |
+| --- | --- |
+| Сайт | [relaxmap-front-final.vercel.app](https://relaxmap-front-final.vercel.app) |
+| API (Render) | [relaxmap-back-final.onrender.com](https://relaxmap-back-final.onrender.com/health) |
+| Swagger | [relaxmap-back-final.onrender.com/api-docs](https://relaxmap-back-final.onrender.com/api-docs/) |
+| Бекенд-репозиторій | [tony-kobs/relaxmap-back-final](https://github.com/tony-kobs/relaxmap-back-final) |
+| Макет | [Figma](https://www.figma.com/design/139uPoMOT1RJ51sirdNQPX/RelaxMap?node-id=6383-168&t=36seQL7y1m6j9bn5-1) |
+
+Бекенд на безкоштовному тарифі Render засинає без запитів, тому перше звернення після паузи може тривати до хвилини.
+
+## Команда
+
+| Учасник | GitHub | Роль |
+| --- | --- | --- |
+| Антон Кобись | [tony-kobs](https://github.com/tony-kobs) | Тімлід, бекенд, Header / Footer, вихід |
+| Валентин Бурий | [groteskzp](https://github.com/groteskzp) | Каталог: фільтри, сітка локацій, «Показати ще» |
+| Христина Білецька | [BiletskaKhristina](https://github.com/BiletskaKhristina) | Профіль: інформація про користувача, порожній стан |
+| Андрій Степанюк | [Andrii-Stepaniuk27](https://github.com/Andrii-Stepaniuk27) | Вхід: форма логіну |
+| Анна Крочак | [KiraSpace777](https://github.com/KiraSpace777) | Відгуки: слайдер на головній, відгуки на сторінці місця |
+| Аліна Овчинникова | [alinakvitochka](https://github.com/alinakvitochka) | Новий відгук: модалка і форма |
+| Сергій Човгун | [sergeychovgun](https://github.com/sergeychovgun) | Реєстрація, редагування локації |
+| Євгеній Крочак | [Zhenya-77](https://github.com/Zhenya-77) | Створення локації: форма додавання |
+| Віктор Матвійчук | [ViktorMatviichuk](https://github.com/ViktorMatviichuk) | Популярні локації: карусель і картка |
+| Олександр Павленко | [AlexandrPavlenko-ctrl](https://github.com/AlexandrPavlenko-ctrl) | Сторінка місця: інформація і галерея |
+| Сергій Минда | [sergijminda9](https://github.com/sergijminda9) | Перший екран: Hero і переваги |
+| Адам Лех | [AdamPershyi](https://github.com/AdamPershyi) | Сесія: модалки підтвердження і підказки входу |
+
 
 ## Що на екрані
 
@@ -36,11 +68,14 @@
 
 | Для чого | Чим |
 | --- | --- |
-| Каркас | Next.js 16, App Router, React 19, TypeScript |
+| Каркас | Next.js 16, App Router, React 19, TypeScript, React Compiler |
 | Стилі | CSS Modules, `modern-normalize`, шрифт Montserrat |
 | Дані | TanStack Query і Axios |
 | Сесія в клієнті | Zustand |
 | Форми | Formik і Yup |
+| Рейтинг | `@smastrom/react-rating` |
+| Лоадери | `react-spinners` |
+| Пошук із затримкою | `use-debounce` |
 | Сповіщення | react-hot-toast |
 | Адаптив | mobile first, `min-width`: 375, 768, 1440 |
 
@@ -56,6 +91,8 @@
 | `/profile/[userId]` | Публічний профіль |
 | `/login` | Вхід |
 | `/register` | Реєстрація |
+| `/forgot-password` | Запит листа для скидання пароля |
+| `/reset-password` | Новий пароль за посиланням із листа |
 
 Приватні лише два: `/locations/add` і `/locations/[locationId]/edit`. Гостя з них веде на `/login`. Авторизованого з `/login` і `/register` веде на `/profile`, а та сторінка переводить на `/profile/[свій id]`.
 
@@ -75,7 +112,7 @@
 app/
 ├── layout.tsx                  хедер, футер, провайдери, слот modal
 ├── page.tsx                    чотири секції головної
-├── (auth)/login | register
+├── (auth)/                     вхід, реєстрація, скидання пароля
 ├── locations/                  каталог, картка, додавання, редагування
 ├── profile/                    редірект і публічний профіль
 ├── @modal/                     вихід, підказка входу, форма відгуку
@@ -128,5 +165,7 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 | `npm run build` | продакшн-збірка |
 | `npm start` | запуск зібраного застосунку |
 | `npm run lint` | ESLint |
+
+Щоб працювати з прод-API без локального бекенду, у `BACKEND_URL` можна вказати `https://relaxmap-back-final.onrender.com`.
 
 API, сід і Swagger описані в репозиторії [relaxmap-back-final](https://github.com/tony-kobs/relaxmap-back-final).
