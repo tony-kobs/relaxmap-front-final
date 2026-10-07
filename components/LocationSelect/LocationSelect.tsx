@@ -21,6 +21,7 @@ export function LocationSelect({
   const selectRef = useRef<HTMLDivElement>(null);
 
   const selectedOption = options.find((option) => option._id === field.value);
+  const listboxId = `${id}-listbox`;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -54,6 +55,7 @@ export function LocationSelect({
         onClick={() => setIsOpen((prev) => !prev)}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
+        aria-controls={isOpen ? listboxId : undefined}
       >
         <span>{selectedOption ? selectedOption.name : placeholder}</span>
 
@@ -63,14 +65,15 @@ export function LocationSelect({
       </button>
 
       {isOpen && (
-        <ul className={css.selectDropdown} role="listbox">
+        <ul className={css.selectDropdown} role="listbox" id={listboxId}>
           {options.map((option) => (
-            <li key={option._id}>
+            <li key={option._id} role="presentation">
               <button
                 className={css.selectOption}
                 type="button"
                 onClick={() => handleSelect(option._id)}
                 role="option"
+                aria-selected={option._id === field.value}
               >
                 {option.name}
               </button>

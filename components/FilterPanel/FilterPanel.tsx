@@ -15,7 +15,7 @@ const SORT_OPTIONS = [
   { value: 'new', label: 'Новіші спочатку' },
 ];
 
-type ParamChanges = Record<string, string | string[] | null>;
+type ParamChanges = Record<string, string | null>;
 
 export default function FilterPanel() {
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function FilterPanel() {
   const searchParams = useSearchParams();
 
   const region = searchParams.get('region') ?? '';
-  const types = searchParams.getAll('type');
+  const locationType = searchParams.get('type') ?? '';
   const sort = searchParams.get('sort') ?? DEFAULT_SORT;
 
   const [searchValue, setSearchValue] = useState(
@@ -44,16 +44,21 @@ export default function FilterPanel() {
 
   const updateParams = (changes: ParamChanges) => {
     const params = new URLSearchParams(searchParams.toString());
-    // будь-яка зміна фільтрів повертає на першу сторінку каталогу
+    // будь-яка зміна фільтрів повертає список на першу порцію
     params.delete('page');
 
     for (const [key, value] of Object.entries(changes)) {
       params.delete(key);
-      if (Array.isArray(value)) {
-        value.forEach((item) => params.append(key, item));
-      } else if (value) {
+      if (value) {
         params.set(key, value);
       }
+    }
+
+    // type — одне значення, навіть якщо в адресі лишились повтори
+    const type = params.get('type');
+    if (params.getAll('type').length > 1 && type) {
+      params.delete('type');
+      params.set('type', type);
     }
 
     const query = params.toString();
@@ -69,13 +74,6 @@ export default function FilterPanel() {
   const handleSearchChange = (value: string) => {
     setSearchValue(value);
     debouncedSearch(value);
-  };
-
-  const toggleType = (id: string) => {
-    const next = types.includes(id)
-      ? types.filter((typeId) => typeId !== id)
-      : [...types, id];
-    updateParams({ type: next });
   };
 
   const handleReset = () => {
@@ -98,24 +96,24 @@ export default function FilterPanel() {
       >
         <div className={css.row}>
           <input
-            className={css.field}
+            className={`${css.field} ${css.search}`}
             type="search"
             value={searchValue}
             onChange={(event) => handleSearchChange(event.target.value)}
-            placeholder="Пошук за назвою"
+            placeholder="Пошук"
             aria-label="Пошук за назвою"
             maxLength={96}
           />
 
           <select
-            className={css.field}
+            className={`${css.field} ${css.region}`}
             value={region}
             onChange={(event) =>
               updateParams({ region: event.target.value || null })
             }
             aria-label="Регіон"
           >
-            <option value="">Усі регіони</option>
+            <option value="">Регіон</option>
             {regions.map(({ _id, name }) => (
               <option key={_id} value={_id}>
                 {name}
@@ -124,7 +122,23 @@ export default function FilterPanel() {
           </select>
 
           <select
-            className={css.field}
+            className={`${css.field} ${css.type}`}
+            value={locationType}
+            onChange={(event) =>
+              updateParams({ type: event.target.value || null })
+            }
+            aria-label="Тип локації"
+          >
+            <option value="">Тип локації</option>
+            {locationTypes.map(({ _id, name }) => (
+              <option key={_id} value={_id}>
+                {name}
+              </option>
+            ))}
+          </select>
+
+          <select
+            className={`${css.field} ${css.sort}`}
             value={sort}
             onChange={(event) => updateParams({ sort: event.target.value })}
             aria-label="Сортування"
@@ -136,25 +150,6 @@ export default function FilterPanel() {
             ))}
           </select>
         </div>
-
-        <fieldset className={css.fieldset}>
-          <legend className={css.legend}>Тип локації</legend>
-          <ul className={css.types}>
-            {locationTypes.map(({ _id, name }) => (
-              <li key={_id}>
-                <label className={css.typeLabel}>
-                  <input
-                    className={css.checkbox}
-                    type="checkbox"
-                    checked={types.includes(_id)}
-                    onChange={() => toggleType(_id)}
-                  />
-                  {name}
-                </label>
-              </li>
-            ))}
-          </ul>
-        </fieldset>
 
         {hasFilters && (
           <button className={css.reset} type="button" onClick={handleReset}>

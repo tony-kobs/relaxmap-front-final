@@ -6,14 +6,14 @@ import css from './StarRating.module.css';
 
 const STAR_COUNT = 5;
 
-const starStyles = {
+const getStarStyles = (strokeWidth: number) => ({
   itemShapes: Star,
-  itemStrokeWidth: 1,
+  itemStrokeWidth: strokeWidth,
   activeFillColor: 'var(--color-neutral-darkest)',
   activeStrokeColor: 'var(--color-neutral-darkest)',
   inactiveFillColor: 'transparent',
   inactiveStrokeColor: 'var(--color-neutral-darkest)',
-};
+});
 
 const itemLabels = ['1 зірка', '2 зірки', '3 зірки', '4 зірки', '5 зірок'];
 
@@ -22,7 +22,8 @@ type StarRatingProps = {
   onChange?: (value: number) => void;
   readOnly?: boolean;
   showValue?: boolean;
-  size?: 'sm' | 'md';
+  size?: 'sm' | 'md' | 'lg';
+  strokeWidth?: number;
   className?: string;
 };
 
@@ -37,6 +38,7 @@ export default function StarRating({
   readOnly,
   showValue = false,
   size = 'md',
+  strokeWidth = 1,
   className,
 }: StarRatingProps) {
   const isReadOnly = readOnly ?? !onChange;
@@ -44,7 +46,7 @@ export default function StarRating({
 
   return (
     <div className={[css.row, className].filter(Boolean).join(' ')}>
-      <div className={size === 'sm' ? css.sm : css.md}>
+      <div className={css[size]}>
         <Rating
           className={css.rating}
           value={value}
@@ -55,7 +57,7 @@ export default function StarRating({
               : (nextValue: number) => onChange(Math.round(nextValue))
           }
           items={STAR_COUNT}
-          itemStyles={starStyles}
+          itemStyles={getStarStyles(strokeWidth)}
           // halfFillMode лише для read-only середнього рейтингу; у формі — цілі зірки
           {...(isReadOnly ? { halfFillMode: 'svg' as const } : {})}
           spaceInside="none"

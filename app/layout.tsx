@@ -52,7 +52,11 @@ type RootLayoutProps = {
 
 export default function RootLayout({ children, modal }: RootLayoutProps) {
   return (
-    <html lang="uk" className={montserrat.variable}>
+    <html
+      lang="uk"
+      className={montserrat.variable}
+      data-scroll-behavior="smooth"
+    >
       <body>
         <TanStackProvider>
           <AuthProvider>

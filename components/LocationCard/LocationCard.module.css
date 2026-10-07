@@ -1,6 +1,7 @@
 .card {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   height: 100%;
   overflow: hidden;
   border: 0px solid var(--color-scheme-2-border);
@@ -18,17 +19,16 @@
   object-fit: cover;
 }
 
+/* Редагування (свій профіль): квадратна кнопка праворуч від «Переглянути локацію» */
 .edit {
-  position: absolute;
-  top: 12px;
-  right: 12px;
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: var(--opacity-white-60);
+  width: 50px;
+  border: 1px solid var(--color-scheme-2-border);
+  border-radius: 6px;
+  background-color: var(--opacity-neutral-darkest-5);
   color: var(--color-coral-darkest);
   transition:
     background-color var(--transition-base),
@@ -81,6 +81,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  /* Кнопка завжди внизу картки, хоч би скільки рядків мала назва */
+  margin-top: auto;
   border: 1px solid var(--color-scheme-2-border);
   border-radius: 6px;
   padding: 12px 0;
@@ -111,4 +113,15 @@
   color: var(--color-white);
   opacity: 1;
   outline: none;
+}
+
+/* Ряд кнопок унизу картки: завжди притиснутий донизу, хоч би скільки рядків мала назва */
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.actions > .link {
+  flex: 1 1 auto;
 }

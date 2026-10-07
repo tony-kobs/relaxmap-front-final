@@ -5,7 +5,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 27px;
   width: 100%;
 }
 
@@ -26,6 +26,11 @@
 .labelFooter {
   display: flex;
   min-height: 18px;
+}
+
+/* Порожній слот помилки не займає місця: відступи між полем, зірками і кнопками як у макеті */
+.labelFooter:empty {
+  display: none;
 }
 
 .input,
@@ -51,8 +56,8 @@
 }
 
 .textarea {
-  min-height: 120px;
-  resize: vertical;
+  height: 180px;
+  resize: none;
 }
 
 .input::placeholder,
@@ -94,6 +99,7 @@
   align-items: center;
   gap: 12px;
   width: 100%;
+  margin-top: 3px;
 }
 
 .buttonPrimary,
@@ -102,6 +108,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  min-height: 48px;
   border-radius: 6px;
   gap: 8px;
   padding: 6px 12px;
@@ -140,7 +147,7 @@
 .buttonGhost {
   border: 1px solid var(--color-scheme-2-border);
   background: var(--opacity-neutral-darkest-5);
-  color: var(--color-scheme-2-text);
+  color: var(--color-coral-darkest);
 }
 
 .buttonGhost:hover,
@@ -167,6 +174,14 @@
 @media (min-width: 768px) {
   .actions {
     flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .buttonPrimary,
+  .buttonGhost {
+    width: 203px;
+    height: 48px;
   }
 }
 

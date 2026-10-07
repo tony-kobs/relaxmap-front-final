@@ -2,20 +2,33 @@
   padding-bottom: 24px;
 }
 
+/* Відступ від блоку профілю до карток задає ProfileInfo (32px, від 1440px — 40px),
+   тому верхній padding сітки тут прибираємо; у каталозі сітка без змін */
+.profilePage > [data-section='LocationsGrid'] {
+  padding-top: 0;
+}
+
+/* «Локації» на публічному профілі; відступи за макетом */
 .title {
-  font-family: var(--font-family);
+  margin: 0 0 24px;
   font-weight: 700;
   font-size: 28px;
   line-height: 1.2;
   letter-spacing: -0.01em;
   color: var(--color-scheme-1-text);
-  margin-bottom: 16px;
 }
 
 .error {
   color: var(--color-error);
   font-size: var(--font-size-sm);
   padding: 16px 0;
+}
+
+@media (min-width: 768px) {
+  .title {
+    margin-bottom: 40px;
+    font-size: 40px;
+  }
 }
 
 @media (min-width: 1440px) {

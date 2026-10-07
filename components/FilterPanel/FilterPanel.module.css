@@ -1,5 +1,5 @@
 .section {
-  padding: 24px 0;
+  padding: 0 0 24px;
 }
 
 .form {
@@ -8,14 +8,33 @@
   gap: 16px;
 }
 
+/* Мобільний за макетом: пошук на всю ширину; тип і регіон по 50%; сортування на всю ширину */
 .row {
   display: grid;
-  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.search {
+  grid-column: 1 / -1;
+}
+
+.type {
+  order: 1;
+}
+
+.region {
+  order: 2;
+}
+
+.sort {
+  order: 3;
+  grid-column: 1 / -1;
 }
 
 .field {
   width: 100%;
-  height: 40px;
+  height: 44px;
   padding: 0 16px;
   border: 1px solid var(--color-scheme-2-border);
   border-radius: 6px;
@@ -25,48 +44,15 @@
   transition: border-color var(--transition-base);
 }
 
+select.field {
+  padding-right: 32px;
+  cursor: pointer;
+}
+
 .field:focus {
   outline: none;
   border-color: var(--color-coral);
   box-shadow: 0 0 0 2px rgba(204, 101, 52, 0.2);
-}
-
-.fieldset {
-  margin: 0;
-  padding: 0;
-  border: none;
-}
-
-.legend {
-  margin-bottom: 8px;
-  font-weight: var(--font-weight-semibold, 600);
-}
-
-.types {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.typeLabel {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border: 1px solid var(--color-scheme-2-border);
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-sm);
-  cursor: pointer;
-  transition: background-color var(--transition-base);
-}
-
-.typeLabel:has(input:checked) {
-  border-color: var(--color-coral);
-  background-color: var(--color-coral-light);
-}
-
-.checkbox {
-  accent-color: var(--color-coral);
 }
 
 .reset {
@@ -76,8 +62,38 @@
   cursor: pointer;
 }
 
+/* Планшет за макетом: пошук на всю ширину; нижче тип, регіон, а сортування праворуч */
 @media (min-width: 768px) {
   .row {
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 208px 208px minmax(0, 1fr) 160px;
+  }
+
+  .sort {
+    grid-column: 4;
+  }
+}
+
+@media (min-width: 1440px) {
+  .row {
+    grid-template-columns: 240px 200px 230px minmax(200px, 1fr);
+    column-gap: 12px;
+    align-items: center;
+  }
+
+  /* Десктоп за макетом: пошук, регіон, тип в одному рядку, сортування праворуч */
+  .search,
+  .sort {
+    grid-column: auto;
+  }
+
+  .type,
+  .region,
+  .sort {
+    order: 0;
+  }
+
+  .sort {
+    justify-self: end;
+    width: 220px;
   }
 }

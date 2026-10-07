@@ -1,12 +1,5 @@
 .section {
-  padding: 24px 16px;
-}
-
-.title {
-  margin: 0 0 12px;
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-scheme-1-text);
+  width: 100%;
 }
 
 .frameWrap {
@@ -42,26 +35,18 @@
   color: var(--color-coral-darker);
 }
 
+/* Планшет за макетом: на всю ширину контенту, висота 280px */
 @media (min-width: 768px) {
-  .section {
-    padding: 32px 24px;
-  }
-
   .frameWrap {
-    aspect-ratio: 16 / 9;
+    aspect-ratio: auto;
+    height: 280px;
   }
 }
 
+/* Десктоп за макетом: 16:9 (865×486 у колонці 865px) */
 @media (min-width: 1440px) {
-  .section {
-    padding: 40px;
-  }
-
-  .title {
-    font-size: var(--font-size-lg);
-  }
-
   .frameWrap {
-    aspect-ratio: 21 / 9;
+    height: auto;
+    aspect-ratio: 16 / 9;
   }
 }

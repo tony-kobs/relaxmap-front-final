@@ -71,7 +71,7 @@
 
 @media (min-width: 1440px) {
   .section {
-    padding: 48px 0;
+    padding: 48px 0 40px;
   }
 
   .name {
