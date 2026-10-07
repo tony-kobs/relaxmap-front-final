@@ -49,17 +49,19 @@
   transform: translateY(-50%) rotate(180deg);
 }
 
-/* Список показує всі варіанти без внутрішньої прокрутки і без смуги */
+/* Список обмеженої висоти (близько 8 варіантів) гортається, а смугу прокрутки
+   сховано так само, як у сторінки (styles/globals.css) і каруселі */
 .list {
   position: absolute;
   top: calc(100% + 4px);
   left: 0;
   z-index: 20;
   width: 100%;
-  max-height: none;
+  max-height: 300px;
   margin: 0;
   padding: 4px 0;
-  overflow: visible;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   scrollbar-width: none;
   list-style: none;
   border: 1px solid var(--color-scheme-2-border);
